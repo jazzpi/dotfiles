@@ -1,0 +1,1 @@
+color candystripe_terminal
