@@ -24,3 +24,6 @@ install_file nvim/ftplugin/markdown.vim ~/.config/nvim/ftplugin/markdown.vim
 
 echo "Installing Xresources..."
 install_file Xresources ~/.Xresources
+
+echo "Installing tmux config..."
+install_file tmux.conf ~/.tmux.conf
