@@ -33,3 +33,7 @@ install_file Xresources ~/.Xresources
 
 echo "Installing tmux config..."
 install_file tmux.conf ~/.tmux.conf
+
+echo "Installing ZSH config..."
+install_file zsh/zshrc ~/.zshrc
+install_file zsh/zshenv ~/.zshenv
