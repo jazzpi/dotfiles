@@ -1,0 +1,38 @@
+! urxvt (rxvt-unicode) configuration
+! ==================================
+! Font config
+! -----------
+! Use the Meslo LG M font in 10pt size
+URxvt.font: xft:Meslo LG M:style=Regular:size=10
+URxvt.boldFont: xft:Meslo LG M:style=Bold:size=10
+! Reduce line and column spacing
+URxvt.letterSpace: -1
+URxvt.lineSpace: -1
+
+! Output scrolling
+! ----------------
+! do not scroll with output
+URxvt.scrollTtyOutput: false
+! scroll back to the bottom on keypress
+URxvt.scrollTtyKeypress: true
+! Allow scrolling in secondary screens (e.g. less, tmux)
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
+
+! Colors
+! ------
+URxvt.depth: 32
+URxvt.foreground: rgb:ee/ee/ee
+! Requires a composite manager, for example compton --no-fading-openclose -b
+URxvt.background: rgba:0000/0000/0200/c800
+
+! Extensions
+! ----------
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/chromium
+URxvt.matcher.button: 1
+
+! Disable the strange Ctrl-Shift keybinding
+URxvt.iso14755: false
+URxvt.iso14755_52: false
