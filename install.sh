@@ -3,6 +3,10 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_file {
+	if [ $(readlink -f $2) = $DIR/$1 ]; then
+		echo "$1 is already installed, skipping..."
+		return
+	fi
 	FILE_DIR=$(dirname $2)
 	if [ ! -d $FILE_DIR ]; then
 		echo "Creating $FILE_DIR"
