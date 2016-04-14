@@ -14,6 +14,9 @@ Plug 'tpope/vim-surround'          " Powerful quote etc. handling
 Plug 'scrooloose/nerdtree'         " File tree
 Plug 'Xuyuanp/nerdtree-git-plugin' " git integrating for NERDTree
 Plug 'fholgado/minibufexpl.vim'    " List open buffers
+Plug 'rking/ag.vim'                " Search for code with the_silver_searcher
+Plug 'tpope/vim-commentary'        " Comment stuff out
+Plug 'moll/vim-bbye'               " Close buffers without closing their window
 call plug#end()
 " NERDTree
 " Open automatically when vim starts
@@ -55,7 +58,7 @@ unmap <Leader>hs
 noremap <Leader>h :bp<CR>
 noremap <Leader>l :bn<CR>
 nmap <silent> <Leader><CR> :nohl<CR>
-nmap <Leader>w :bd<CR>
+nmap <Leader>w :Bd<CR>
 nmap <Leader>W :qa<CR>
 
 " EX COMMANDS
