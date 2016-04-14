@@ -18,6 +18,9 @@ Plug 'rking/ag.vim'                " Search for code with the_silver_searcher
 Plug 'tpope/vim-commentary'        " Comment stuff out
 Plug 'moll/vim-bbye'               " Close buffers without closing their window
 Plug 'morhetz/gruvbox'             " A very nice colorscheme
+Plug 'vim-scripts/mru.vim'         " Show recently opened files in a window
+Plug 'Shougo/deoplete.nvim'        " Dark-powered neo-completion
+Plug 'ervandew/supertab'           " completion with Tab and Shift-Tab
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
