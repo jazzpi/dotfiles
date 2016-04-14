@@ -39,6 +39,8 @@ set nu
 set so=5 ss=1 siso=8
 " Format for the ruler on the right side of the statusbar
 set ru ruf=%(%P%=%l:%c%V%)
+" Show a line at 80 characters
+set colorcolumn=80
 
 " GENERAL
 " Be smart about case when searching
