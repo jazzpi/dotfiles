@@ -51,12 +51,8 @@ set nowrap
 
 " KEYMAP
 let mapleader = "\<space>"
-" Remove some gitgutter binds that interfere with <Leader>h
-unmap <Leader>hp
-unmap <Leader>hr
-unmap <Leader>hs
-noremap <Leader>h :bp<CR>
-noremap <Leader>l :bn<CR>
+noremap <Leader>n :bp<CR>
+noremap <Leader>m :bn<CR>
 nmap <silent> <Leader><CR> :nohl<CR>
 nmap <Leader>w :Bd<CR>
 nmap <Leader>W :qa<CR>
