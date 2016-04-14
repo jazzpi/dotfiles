@@ -17,6 +17,7 @@ Plug 'fholgado/minibufexpl.vim'    " List open buffers
 Plug 'rking/ag.vim'                " Search for code with the_silver_searcher
 Plug 'tpope/vim-commentary'        " Comment stuff out
 Plug 'moll/vim-bbye'               " Close buffers without closing their window
+Plug 'morhetz/gruvbox'             " A very nice colorscheme
 call plug#end()
 " NERDTree
 " Open automatically when vim starts
@@ -24,11 +25,12 @@ autocmd vimenter * NERDTree
 
 " USER INTERFACE
 syntax enable
-colorscheme slate
+let g:gruvbox_italic = 1
+set background=dark
+colorscheme gruvbox
 " display invisible characters
 set list
 set listchars=tab:\|-,trail:~,nbsp:%,space:·,extends:>,precedes:<
-hi SpecialKey ctermfg=240
 " Show line numbers
 set nu
 " Leave some lines/columns visible when scrolling
@@ -60,4 +62,4 @@ nmap <Leader>W :qa<CR>
 " EX COMMANDS
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
