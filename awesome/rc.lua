@@ -298,7 +298,7 @@ globalkeys = awful.util.table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function ()
-      awful.util.spawn_with_shell(terminal .. ' -e bash -c "tmux -2 -q has-session -tmain && exec tmux attach-session -tmain -d || exec tmux new-session -n$USER -smain"')
+      awful.util.spawn_with_shell(terminal .. ' -e zsh -c "tmx main"')
     end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
