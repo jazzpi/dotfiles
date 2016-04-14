@@ -20,8 +20,10 @@ Plug 'moll/vim-bbye'               " Close buffers without closing their window
 Plug 'morhetz/gruvbox'             " A very nice colorscheme
 call plug#end()
 " NERDTree
-" Open automatically when vim starts
-autocmd vimenter * NERDTree
+" Open automatically when vim starts, then switch to the editor window
+autocmd vimenter * NERDTree | wincmd w
+" Close vim if only a NERDTree window is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " USER INTERFACE
 syntax enable
