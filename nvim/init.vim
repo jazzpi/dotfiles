@@ -21,6 +21,8 @@ Plug 'morhetz/gruvbox'             " A very nice colorscheme
 Plug 'vim-scripts/mru.vim'         " Show recently opened files in a window
 Plug 'Shougo/deoplete.nvim'        " Dark-powered neo-completion
 Plug 'ervandew/supertab'           " completion with Tab and Shift-Tab
+" Extended session management
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
