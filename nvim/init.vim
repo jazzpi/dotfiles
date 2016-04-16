@@ -29,6 +29,8 @@ call plug#end()
 autocmd vimenter * NERDTree | wincmd w
 " Close vim if only a NERDTree window is open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Enable deoplete on startup
+let g:deoplete#enable_at_startup = 1
 
 " USER INTERFACE
 syntax enable
