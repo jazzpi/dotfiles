@@ -68,7 +68,7 @@ noremap <Leader>n :bp<CR>
 noremap <Leader>m :bn<CR>
 nmap <silent> <Leader><CR> :nohl<CR>
 nmap <Leader>w :Bd<CR>
-nmap <Leader>W :qa<CR>
+nmap <Leader>W :q<CR>
 
 " EX COMMANDS
 " :W sudo saves the file
