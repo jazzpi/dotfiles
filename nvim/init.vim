@@ -21,8 +21,13 @@ Plug 'morhetz/gruvbox'             " A very nice colorscheme
 Plug 'vim-scripts/mru.vim'         " Show recently opened files in a window
 Plug 'Shougo/deoplete.nvim'        " Dark-powered neo-completion
 Plug 'ervandew/supertab'           " completion with Tab and Shift-Tab
+Plug 'jiangmiao/auto-pairs'        " Auto-close brackets and more
+Plug 'derekwyatt/vim-fswitch'      " Quickly switch between .cpp and .h files
+Plug 'rkitover/vimpager'           " Use vim as a pager
 " Extended session management
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
+Plug 'marcweber/vim-addon-mw-utils' | Plug 'tomtom/tlib_vim' | Plug 'garbas/vim-snipmate' | Plug 'honza/vim-snippets' " Snippets
+Plug 'lervag/vimtex'               " LaTeX support
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
@@ -56,6 +61,8 @@ set ignorecase smartcase
 set shiftwidth=4
 set tabstop=4
 set noexpandtab
+" Don't indent C++ namespaces
+set cino=N-s
 filetype plugin indent on
 set hidden " Allow modified buffers to be hidden
 
@@ -64,11 +71,13 @@ set nowrap
 
 " KEYMAP
 let mapleader = "\<space>"
+let maplocalleader = "\<space>"
 noremap <Leader>n :bp<CR>
 noremap <Leader>m :bn<CR>
 nmap <silent> <Leader><CR> :nohl<CR>
 nmap <Leader>w :Bd<CR>
 nmap <Leader>W :q<CR>
+nnoremap <silent> <C-\> :NERDTreeToggle<CR>
 
 " EX COMMANDS
 " :W sudo saves the file
