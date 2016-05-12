@@ -36,6 +36,7 @@ autocmd vimenter * NERDTree | wincmd w
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Enable deoplete on startup
 let g:deoplete#enable_at_startup = 1
+let g:tex_flavor = 'latex' " Who uses Plain TeX anyway?
 " Neovim doesn't have --servername
 let g:vimtex_latexmk_progname = 'nvr'
 
