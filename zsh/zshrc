@@ -7,6 +7,9 @@
 # time that oh-my-zsh is loaded.
 ZSH_THEME="crunch"
 
+# Show hostname in cyan as RPROMPT
+RPROMPT='[%{$fg[cyan]%}%m%{$reset_color%}]'
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -91,3 +94,5 @@ alias rfb="rfkill block 0; rfkill block 1; rfkill block 2; rfkill block 3"
 alias uds="udisksctl status"
 alias udm="udisksctl mount -b"
 alias udu="udisksctl unmount -b"
+alias idea="intellij-idea-ultimate-edition"
+alias ltspice="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/LTC/LTspiceIV/scad3.exe"
