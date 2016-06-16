@@ -26,6 +26,7 @@ echo "Note: Not installing the theme!"
 echo "Installing Neovim config..."
 install_file nvim/init.vim ~/.config/nvim/init.vim
 install_file nvim/ftplugin/markdown.vim ~/.config/nvim/ftplugin/markdown.vim
+install_file nvim/ftplugin/tex.vim ~/.config/nvim/ftplugin/tex.vim
 echo "Downloading vim-plug"
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

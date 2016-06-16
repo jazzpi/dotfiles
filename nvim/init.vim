@@ -39,6 +39,9 @@ let g:deoplete#enable_at_startup = 1
 let g:tex_flavor = 'latex' " Who uses Plain TeX anyway?
 " Neovim doesn't have --servername
 let g:vimtex_latexmk_progname = 'nvr'
+let g:vimtex_view_general_viewer = 'okular'
+let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
 
 " USER INTERFACE
 syntax enable
@@ -77,6 +80,8 @@ let mapleader = "\<space>"
 let maplocalleader = "\<space>"
 noremap <Leader>n :bp<CR>
 noremap <Leader>m :bn<CR>
+noremap <Leader>N :tabp<CR>
+noremap <Leader>M :tabn<CR>
 nmap <silent> <Leader><CR> :nohl<CR>
 nmap <Leader>w :Bd<CR>
 nmap <Leader>W :q<CR>
