@@ -14,6 +14,7 @@ Plug 'tpope/vim-surround'          " Powerful quote etc. handling
 Plug 'scrooloose/nerdtree'         " File tree
 Plug 'Xuyuanp/nerdtree-git-plugin' " git integrating for NERDTree
 Plug 'fholgado/minibufexpl.vim'    " List open buffers
+Plug 'ap/vim-buftabline'           " Buffers in tab bar
 Plug 'rking/ag.vim'                " Search for code with the_silver_searcher
 Plug 'tpope/vim-commentary'        " Comment stuff out
 Plug 'moll/vim-bbye'               " Close buffers without closing their window
@@ -28,6 +29,16 @@ Plug 'rkitover/vimpager'           " Use vim as a pager
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 Plug 'marcweber/vim-addon-mw-utils' | Plug 'tomtom/tlib_vim' | Plug 'garbas/vim-snipmate' | Plug 'honza/vim-snippets' " Snippets
 Plug 'lervag/vimtex'               " LaTeX support
+Plug 'peterhoeg/vim-qml'           " QML language highlighting
+Plug 'brookhong/cscope.vim'        " cscope support
+" Automatically update ctags
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+Plug 'majutsushi/tagbar'           " Window with all tags in the file
+Plug 'digitaltoad/vim-pug'         " Pug (formerly Jade) language support
+Plug 'isRuslan/vim-es6'            " ES6 Syntax & Snippets
+Plug 'derekwyatt/vim-fswitch'      " Quickly switch source and header files
+" Markdown Preview
+Plug 'JamshedVesuna/vim-markdown-preview'
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
@@ -42,6 +53,30 @@ let g:vimtex_latexmk_progname = 'nvr'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
+" Config for buftabline
+let g:buftabline_numbers = 2 " Show numbers next to buffers (1 to 10)
+let g:buftabline_indicators = 1 " Show modified indicator in buftabline
+" Keybinds for cscope
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
+" Silver Searcher config
+let g:ag_prg="ag --vimgrep --smart-case --ignore assets/ --ignore bin/"
 
 " USER INTERFACE
 syntax enable
@@ -75,6 +110,19 @@ set hidden " Allow modified buffers to be hidden
 " TODO: show indicator at 80 chars
 set nowrap
 
+" Automatically restore views when opening a file
+augroup autosave_view
+	au!
+	au BufWinLeave ?* mkview
+	au BufWinEnter ?* silent! loadview
+augroup END
+
+" Exclude quickfix list from :bn and :bp
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+
 " KEYMAP
 let mapleader = "\<space>"
 let maplocalleader = "\<space>"
@@ -86,6 +134,23 @@ nmap <silent> <Leader><CR> :nohl<CR>
 nmap <Leader>w :Bd<CR>
 nmap <Leader>W :q<CR>
 nnoremap <silent> <C-\> :NERDTreeToggle<CR>
+" Go to buffers 1-10
+nmap <Leader>1 <Plug>BufTabLine.Go(1)
+nmap <Leader>2 <Plug>BufTabLine.Go(2)
+nmap <Leader>3 <Plug>BufTabLine.Go(3)
+nmap <Leader>4 <Plug>BufTabLine.Go(4)
+nmap <Leader>5 <Plug>BufTabLine.Go(5)
+nmap <Leader>6 <Plug>BufTabLine.Go(6)
+nmap <Leader>7 <Plug>BufTabLine.Go(7)
+nmap <Leader>8 <Plug>BufTabLine.Go(8)
+nmap <Leader>9 <Plug>BufTabLine.Go(9)
+nmap <Leader>0 <Plug>BufTabLine.Go(10)
+" Switch header and source file
+nnoremap <silent> <Leader>A :A<CR>
+" These are bound for some stupid reason
+iunmap <Leader>ihn
+iunmap <Leader>is
+iunmap <Leader>ih
 
 " EX COMMANDS
 " :W sudo saves the file
