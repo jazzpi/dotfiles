@@ -56,6 +56,9 @@ let g:vimtex_view_general_options_latexmk = '--unique'
 " Config for buftabline
 let g:buftabline_numbers = 2 " Show numbers next to buffers (1 to 10)
 let g:buftabline_indicators = 1 " Show modified indicator in buftabline
+" Markdown preview config
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_toggle=2
 " Keybinds for cscope
 nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
 nnoremap <leader>l :call ToggleLocationList()<CR>
@@ -119,8 +122,17 @@ augroup END
 
 " Exclude quickfix list from :bn and :bp
 augroup qf
-    autocmd!
-    autocmd FileType qf set nobuflisted
+	autocmd!
+	autocmd FileType qf set nobuflisted
+augroup END
+
+" Setup for FSwitch
+augroup fsw
+	au!
+	au BufEnter *.cpp let b:fswitchdst = 'h,hpp'
+	au BufEnter *.c let b:fswitchdst = 'h'
+	au BufEnter *.hpp let b:fswitchdst = 'cpp'
+	au BufEnter *.h let b:fswitchdst = 'cpp,c'
 augroup END
 
 " KEYMAP
@@ -145,12 +157,11 @@ nmap <Leader>7 <Plug>BufTabLine.Go(7)
 nmap <Leader>8 <Plug>BufTabLine.Go(8)
 nmap <Leader>9 <Plug>BufTabLine.Go(9)
 nmap <Leader>0 <Plug>BufTabLine.Go(10)
-" Switch header and source file
-nnoremap <silent> <Leader>A :A<CR>
-" These are bound for some stupid reason
-iunmap <Leader>ihn
-iunmap <Leader>is
-iunmap <Leader>ih
+nmap <silent> <Leader>of :FSHere<cr>
+nmap <silent> <Leader>ol :FSSplitRight<cr>
+nmap <silent> <Leader>oL :FSRight<cr>
+nmap <silent> <Leader>oh :FSSplitLeft<cr>
+nmap <silent> <Leader>oH :FSLeft<cr>
 
 " EX COMMANDS
 " :W sudo saves the file
