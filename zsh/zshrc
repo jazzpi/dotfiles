@@ -95,6 +95,7 @@ alias rfb="rfkill block 0; rfkill block 1; rfkill block 2; rfkill block 3"
 alias uds="udisksctl status"
 alias udm="udisksctl mount -b"
 alias udu="udisksctl unmount -b"
+alias l="ls -A --group-directories-first"
 alias idea="intellij-idea-ultimate-edition"
 alias ltspice="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/LTC/LTspiceIV/scad3.exe"
 alias gpn='git push --set-upstream origin $(git_current_branch)'
