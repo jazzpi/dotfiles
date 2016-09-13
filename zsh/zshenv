@@ -1,4 +1,4 @@
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+export PATH="$HOME/bin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jasper/.gem/ruby/2.3.0/bin"
 export VISUAL=nvim
 export EDITOR=nvim
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
