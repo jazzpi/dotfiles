@@ -20,8 +20,8 @@ Plug 'tpope/vim-commentary'        " Comment stuff out
 Plug 'moll/vim-bbye'               " Close buffers without closing their window
 Plug 'morhetz/gruvbox'             " A very nice colorscheme
 Plug 'vim-scripts/mru.vim'         " Show recently opened files in a window
-Plug 'Shougo/deoplete.nvim'        " Dark-powered neo-completion
-Plug 'ervandew/supertab'           " completion with Tab and Shift-Tab
+" Plug 'Shougo/deoplete.nvim'        " Dark-powered neo-completion
+" Plug 'ervandew/supertab'           " completion with Tab and Shift-Tab
 Plug 'jiangmiao/auto-pairs'        " Auto-close brackets and more
 Plug 'derekwyatt/vim-fswitch'      " Quickly switch between .cpp and .h files
 Plug 'rkitover/vimpager'           " Use vim as a pager
@@ -39,6 +39,8 @@ Plug 'isRuslan/vim-es6'            " ES6 Syntax & Snippets
 Plug 'derekwyatt/vim-fswitch'      " Quickly switch source and header files
 " Markdown Preview
 Plug 'JamshedVesuna/vim-markdown-preview'
+" Amazing tab completion
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
