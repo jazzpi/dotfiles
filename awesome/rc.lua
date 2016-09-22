@@ -376,7 +376,20 @@ globalkeys = awful.util.table.join(
 
     awful.key({ "Mod1", "Shift", "Control" }, "Return", function()
         kbdcfg.switch()
-      end)
+      end),
+
+    -- unminimize everything
+    awful.key({ modkey, "Shift"   }, "n", function()
+        local tag = awful.tag.selected()
+        for i=1, #tag:clients() do
+            tag:clients()[i].minimized=false
+        end
+    end),
+
+    -- lock screen
+    awful.key({ modkey, "Mod1" }, "l", function()
+        awful.util.spawn_with_shell("lock")
+    end)
 )
 
 clientkeys = awful.util.table.join(
@@ -396,6 +409,11 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
+        end),
+    awful.key({ modkey, "Control" }, "t",
+        function (c)
+            -- toggle titlebar
+            awful.titlebar.toggle(c)
         end)
 )
 
