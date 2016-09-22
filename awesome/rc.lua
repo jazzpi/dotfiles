@@ -501,6 +501,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][5] } },
     { rule = { class = "Atom" },
       properties = { tag = tags[1][2] } },
+	{ rule = { class = "jetbrains-idea" },
+	  properties = { tag = tags[1][2] } },
 }
 -- }}}
 
