@@ -74,6 +74,10 @@ local layouts =
 }
 -- }}}
 
+-- {{{ Naughty configuration
+naughty.config.defaults.icon_size = 48
+-- }}}
+
 -- {{{ Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
