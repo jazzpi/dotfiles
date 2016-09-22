@@ -6,6 +6,8 @@ awful.rules = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
+-- More widgets
+local vicious = require("vicious")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
@@ -182,6 +184,17 @@ kbdcfg.widget:buttons(
  awful.util.table.join(awful.button({ }, 1, function () kbdcfg.switch() end))
 )
 
+-- CPU usage
+-- Initialize widget
+cpuwidget = awful.widget.graph()
+-- Graph properties
+cpuwidget:set_width(30)
+cpuwidget:set_background_color("#494B4F")
+-- cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"},
+                    -- {1, "#AECF96" }}})
+-- Register widget
+vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
 -- LAPTOP ONLY SETTINGS {{{
 -- Battery widget
 myassault = assault({
@@ -244,6 +257,7 @@ for s = 1, screen.count() do
     right_layout:add(mybright.widget)
     right_layout:add(myassault)
     -- }}}
+	right_layout:add(cpuwidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
