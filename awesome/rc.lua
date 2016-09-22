@@ -598,8 +598,9 @@ function run_once(prg,arg_string,pname,screen)
     end
 end
 
-run_once("compton --no-fading-openclose -CGb")
+-- run_once("compton --no-fading-openclose -CGb")
 run_once("thunderbird")
+run_once("nm-applet")
 --run_once(terminal, "-e weechat")
 
 -- }}}
