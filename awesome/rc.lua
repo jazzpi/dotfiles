@@ -1,3 +1,4 @@
+-- vim: expandtab
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -42,7 +43,7 @@ end
 beautiful.init(awful.util.getdir("config") .. "/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt.sh"
+terminal = "st"
 editor = "nvim"
 editor_cmd = terminal .. " -e tmux new-session nvim"
 
