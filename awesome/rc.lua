@@ -1,4 +1,10 @@
 -- vim: expandtab
+
+------------------------------------------------------------------
+-- SET THIS TO FALSE IF YOU DON'T WANT THE LAPTOP ONLY SETTINGS --
+------------------------------------------------------------------
+local IS_LAPTOP = false
+
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -13,8 +19,12 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
--- Battery widget -  https://github.com/NuckChorris/assault
-local assault = require("assault")
+-- LAPTOP ONLY SETTINGS {{{
+local assault
+if IS_LAPTOP then
+    -- Battery widget -  https://github.com/NuckChorris/assault
+    assault = require("assault")
+end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -200,31 +210,35 @@ cpuwidget:set_background_color("#494B4F")
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 -- LAPTOP ONLY SETTINGS {{{
--- Battery widget
-myassault = assault({
-    width = 25
-})
+if IS_LAPTOP then
+    -- Battery widget
+    myassault = assault({
+        width = 25
+    })
 
--- Screen brightness widget
-mybright = {}
-mybright.inc_cmd = "backlight_inc"
-mybright.dec_cmd = "backlight_dec"
-mybright.get_cmd = "xbacklight"
-mybright.brightness = 0
-mybright.widget = wibox.widget.textbox()
-mybright.update = function ()
-    mybright.brightness = awful.util.pread(mybright.get_cmd)
-    mybright.widget:set_text(" " .. string.format("%.0f%%", mybright.brightness))
-end
-mybright.inc = function ()
-    awful.util.spawn_with_shell(mybright.inc_cmd)
+    -- Screen brightness widget
+    mybright = {}
+    mybright.inc_cmd = "backlight_inc"
+    mybright.dec_cmd = "backlight_dec"
+    mybright.get_cmd = "xbacklight"
+    mybright.brightness = 0
+    mybright.widget = wibox.widget.textbox()
+    mybright.update = function ()
+        mybright.brightness = awful.util.pread(mybright.get_cmd)
+        mybright.widget:set_text(" " .. string.format("☀ %.0f%%", mybright.brightness))
+    end
+    mybright.inc = function ()
+        awful.util.spawn_with_shell(mybright.inc_cmd)
+        mybright.update()
+    end
+    mybright.dec = function ()
+        awful.util.spawn_with_shell(mybright.dec_cmd)
+        mybright.update()
+    end
     mybright.update()
+else
+    mybright = {}
 end
-mybright.dec = function ()
-    awful.util.spawn_with_shell(mybright.dec_cmd)
-    mybright.update()
-end
-mybright.update()
 -- }}}
 
 for s = 1, screen.count() do
@@ -258,10 +272,12 @@ for s = 1, screen.count() do
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(kbdcfg.widget)
     -- LAPTOP ONLY SETTINGS {{{
-    right_layout:add(mybright.widget)
-    right_layout:add(myassault)
+    if IS_LAPTOP then
+        right_layout:add(mybright.widget)
+        right_layout:add(myassault)
+    end
     -- }}}
-	right_layout:add(cpuwidget)
+    right_layout:add(cpuwidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -346,6 +362,9 @@ globalkeys = awful.util.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end),
 
+    -- LAPTOP ONLY SETTINGS {{{
+    -- Can't use if in here so mybright is set to an empty table if IS_LAPTOP
+    -- is false
     -- Brightness Control
     awful.key({ }, "XF86MonBrightnessDown",-- function ()
         --awful.util.spawn_with_shell("backlight_dec") end),
@@ -353,6 +372,7 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86MonBrightnessUp",-- function ()
         --awful.util.spawn_with_shell("backlight_inc") end),
         mybright.inc),
+    -- }}}
 
     awful.key({ "Mod1", "Shift", "Control" }, "Return", function()
         kbdcfg.switch()
