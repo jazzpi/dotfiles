@@ -63,6 +63,10 @@ export PATH="$HOME/bin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/b
 
 source $ZSH/oh-my-zsh.sh
 
+function termbin() {
+	cat $1 | nc termbin.com 9999
+}
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
