@@ -42,3 +42,6 @@ install_file tmux.conf ~/.tmux.conf
 echo "Installing ZSH config..."
 install_file zsh/zshrc ~/.zshrc
 install_file zsh/zshenv ~/.zshenv
+
+echo "Installing Spacemacs config..."
+install_file spacemacs ~/.spacemacs
