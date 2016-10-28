@@ -54,9 +54,9 @@ values."
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode)
             ;; c-c++-enable-clang-support t)
-     (ycmd :variables
-           ycmd-server-command '("python" "/home/jasper/dev/ycmd/ycmd")
-           ycmd-force-semantic-completion t)
+     ;; (ycmd :variables
+     ;;       ycmd-server-command '("python" "/home/jasper/dev/ycmd/ycmd")
+     ;;       ycmd-force-semantic-completion t)
      ;; cscope
      semantic
      )
@@ -298,13 +298,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  ;; Meslo is the multi-platform variant of Menlo, but Menlo is always available on OSX
-  (if (eq system-type 'darwin)
-      (dotspacemacs-default-font '("Menlo Regular"
-                                   :size 12
-                                   :weight normal
-                                   :width normal
-                                   :powerline-scale 1.1)))
+  (require 'rtags)
   )
 
 (defun dotspacemacs/user-config ()
@@ -314,11 +308,12 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq-default ycmd-parse-conditions '(save mode-enabled)
-                ycmd-extra-conf-whitelist '("~/dev/*")
+  (setq-default ;;ycmd-parse-conditions '(save mode-enabled)
+                ;;ycmd-extra-conf-whitelist '("~/dev/*")
                 whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
                 tab-width 4
                 truncate-lines 't
+                cmake-ide-make-command "make -j4"
                 )
   (spacemacs/toggle-whitespace-globally-on)
   ;; (defvaralias 'c-basic-offset 'tab-width)
@@ -478,7 +473,11 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (hide-comnt vmd-mode org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot mmm-mode markdown-toc markdown-mode gh-md git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor smart-tabs-mode flycheck-ycmd flycheck-pos-tip pos-tip flycheck mode-icons gruvbox-theme company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor helm-cscope xcscope disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+    (cmake-ide levenshtein vmd-mode org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot mmm-mode markdown-toc markdown-mode gh-md git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor smart-tabs-mode flycheck-ycmd flycheck-pos-tip pos-tip flycheck mode-icons gruvbox-theme company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor helm-cscope xcscope disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+ '(safe-local-variable-values
+   (quote
+    ((cmake-ide-build-dir "~/dev/openage")
+     (indent-tabs-mode t))))
  '(ycmd-parse-conditions (quote (save mode-enabled))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
