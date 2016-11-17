@@ -59,7 +59,9 @@ plugins=(git zsh-syntax-highlighting)
 # moved to ~/.zshenv
   # export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$HOME/bin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jasper/.gem/ruby/2.3.0/bin"
+export PATH="$HOME/bin:$HOME/.linuxbrew/bin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jasper/.gem/ruby/2.3.0/bin"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
 source $ZSH/oh-my-zsh.sh
 
