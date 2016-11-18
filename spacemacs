@@ -52,12 +52,8 @@ values."
      syntax-checking
      version-control
      (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode)
-            ;; c-c++-enable-clang-support t)
-     ;; (ycmd :variables
-     ;;       ycmd-server-command '("python" "/home/jasper/dev/ycmd/ycmd")
-     ;;       ycmd-force-semantic-completion t)
-     ;; cscope
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t)
      semantic
      )
    ;; List of additional packages that will be installed without being
@@ -308,9 +304,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq-default ;;ycmd-parse-conditions '(save mode-enabled)
-                ;;ycmd-extra-conf-whitelist '("~/dev/*")
-                whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
+  (setq-default whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
                 tab-width 4
                 truncate-lines 't
                 cmake-ide-make-command "make -j4"
