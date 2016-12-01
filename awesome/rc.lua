@@ -515,7 +515,7 @@ awful.rules.rules = {
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
     -- Move certain applications to the tags I want them on
-    { rule = { class = "chromium" },
+    { rule = { class = "Chromium" },
       properties = { tag = tags[1][1] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
