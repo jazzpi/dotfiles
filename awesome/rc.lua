@@ -209,6 +209,24 @@ cpuwidget:set_background_color("#494B4F")
 -- Register widget
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
+-- Memory usage
+-- Initialize widget
+memwidget = awful.widget.progressbar()
+-- Progressbar properties
+memwidget:set_width(8)
+memwidget:set_height(10)
+memwidget:set_vertical(true)
+memwidget:set_background_color("#494B4F")
+memwidget:set_border_color(nil)
+memwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#AECF96"}, {0.5, "#88A175"}, 
+                    {1, "#FF5656"}}})
+-- Register widget
+vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
+
+-- Spaceholder
+spacewidget = wibox.widget.textbox()
+spacewidget:set_text(" ")
+
 -- LAPTOP ONLY SETTINGS {{{
 if IS_LAPTOP then
     -- Battery widget
@@ -277,6 +295,9 @@ for s = 1, screen.count() do
         right_layout:add(myassault)
     end
     -- }}}
+    right_layout:add(spacewidget)
+    right_layout:add(memwidget)
+    right_layout:add(spacewidget)
     right_layout:add(cpuwidget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
