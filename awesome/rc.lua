@@ -397,9 +397,9 @@ globalkeys = awful.util.table.join(
         mybright.inc),
     -- }}}
 
-    awful.key({ "Mod1", "Shift", "Control" }, "Return", function()
-        kbdcfg.switch()
-      end),
+    -- awful.key({ "Mod1", "Shift", "Control" }, "Return", function()
+    --     kbdcfg.switch()
+    --   end),
 
     -- unminimize everything
     awful.key({ modkey, "Shift"   }, "n", function()
@@ -624,6 +624,7 @@ end
 -- run_once("compton --no-fading-openclose -CGb")
 run_once("thunderbird")
 run_once("nm-applet")
+run_once("ibus-daemon")
 --run_once(terminal, "-e weechat")
 
 -- }}}
