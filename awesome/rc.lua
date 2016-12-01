@@ -247,10 +247,12 @@ if IS_LAPTOP then
     end
     mybright.inc = function ()
         awful.util.spawn_with_shell(mybright.inc_cmd)
+        os.execute("sleep 0.01")
         mybright.update()
     end
     mybright.dec = function ()
         awful.util.spawn_with_shell(mybright.dec_cmd)
+        os.execute("sleep 0.01")
         mybright.update()
     end
     mybright.update()
