@@ -308,6 +308,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
   (setq-default whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
                 tab-width 4
                 truncate-lines 't
