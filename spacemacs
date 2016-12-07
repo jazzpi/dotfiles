@@ -318,6 +318,10 @@ you should place your code here."
                 js2-basic-offset 2
                 )
   (spacemacs/toggle-whitespace-globally-on)
+  ;; Load theme again because it's going to have red whitespace otherwise
+  (enable-theme 'gruvbox)
+  (custom-theme-set-faces 'gruvbox
+                          '(whitespace-line ((t :foreground nil))))
   ;; (defvaralias 'c-basic-offset 'tab-width)
   ;; (defvaralias 'cperl-indent-level 'tab-width)
   ;; (smart-tabs-insinuate 'c 'c++ 'java)
