@@ -31,6 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     haskell
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -44,7 +46,7 @@ values."
      (markdown :variables
                markdown-live-preview-engine 'vmd)
      (org :variables
-          org-projectile-file "TODOs.org")
+          org-projectile-file "~/org-projectile.org")
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -61,13 +63,21 @@ values."
      javascript
      java
      shaders
-     latex
+     (latex :variables
+            latex-build-command "LatexMk"
+            latex-enable-auto-fill t
+            latex-enable-folding t)
+     (ranger :variables
+             ranger-show-preview t)
+     django
+     (spell-checking :variables
+                     spell-checking-enable-auto-dictionary t)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(gruvbox-theme weechat glsl-mode); smart-tabs-mode)
+   dotspacemacs-additional-packages '(gruvbox-theme weechat glsl-mode tex-smart-umlauts); smart-tabs-mode)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -302,95 +312,91 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (require 'rtags)
+  (jazzpi/hooks)
+  (setq-default ispell-program-name "hunspell")
   )
 
-(defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
-  (define-key global-map (kbd "C-+") 'text-scale-increase)
-  (define-key global-map (kbd "C--") 'text-scale-decrease)
-  (setq-default whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
-                tab-width 4
-                truncate-lines 't
-                cmake-ide-make-command "make -j4"
-                web-mode-markup-indent-offset 2
-                web-mode-css-indent-offset 2
-                web-mode-code-indent-offset 2
-                js2-basic-offset 2
-                )
-  (spacemacs/toggle-whitespace-globally-on)
-  ;; Load theme again because it's going to have red whitespace otherwise
-  (enable-theme 'gruvbox)
-  (custom-theme-set-faces 'gruvbox
-                          '(whitespace-line ((t :foreground nil))))
-  ;; (defvaralias 'c-basic-offset 'tab-width)
-  ;; (defvaralias 'cperl-indent-level 'tab-width)
-  ;; (smart-tabs-insinuate 'c 'c++ 'java)
-  ;; Don't display normal spaces in front of line numbers since that highlights
-  ;; them with WhiteSpace -- instead use U+2007 (FIGURE SPACE)
-  ;; By StefanThomas, from https://www.emacswiki.org/emacs/WhiteSpace comments
-  (add-hook 'linum-before-numbering-hook
-            (lambda ()
-              (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-                (setq linum-format
-                      `(lambda (line)
-                         (propertize (concat
-                                      (truncate-string-to-width
-                                       "" (- ,w (length (number-to-string line)))
-                                       nil ?\x2007)
-                                      (number-to-string line))
-                                     'face 'linum)))))) (global-linum-mode)
-  (with-eval-after-load 'org-agenda
-    (require 'org-projectile)
-    (push (org-projectile:todo-files) org-agenda-files))
+;; Smart Tabs (tabs for indentation, spaces for alignment)
+;; Taken from https://github.com/TheJJ/conffiles/blob/master/homedir/.spacemacs#L370
+(defadvice align (around smart-tabs activate)
+          (let ((indent-tabs-mode nil)) ad-do-it))
 
-  (defadvice align (around smart-tabs activate)
-            (let ((indent-tabs-mode nil)) ad-do-it))
+(defadvice align-regexp (around smart-tabs activate)
+          (let ((indent-tabs-mode nil)) ad-do-it))
 
-  (defadvice align-regexp (around smart-tabs activate)
-            (let ((indent-tabs-mode nil)) ad-do-it))
+(defadvice indent-relative (around smart-tabs activate)
+          (let ((indent-tabs-mode nil)) ad-do-it))
 
-  (defadvice indent-relative (around smart-tabs activate)
-            (let ((indent-tabs-mode nil)) ad-do-it))
+(defadvice indent-according-to-mode (around smart-tabs activate)
+          (let ((indent-tabs-mode indent-tabs-mode))
+            (if (memq indent-line-function
+                      '(indent-relative indent-relative-maybe))
+              (setq indent-tabs-mode nil))
+            ad-do-it))
 
-  (defadvice indent-according-to-mode (around smart-tabs activate)
-            (let ((indent-tabs-mode indent-tabs-mode))
-              (if (memq indent-line-function
-                        '(indent-relative indent-relative-maybe))
-                (setq indent-tabs-mode nil))
-              ad-do-it))
+(defmacro smart-tabs-advice (function offset)
+  `(progn
+    ;(defvaralias ',offset 'tab-width)
+    (defadvice ,function (around smart-tabs activate)
+                (cond
+                  (indent-tabs-mode
+                    ;remove spaces before or in between tabs
+                    (save-excursion
+                      (beginning-of-line)
+                      (while (looking-at "\t*\\( +\\)\t+")
+                            (replace-match "" nil nil nil 1)))
+                    (setq tab-width tab-width)
+                    (let
+                        (;;set tabwidth to really high value (fill-column)
+                        (tab-width fill-column)
+                        (,offset fill-column)
+                        ;;(wstart (window-start))
+                        )
+                      (unwind-protect
+                          (progn ad-do-it)
+                        ;;(set-window-start (selected-window) wstart)
+                        )))
+                  (t ad-do-it)))))
 
-  (defmacro smart-tabs-advice (function offset)
-    `(progn
-      ;(defvaralias ',offset 'tab-width)
-      (defadvice ,function (around smart-tabs activate)
-                  (cond
-                    (indent-tabs-mode
-                      ;remove spaces before or in between tabs
-                      (save-excursion
-                        (beginning-of-line)
-                        (while (looking-at "\t*\\( +\\)\t+")
-                              (replace-match "" nil nil nil 1)))
-                      (setq tab-width tab-width)
-                      (let
-                          (;;set tabwidth to really high value (fill-column)
-                          (tab-width fill-column)
-                          (,offset fill-column)
-                          ;;(wstart (window-start))
-                          )
-                        (unwind-protect
-                            (progn ad-do-it)
-                          ;;(set-window-start (selected-window) wstart)
-                          )))
-                    (t ad-do-it)))))
+(defun lunaryorn/virtualenv-executable-find (executable)
+  "Find path to an executable using virtualenv.
+  Taken from https://github.com/lunaryorn/.emacs.d/blob/master/lisp/flycheck-virtualenv.el#L39"
+  (if (bound-and-true-p python-shell-virtualenv-root)
+      (let ((exec-path (python-shell-calculate-exec-path)))
+        (executable-find executable))
+    (executable-find executable)))
 
-  ;; SFT coding style
-  ;; Taken from https://github.com/TheJJ/conffiles/blob/master/homedir/.spacemacs
-    ;; sft coding style
+;; Taken from http://emacs.stackexchange.com/a/13096
+(defun biondo/reload-dir-locals-current ()
+  "reload dir locals for the current buffer"
+  (interactive)
+  (let ((enable-local-variables :all))
+    (hack-dir-local-variables-non-file-buffer)))
+
+(defun biondo/reload-dir-locals ()
+  "For every buffer with the same `default-directory` as the 
+current buffer's, reload dir-locals."
+  (interactive)
+  (let ((dir default-directory))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (equal default-directory dir))
+        (biondo/reload-dir-locals-current)))))
+
+;; Taken from https://github.com/TheJJ/conffiles/blob/master/homedir/.spacemacs#L771
+(defun jj/c-codestyle ()
+  ;; codestyle defaults, will be overwritten
+
+  ;; linux kernel indentation style
+  (defconst kernel-c-style
+    '("linux" (c-offsets-alist (
+                                arglist-cont-nonempty
+                                c-lineup-gcc-asm-reg
+                                c-lineup-arglist   ;-tabs-only
+                                )))
+    )
+
+  ;; sft coding style
   (defconst sft-c-style
     '("linux" ; base it on linux code style
       (indent-tabs-mode           . t)
@@ -466,12 +472,104 @@ you should place your code here."
       ;; this is also triggered by C-c C-s
       (c-echo-syntactic-information-p . nil))
     "The SFT C programming style"
+    ))
+;; end coding style definitions
+
+;; Mode hooks
+(defun jazzpi/hooks ()
+  ;; C-Style languages (C, C++, Java etc.)
+  (defun jazzpi/cstyle-hook ()
+    (jj/c-codestyle)
+    (c-add-style "sft" sft-c-style)
+    (smart-tabs-advice c-indent-line c-basic-offset)
+    (smart-tabs-advice c-indent-region c-basic-offset))
+
+  ;; C/C++
+  (defun jazzpi/c-coding-hook ()
+    (jazzpi/cstyle-hook))
+
+  ;; Python
+  (defun jazzpi/python-coding-hook ()
+    (setq-local flycheck-executable-find 'lunaryorn/virtualenv-executable-find)
+    (pyvenv-mode)
     )
 
-  (smart-tabs-advice c-indent-line c-basic-offset)
-  (smart-tabs-advice c-indent-region c-basic-offset)
+  ;; JavaScript
+  (defun jazzpi/javascript-coding-hook ()
+    (js2-mode-hide-warnings-and-errors) ;; We can do this better with flycheck
+    (setq js2-basic-offset 2)
+    )
 
-  (c-add-style "sft" sft-c-style)
+  ;; JSON
+  (defun jazzpi/json-coding-hook ()
+    (setq js-indent-level 2))
+
+  ;; LaTeX
+  (defun jazzpi/latex-coding-hook ()
+    (setq TeX-open-quote "\"")
+    (tex-smart-umlauts-mode))
+
+  ;; Don't display normal spaces in front of line numbers since that highlights
+  ;; them with WhiteSpace -- instead use U+2007 (FIGURE SPACE)
+  ;; By StefanThomas, from https://www.emacswiki.org/emacs/WhiteSpace comments
+  (defun stefanthomas/linum-hook ()
+    (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+      (setq linum-format
+        `(lambda (line)
+          (propertize (concat
+                      (truncate-string-to-width
+                        "" (- ,w (length (number-to-string line)))
+                        nil ?\x2007)
+                      (number-to-string line))
+                      'face 'linum)))))
+
+  ;; All language modes derive from prog-mode
+
+  ;; Language hooks
+  (add-hook 'c-mode-common-hook 'jazzpi/c-coding-hook)
+  (add-hook 'python-mode-hook 'jazzpi/python-coding-hook)
+  (add-hook 'js2-mode-hook 'jazzpi/javascript-coding-hook)
+  (add-hook 'json-mode-hook 'jazzpi/json-coding-hook)
+  (add-hook 'LaTeX-mode-hook 'jazzpi/latex-coding-hook)
+
+  ;; Other hooks
+  (add-hook 'linum-before-numbering-hook 'stefanthomas/linum-hook)
+  )
+
+(defun jazzpi/style ()
+  (setq-default whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
+                truncate-lines 't)
+                ;; TeX-master "main")
+  (spacemacs/toggle-whitespace-globally-on)
+  ;; Load theme again because it's going to have red whitespace otherwise
+  (enable-theme 'gruvbox)
+  (custom-theme-set-faces 'gruvbox
+                          '(whitespace-line ((t :foreground nil))))
+  )
+
+(defun dotspacemacs/user-config ()
+  "Configuration function for user code.
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
+  (jazzpi/style)
+  (define-key global-map (kbd "C-+") 'text-scale-increase)
+  (define-key global-map (kbd "C--") 'text-scale-decrease)
+  (setq-default tab-width 4
+                cmake-ide-make-command "make -j4"
+                web-mode-markup-indent-offset 2
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2
+                )
+  ;; (defvaralias 'c-basic-offset 'tab-width)
+  ;; (defvaralias 'cperl-indent-level 'tab-width)
+  ;; (smart-tabs-insinuate 'c 'c++ 'java)
+  (with-eval-after-load 'org-agenda
+    (require 'org-projectile)
+    (push (org-projectile:todo-files) org-agenda-files))
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -482,12 +580,20 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol t)
+ '(global-linum-mode t)
  '(package-selected-packages
    (quote
-    (company-auctex auctex-latexmk auctex glsl-mode company-emacs-eclim eclim weechat tracking web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections feature-mode chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode less-css-mode jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help lua-mode cmake-ide levenshtein vmd-mode org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot mmm-mode markdown-toc markdown-mode gh-md git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor smart-tabs-mode flycheck-ycmd flycheck-pos-tip pos-tip flycheck mode-icons gruvbox-theme company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor helm-cscope xcscope disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
+    (flyspell-popup flyspell-correct-helm flyspell-correct auto-dictionary tex-smart-umlauts intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode yaml-mode yapfify pyvenv pytest pyenv-mode py-isort pony-mode pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic ranger pug-mode minitest hide-comnt company-auctex auctex-latexmk auctex glsl-mode company-emacs-eclim eclim weechat tracking web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv projectile-rails rake inflections feature-mode chruby bundler inf-ruby web-mode tagedit slim-mode scss-mode sass-mode less-css-mode jade-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help lua-mode cmake-ide levenshtein vmd-mode org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot mmm-mode markdown-toc markdown-mode gh-md git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl smeargle orgit org magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit with-editor smart-tabs-mode flycheck-ycmd flycheck-pos-tip pos-tip flycheck mode-icons gruvbox-theme company-ycmd ycmd request-deferred deferred stickyfunc-enhance srefactor helm-cscope xcscope disaster company-c-headers cmake-mode clang-format helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme)))
  '(safe-local-variable-values
    (quote
-    ((cmake-ide-build-dir "~/dev/openage")
+    ((eval
+      (pyvenv-workon "jazzpi_aoc"))
+     (eval
+      (pyvenv-workon . "jazzpi_aoc"))
+     (cmake-ide-build-dir . "~/dev/rnvs-ws1617/b04/build")
+     (cmake-ide-build-dir . "~/dev/openage")
+     (pyvenv-workon . "jazzpi_aoc")
+     (cmake-ide-build-dir "~/dev/openage")
      (indent-tabs-mode t))))
  '(ycmd-parse-conditions (quote (save mode-enabled))))
 (custom-set-faces
