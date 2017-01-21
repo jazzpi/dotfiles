@@ -36,3 +36,8 @@ URxvt.matcher.button: 1
 ! Disable the strange Ctrl-Shift keybinding
 URxvt.iso14755: false
 URxvt.iso14755_52: false
+
+! Enable IBus input
+! -----------------
+URxvt.inputMethod: ibus
+URxvt.preeditType: OverTheSpot
