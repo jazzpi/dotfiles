@@ -30,7 +30,7 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-session'
 Plug 'marcweber/vim-addon-mw-utils' | Plug 'tomtom/tlib_vim' | Plug 'garbas/vim-snipmate' | Plug 'honza/vim-snippets' " Snippets
 Plug 'lervag/vimtex'               " LaTeX support
 Plug 'peterhoeg/vim-qml'           " QML language highlighting
-Plug 'brookhong/cscope.vim'        " cscope support
+"Plug 'brookhong/cscope.vim'        " cscope support
 " Automatically update ctags
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'           " Window with all tags in the file
@@ -40,7 +40,7 @@ Plug 'derekwyatt/vim-fswitch'      " Quickly switch source and header files
 " Markdown Preview
 Plug 'JamshedVesuna/vim-markdown-preview'
 " Amazing tab completion
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer' }
 call plug#end()
 " NERDTree
 " Open automatically when vim starts, then switch to the editor window
