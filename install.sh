@@ -21,7 +21,7 @@ function install_file {
 
 echo "Installing awesome config..."
 install_file awesome/rc.lua ~/.config/awesome/rc.lua
-echo "Note: Not installing the theme!"
+install_file awesome/themes/jazzpi ~/.config/awesome/themes/jazzpi
 
 echo "Installing Neovim config..."
 install_file nvim/init.vim ~/.config/nvim/init.vim
