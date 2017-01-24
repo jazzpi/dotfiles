@@ -562,6 +562,7 @@ you should place your code here."
                 web-mode-markup-indent-offset 2
                 web-mode-css-indent-offset 2
                 web-mode-code-indent-offset 2
+                vc-follow-symlinks t ;; Always follow symlinks to git-controlled files without prompting
                 )
   ;; (defvaralias 'c-basic-offset 'tab-width)
   ;; (defvaralias 'cperl-indent-level 'tab-width)
