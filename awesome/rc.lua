@@ -143,6 +143,65 @@ myramwidget = wibox.widget.textbox()
 myramwidget.forced_width = 35
 vicious.register(myramwidget, vicious.widgets.mem, "$1%")
 
+-- Battery widget
+mybatlabel = wibox.widget.textbox()
+mybatlabel.font = beautiful.icon_font
+mybatlabel.text = "\u{f0f8}"
+mybatlabelbg = wibox.container.background()
+mybatwidgetbg = wibox.container.background()
+mybatwidget = wibox.widget.textbox()
+mybatwidget.forced_width = 35
+vicious.register(
+  mybatwidget, vicious.widgets.bat,
+  function(widget, args)
+    local state = args[1]
+    local lvl = args[2]
+    local label
+    local color
+    local charging
+    if state == "⌁" or state == "+" then
+      charging = "yes"
+      if lvl == 100 then
+        label = "\u{f0f4}" -- icon-batterycharged
+        color = "#00ff00"
+      else
+        label = "\u{f0f3}" -- icon-batterycharging
+        color = "#77ff00"
+      end
+    else
+      charging = "no"
+      if lvl == 100 then
+        label = "\u{f0fa}" -- icon-batteryfull
+        color = "#00ff00"
+      elseif lvl >= 80 then
+        label = "\u{f0f9}" -- icon-battery80
+        color = "#55ff00"
+      elseif lvl >= 60 then
+        label = "\u{f0f8}" -- icon-battery60
+        color = "#aaff00"
+      elseif lvl >= 40 then
+        label = "\u{f0f7}" -- icon-battery40
+        color = "#ffee00"
+      elseif lvl >= 20 then
+        label = "\u{f0f6}" -- icon-battery20
+        color = "#ff9900"
+      else
+        label = "\u{f0f5}" -- icon-batteryempty
+        if lvl >= 10 then
+          color = "#ff5500"
+        else
+          color = "#ff0000"
+        end
+      end
+    end
+    mybatlabel.text = label
+    mybatlabelbg.fg = color
+    mybatwidgetbg.fg = color
+    return lvl .. "%"
+  end, 5, "BAT0")
+mybatlabelbg:set_children({mybatlabel})
+mybatwidgetbg:set_children({mybatwidget})
+
 -- }}}
 
 -- Create a wibox for each screen and add it
@@ -254,6 +313,9 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            mybatlabelbg,
+            myspacer,
+            mybatwidgetbg,
             myramlabel,
             myspacer,
             myramwidget,
