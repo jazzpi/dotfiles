@@ -72,6 +72,7 @@ values."
      django
      (spell-checking :variables
                      spell-checking-enable-auto-dictionary t)
+     java
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
