@@ -539,8 +539,8 @@ current buffer's, reload dir-locals."
 
 (defun jazzpi/style ()
   (setq-default whitespace-style '(face spaces tabs trailing lines-tail space-before-tab indentation empty space-mark tab-mark)
-                truncate-lines 't)
-                ;; TeX-master "main")
+                truncate-lines 't
+                TeX-master "main")
   (spacemacs/toggle-whitespace-globally-on)
   ;; Load theme again because it's going to have red whitespace otherwise
   (enable-theme 'gruvbox)
