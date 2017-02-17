@@ -593,7 +593,7 @@ awful.rules.rules = {
       properties = { screen = 1, tag = tag_names[2] } },
     { rule = { class = "Eclipse" },
       properties = { screen = 1, tag = tag_names[2] } },
-    { rule = { class = "Mail" },
+    { rule = { class = "Thunderbird" },
       properties = { screen = 1, tag = tag_names[4] } },
 }
 -- }}}
