@@ -26,7 +26,7 @@ theme.fg_urgent  = "#FFFFFF"
 theme.bg_normal  = "#00000011"
 theme.bg_focus   = "#3188b455"
 theme.bg_urgent  = "#e7842c"
-theme.bg_systray = theme.bg_normal -- TODO: The opacity isn't honored :|
+theme.bg_systray = "#73965b" -- TODO: The opacity isn't honored :|
 -- }}}
 
 -- {{{ Borders
