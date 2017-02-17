@@ -489,6 +489,10 @@ current buffer's, reload dir-locals."
   (defun jazzpi/c-coding-hook ()
     (jazzpi/cstyle-hook))
 
+  ;; C++ only
+  (defun jazzpi/c++-coding-hook ()
+    (setq flycheck-clang-language-standard "c++14"))
+
   ;; Python
   (defun jazzpi/python-coding-hook ()
     (setq-local flycheck-executable-find 'lunaryorn/virtualenv-executable-find)
@@ -528,6 +532,7 @@ current buffer's, reload dir-locals."
 
   ;; Language hooks
   (add-hook 'c-mode-common-hook 'jazzpi/c-coding-hook)
+  (add-hook 'c++-mode-hook 'jazzpi/c++-coding-hook)
   (add-hook 'python-mode-hook 'jazzpi/python-coding-hook)
   (add-hook 'js2-mode-hook 'jazzpi/javascript-coding-hook)
   (add-hook 'json-mode-hook 'jazzpi/json-coding-hook)
