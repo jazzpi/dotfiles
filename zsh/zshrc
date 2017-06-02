@@ -59,7 +59,7 @@ plugins=(git zsh-syntax-highlighting)
 # moved to ~/.zshenv
   # export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="$HOME/bin:$HOME/.linuxbrew/bin:/bin:/sbin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jasper/.gem/ruby/2.4.0/bin"
+export PATH="$HOME/bin:$HOME/.linuxbrew/bin:$PATH:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/jasper/.gem/ruby/2.4.0/bin"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
@@ -85,6 +85,9 @@ function termbin() {
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+# Set up thefuck alias
+eval $(thefuck --alias)
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -105,6 +108,7 @@ alias l="ls -A --group-directories-first"
 alias idea="intellij-idea-ultimate-edition"
 alias ltspice="wine ~/.wine/drive_c/Program\ Files\ \(x86\)/LTC/LTspiceIV/scad3.exe"
 alias gpn='git push --set-upstream origin $(git_current_branch)'
+alias spacemacs="emacs -q --eval '(progn (load-file \"~/.spacemacs.d/init.el\") (setq emacs-user-directory \"~/.spacemacs.d\"))'"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
