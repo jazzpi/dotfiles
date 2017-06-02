@@ -523,7 +523,11 @@ for i = 1, 9 do
                           end
                       end
                   end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
+                  {description = "toggle focused client on tag #" .. i, group = "tag"}),
+        -- lock screen
+        awful.key({ modkey, "Mod1" }, "l", function()
+            awful.util.spawn_with_shell("lock")
+        end)
     )
 end
 
@@ -592,6 +596,10 @@ awful.rules.rules = {
     { rule = { class = "Emacs" },
       properties = { screen = 1, tag = tag_names[2] } },
     { rule = { class = "Eclipse" },
+      properties = { screen = 1, tag = tag_names[2] } },
+    { rule = { class = "jetbrains-idea" },
+      properties = { screen = 1, tag = tag_names[2] } },
+    { rule = { class = "jetbrains-studio" },
       properties = { screen = 1, tag = tag_names[2] } },
     { rule = { class = "Thunderbird" },
       properties = { screen = 1, tag = tag_names[4] } },
