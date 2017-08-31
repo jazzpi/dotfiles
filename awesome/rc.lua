@@ -52,8 +52,8 @@ naughty.config.defaults.bg = beautiful.naughty_bg
 -- This is used later as the default terminal and editor to run.
 terminal = "st"
 terminal_cmd = terminal .. ' -e zsh -c "tmx main"'
-editor = "emacs"
-editor_cmd = "emacs"
+editor = "emacsclient -c -a emacs"
+editor_cmd = "emacsclient -c -a emacs"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -693,7 +693,7 @@ function run_once(prg,arg_string,pname,screen)
   end
 end
 
-local AUTOSTART_PROGRAMS = {"thunderbird", "nm-applet", "ibus-daemon -r"}
+local AUTOSTART_PROGRAMS = {"thunderbird", "nm-applet", "ibus-daemon -r", "emacs --daemon"}
 
 for index,cmd in pairs(AUTOSTART_PROGRAMS) do
   run_once(cmd)
