@@ -7,5 +7,5 @@ To install, run
 ```bash
 git clone https://github.com/jazzpi/dotfiles.git
 cd dotfiles
-./install.sh
+./install.sh all
 ```
