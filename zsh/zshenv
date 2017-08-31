@@ -1,6 +1,7 @@
 export PATH="$HOME/bin:$HOME/.linuxbrew/bin:$PATH:$HOME/.gem/ruby/2.3.0/bin:$HOME/.rvm/bin"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-export VISUAL=nvim
-export EDITOR=nvim
+export ALTERNATE_EDITOR=""
+export VISUAL="emacsclient -c"
+export EDITOR="emacsclient -t"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
