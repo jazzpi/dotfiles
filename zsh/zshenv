@@ -1,9 +1,12 @@
-export PATH="$HOME/bin:$HOME/.linuxbrew/bin:$PATH:$HOME/.gem/ruby/2.5.0/bin:$HOME/.rvm/bin"
+export PATH="$HOME/bin:$HOME/.linuxbrew/bin:$PATH:$HOME/.gem/ruby/2.5.0/bin:$HOME/.rvm/bin:$HOME/.cargo/bin"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 export ALTERNATE_EDITOR=""
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-export RUST_BACKTRACE=1
-export RUST_SRC_PATH="$HOME/dev/rust"
+if hash rustc 2>/dev/null
+then
+    export RUST_BACKTRACE=1
+    export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
