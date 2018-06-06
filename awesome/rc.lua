@@ -603,6 +603,10 @@ awful.rules.rules = {
       properties = { screen = 1, tag = tag_names[2] } },
     { rule = { class = "Thunderbird" },
       properties = { screen = 1, tag = tag_names[4] } },
+    -- Note: This alone doesn't move Spotify because WM_CLASS isn't set on
+    -- startup. See the "property::class" signal handler
+    { rule = { class = "[Ss]potify" },
+      properties = { screen = 1, tag = tag_names[5] } },
 }
 -- }}}
 
@@ -618,6 +622,13 @@ client.connect_signal("manage", function (c)
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
+    end
+end)
+
+-- Map Spotify to music tag
+client.connect_signal("property::class", function (c)
+    if string.match(c.class, "[Ss]potify") then
+       awful.rules.apply(c)
     end
 end)
 
