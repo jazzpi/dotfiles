@@ -7,11 +7,13 @@ local wibox = require("wibox")
 -- Widget type library
 local vicious = require("vicious")
 -- Theme handling library
-local beautiful = require("beautiful")
+-- Make this non-local so we can use it from other places (mywidgets)
+beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local spotify = require("mywidgets.spotify")
 
 local IS_LAPTOP, reason, ret = os.execute("laptop-detect")
 if ret == 127 then
@@ -148,6 +150,9 @@ myramwidget = wibox.widget.textbox()
 myramwidget.forced_width = 35
 vicious.register(myramwidget, vicious.widgets.mem, "$1%")
 
+-- Spotify widget
+myspotifywidget = spotify.widget:create()
+
 if IS_LAPTOP then
   -- Battery widget
   mybatlabel = wibox.widget.textbox()
@@ -276,7 +281,7 @@ local tag_names = {
   "\u{f136}", -- icon-emailalt
   "\u{f181}", -- icon-music
   "\u{22b7}", -- icon-picture
-  "7",
+  "\u{f419}", -- icon-searchdocument
   "8",
   "9"
 }
@@ -319,6 +324,8 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            myspotifywidget.widget,
+            myspacer,
             mybatlabelbg,
             myspacer,
             mybatwidgetbg,
@@ -607,6 +614,8 @@ awful.rules.rules = {
     -- startup. See the "property::class" signal handler
     { rule = { class = "[Ss]potify" },
       properties = { screen = 1, tag = tag_names[5] } },
+    { rule = { class = "[Zz]eal" },
+      properties = { screen = 1, tag = tag_names[7] } },
 }
 -- }}}
 

@@ -24,6 +24,7 @@ POSSIBLE_TARGETS=("awesome" "nvim" "xres" "tmux" "zsh" "spacemacs")
 function install_awesome {
     echo "Installing awesome config..."
     install_file awesome/rc.lua ~/.config/awesome/rc.lua
+    install_file awesome/mywidgets ~/.config/awesome/mywidgets
     install_file awesome/themes/jazzpi ~/.config/awesome/themes/jazzpi
 }
 
