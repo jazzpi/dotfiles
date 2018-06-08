@@ -1,4 +1,7 @@
+local awful = require('awful')
 local wibox = require('wibox')
+local s = require('gears.string')
+local http = require('socket.http')
 local lgi = require('lgi')
 local GLib = lgi.GLib
 local Gio = lgi.Gio
@@ -39,6 +42,134 @@ local function running()
    return data
 end
 
+local function split_url(url)
+   local spl = s.split(url, '//')
+   local prot = spl[1]
+   local rest = table.concat({table.unpack(spl, 2, #spl)}, '//')
+   spl = s.split(rest, '/')
+   local domain = spl[1]
+   local intermediate = table.concat({table.unpack(spl, 2, #spl-1)}, '/')
+   local file = spl[#spl]
+   return prot, domain, intermediate, file
+end
+
+local Tooltip = {
+   IMAGE_WIDTH = 128,
+   IMAGE_HEIGHT = 128,
+   MARGIN = 5,
+}
+Tooltip.__index = Tooltip
+
+function Tooltip:create(parent, width, height)
+   local tooltip = {}
+   setmetatable(tooltip, Tooltip)
+   tooltip.width = width or 300
+   tooltip.height = height or tooltip.IMAGE_HEIGHT
+   tooltip._parent = parent
+   tooltip._art_url = nil
+   tooltip._art = wibox.widget.imagebox(nil, true)
+   tooltip._art.forced_width = Tooltip.IMAGE_WIDTH
+   tooltip._art.forced_height = Tooltip.IMAGE_HEIGHT
+   tooltip._artist = wibox.widget.textbox('Allegaeon')
+   tooltip._album = wibox.widget.textbox('Proponent for Sentience')
+   tooltip._song = wibox.widget.textbox('Cognitive Computations')
+   tooltip._widget = wibox.widget {
+      {
+         {
+            layout = wibox.layout.align.horizontal,
+            tooltip._art,
+            {
+               layout = wibox.layout.align.vertical,
+               tooltip._artist,
+               tooltip._album,
+               tooltip._song
+            }
+         },
+         left = tooltip.MARGIN,
+         right = tooltip.MARGIN,
+         top = tooltip.MARGIN,
+         bottom = tooltip.MARGIN,
+         layout = wibox.container.margin,
+      },
+      bg = beautiful.bg_focus,
+      widget = wibox.container.background,
+   }
+   tooltip._wibox = nil
+   tooltip._hidden = nil
+
+   tooltip._parent:connect_signal('music::update', function(...) tooltip:_music_update(...) end)
+   tooltip._parent:connect_signal('mouse::enter', function(...) tooltip:_mouse_enter(...) end)
+   tooltip._parent:connect_signal('mouse::leave', function(...) tooltip:_mouse_leave(...) end)
+end
+
+function Tooltip:_music_update(_, status, data)
+   if status == 'Playing' or status == 'Paused' then
+      if data.art ~= self._art_url then
+         self._art_url = data.art
+         Gio.Async.start(self._download_art)(self, data.art)
+      end
+      self._artist.text = data.artist
+      self._album.text = data.album
+      self._song.text = data.song
+   end
+end
+
+function Tooltip:_download_art(url)
+   local prot, domain, intermediate, file = split_url(url)
+   -- Downloading from i.scdn.co removes the Spotify logo from the image
+   url = prot .. '//i.scdn.co/' .. intermediate .. '/' .. file
+   common.notify.dbg('Downloading from ' .. url)
+   local body, code = http.request(url)
+   if not body then
+      common.notify.err(code)
+      return
+   end
+
+   local path = '/tmp/' .. file
+   common.notify.dbg('Writing to ' .. path)
+   local f, err = io.open(path, 'wb')
+   if not f then
+      common.notify.err(err)
+      return
+   end
+
+   f:write(body)
+   f:close()
+
+   self._art.image = path
+end
+
+function Tooltip:_setup_boxes(parent_geo)
+   if not self._wibox then
+      self._wibox = wibox {
+         width = self.width,
+         height = self.height,
+         widget = self._widget,
+         ontop = true,
+      }
+      self._wibox:connect_signal('mouse::leave', function(...) self:_mouse_leave(...) end)
+   end
+end
+
+function Tooltip:_mouse_enter(_, geo)
+   self:_setup_boxes(geo)
+   self._wibox:geometry({
+         x = geo.x,
+         y = geo.y + geo.height
+   })
+   self._wibox.visible = true
+end
+
+function Tooltip:_mouse_leave(maybe_align, geo)
+   -- When the event fires on the parent, we get an align as the first argument
+   -- for some reason. When it fires on our wibox, we only get the geometry.
+   geo = geo or maybe_align
+   if geo.widget == self._parent and mouse.current_wibox == self._wibox then
+      return
+   end
+   self._wibox.visible = false
+end
+
 local Widget = {}
 Widget.__index = Widget
 
@@ -53,9 +184,11 @@ function Widget:create()
       widget._textbox,
       layout = wibox.layout.align.horizontal
    }
+   widget._tooltip = Tooltip:create(widget.widget)
+
    widget._running = false
    widget._data = nil
-   widget._status = "Unconnected"
+   widget._status = 'Unconnected'
    widget:_update()
    widget._watch = Gio.bus_watch_name(
       Gio.BusType.SESSION,
@@ -109,7 +242,8 @@ end
 function Widget:_update_metadata(metadata)
    self._data = {
       title = metadata['xesam:title'],
-      artist = metadata['xesam:artist'].value[1],
+      album = metadata['xesam:album'],
+      artist = metadata['xesam:albumArtist'][1],
       art = metadata['mpris:artUrl']
    }
 end
@@ -169,6 +303,8 @@ function Widget:_update()
       self._status_widget.text = '\u{f316}'  -- icon-warning-sign
       self._textbox.markup = " <i>Spotify isn't running</i>"
    end
+
+   self.widget:emit_signal('music::update', self._status, self._data)
 end
 
 return {
