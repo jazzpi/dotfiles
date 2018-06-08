@@ -4,7 +4,7 @@ local notify = {
    _presets = {
       dbg = naughty.config.presets.low,
       info = naughty.config.presets.normal,
-      warn = { bg = "#ffff00", fg = "#ffffff", timeout = 20 },
+      warn = { bg = "#ff9900", fg = "#ffffff", timeout = 20 },
       err = naughty.config.presets.critical,
    },
 

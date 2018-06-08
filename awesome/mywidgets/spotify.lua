@@ -56,6 +56,7 @@ function Widget:create()
    widget._running = false
    widget._data = nil
    widget._status = "Unconnected"
+   widget:_update()
    widget._watch = Gio.bus_watch_name(
       Gio.BusType.SESSION,
       SPOTIFY_NAME,
@@ -151,10 +152,14 @@ end
 
 function Widget:_update()
    if self._running then
-      if self._status == "Playing" then
+      if self._status == 'Playing' then
          self._status_widget.text = '\u{f184}'  -- icon-play
-      elseif self._status == "Paused" then
+      elseif self._status == 'Paused' then
          self._status_widget.text = '\u{f186}'  -- icon-pause
+      elseif self._status == 'Stopped' then
+         self._status_widget.text = '\u{f185}'  -- icon-stop
+         self._textbox.text = ' Stopped'
+         return
       else
          common.notify.warn(self._status, 'Unknown playback status')
          return
@@ -162,7 +167,7 @@ function Widget:_update()
       self._textbox.markup = ' <b>' .. self._data.artist .. '</b> \u{2014} ' .. self._data.title
    else
       self._status_widget.text = '\u{f316}'  -- icon-warning-sign
-      self._textbox.text = " Spotify isn't running"
+      self._textbox.markup = " <i>Spotify isn't running</i>"
    end
 end
 
