@@ -1,3 +1,4 @@
+local awful = require('awful')
 local wibox = require('wibox')
 local lgi = require('lgi')
 local GLib = lgi.GLib
@@ -39,6 +40,66 @@ local function running()
    return data
 end
 
+local Tooltip = {}
+Tooltip.__index = Tooltip
+
+function Tooltip:create(parent)
+   local tooltip = {}
+   setmetatable(tooltip, Tooltip)
+   tooltip._parent = parent
+   tooltip._art = wibox.widget.imagebox('/tmp/spotify-albumart/e11988bbfd96b079c936c43e4e9a739fa0af1ef7.jpeg', true)
+   tooltip._artist = wibox.widget.textbox('Allegaeon')
+   tooltip._album = wibox.widget.textbox('Proponent for Sentience')
+   tooltip._song = wibox.widget.textbox('Cognitive Computations')
+   -- tooltip._widget = wibox {
+   --    widget = {
+   tooltip._widget = wibox.widget {
+      layout = wibox.layout.align.horizontal,
+      tooltip._art,
+      {
+         layout = wibox.layout.align.vertical,
+         tooltip._artist,
+         tooltip._album,
+         tooltip._song
+      }
+   }
+   -- }
+   tooltip._w = nil
+
+   tooltip._parent:connect_signal('mouse::enter', function() tooltip:_mouse_enter() end)
+   tooltip._parent:connect_signal('mouse::leave', function() tooltip:_mouse_leave() end)
+end
+
+function Tooltip:_mouse_enter()
+   common.notify.dbg('Mouse entered')
+   local fields = ''
+   for key, val in pairs(self._parent._private) do
+      fields = fields .. '[' .. tostring(key) .. '] => ' .. tostring(val) .. '\n'
+   end
+   common.notify.dbg(self._parent.x)
+   common.notify.err(fields)
+   -- TODO: Aligns at mouse
+   if not self._w then
+      self._w = wibox {
+         width = 300,
+         height = 200,
+         widget = self._widget,
+      }
+   end
+   awful.placement.next_to(
+      self._w, {
+         mode = "geometry",
+         preferred_positions = { "top" },
+         gemoetry = self._parent.first
+   })
+   self._w.visible = true
+end
+
+function Tooltip:_mouse_leave()
+   common.notify.dbg('Mouse left')
+   self._w.visible = false
+end
+
 local Widget = {}
 Widget.__index = Widget
 
@@ -53,6 +114,8 @@ function Widget:create()
       widget._textbox,
       layout = wibox.layout.align.horizontal
    }
+   widget._tooltip = Tooltip:create(widget.widget)
+
    widget._running = false
    widget._data = nil
    widget._status = "Unconnected"
@@ -109,7 +172,8 @@ end
 function Widget:_update_metadata(metadata)
    self._data = {
       title = metadata['xesam:title'],
-      artist = metadata['xesam:artist'].value[1],
+      album = metadata['xesam:album'],
+      artist = metadata['xesam:albumArtist'][1],
       art = metadata['mpris:artUrl']
    }
 end
