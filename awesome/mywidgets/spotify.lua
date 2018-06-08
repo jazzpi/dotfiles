@@ -53,72 +53,85 @@ local function split_url(url)
    return prot, domain, intermediate, file
 end
 
-local Tooltip = {
+local Popup = {
    IMAGE_WIDTH = 128,
    IMAGE_HEIGHT = 128,
    MARGIN = 5,
 }
-Tooltip.__index = Tooltip
+Popup.__index = Popup
 
-function Tooltip:create(parent, width, height)
-   local tooltip = {}
-   setmetatable(tooltip, Tooltip)
-   tooltip.width = width or 300
-   tooltip.height = height or tooltip.IMAGE_HEIGHT
-   tooltip._parent = parent
-   tooltip._art_url = nil
-   tooltip._art = wibox.widget.imagebox(nil, true)
-   tooltip._art.forced_width = Tooltip.IMAGE_WIDTH
-   tooltip._art.forced_height = Tooltip.IMAGE_HEIGHT
-   tooltip._artist = wibox.widget.textbox('Allegaeon')
-   tooltip._album = wibox.widget.textbox('Proponent for Sentience')
-   tooltip._song = wibox.widget.textbox('Cognitive Computations')
-   tooltip._widget = wibox.widget {
+function Popup:create(parent, width, height)
+   local popup = {}
+   setmetatable(popup, Popup)
+
+   popup.width = width or 300
+   popup.height = height or popup.IMAGE_HEIGHT
+   popup._parent = parent
+
+   popup._art_url = nil
+   popup._art = wibox.widget.imagebox(nil, true)
+   popup._art.forced_width = Popup.IMAGE_WIDTH
+   popup._art.forced_height = Popup.IMAGE_HEIGHT
+
+   popup._song = wibox.widget.textbox('Song')
+   popup._song.font = beautiful.popup_font
+   popup._artist = wibox.widget.textbox('Artist')
+   popup._artist.font = beautiful.popup_font
+   popup._album = wibox.widget.textbox('Album')
+   popup._album.font = beautiful.popup_font
+
+   popup._widget = wibox.widget {
       {
          {
             layout = wibox.layout.align.horizontal,
-            tooltip._art,
+            popup._art,
             {
-               layout = wibox.layout.align.vertical,
-               tooltip._artist,
-               tooltip._album,
-               tooltip._song
+               layout = wibox.layout.fixed.vertical,
+               popup._song,
+               {
+                  {
+                     layout = wibox.layout.fixed.vertical,
+                     popup._artist,
+                     popup._album,
+                  },
+                  fg = beautiful.fg_low,
+                  widget = wibox.container.background,
+               }
             }
          },
-         left = tooltip.MARGIN,
-         right = tooltip.MARGIN,
-         top = tooltip.MARGIN,
-         bottom = tooltip.MARGIN,
+         left = popup.MARGIN,
+         right = popup.MARGIN,
+         top = popup.MARGIN,
+         bottom = popup.MARGIN,
          layout = wibox.container.margin,
       },
       bg = beautiful.bg_focus,
       widget = wibox.container.background,
    }
-   tooltip._wibox = nil
-   tooltip._hidden = nil
+   popup._wibox = nil
+   popup._hidden = nil
 
-   tooltip._parent:connect_signal('music::update', function(...) tooltip:_music_update(...) end)
-   tooltip._parent:connect_signal('mouse::enter', function(...) tooltip:_mouse_enter(...) end)
-   tooltip._parent:connect_signal('mouse::leave', function(...) tooltip:_mouse_leave(...) end)
+   popup._parent:connect_signal('music::update', function(...) popup:_music_update(...) end)
+   popup._parent:connect_signal('mouse::enter', function(...) popup:_mouse_enter(...) end)
+   popup._parent:connect_signal('mouse::leave', function(...) popup:_mouse_leave(...) end)
 end
 
-function Tooltip:_music_update(_, status, data)
+function Popup:_music_update(_, status, data)
    if status == 'Playing' or status == 'Paused' then
       if data.art ~= self._art_url then
          self._art_url = data.art
          Gio.Async.start(self._download_art)(self, data.art)
       end
+      self._song.markup = '<big><b>' .. data.title .. '</b></big>'
       self._artist.text = data.artist
       self._album.text = data.album
-      self._song.text = data.song
    end
 end
 
-function Tooltip:_download_art(url)
+function Popup:_download_art(url)
    local prot, domain, intermediate, file = split_url(url)
    -- Downloading from i.scdn.co removes the Spotify logo from the image
    url = prot .. '//i.scdn.co/' .. intermediate .. '/' .. file
-   common.notify.dbg('Downloading from ' .. url)
    local body, code = http.request(url)
    if not body then
       common.notify.err(code)
@@ -126,7 +139,6 @@ function Tooltip:_download_art(url)
    end
 
    local path = '/tmp/' .. file
-   common.notify.dbg('Writing to ' .. path)
    local f, err = io.open(path, 'wb')
    if not f then
       common.notify.err(err)
@@ -139,7 +151,7 @@ function Tooltip:_download_art(url)
    self._art.image = path
 end
 
-function Tooltip:_setup_boxes(parent_geo)
+function Popup:_setup_boxes(parent_geo)
    if not self._wibox then
       self._wibox = wibox {
          width = self.width,
@@ -151,7 +163,7 @@ function Tooltip:_setup_boxes(parent_geo)
    end
 end
 
-function Tooltip:_mouse_enter(_, geo)
+function Popup:_mouse_enter(_, geo)
    self:_setup_boxes(geo)
    self._wibox:geometry({
          x = geo.x,
@@ -160,7 +172,7 @@ function Tooltip:_mouse_enter(_, geo)
    self._wibox.visible = true
 end
 
-function Tooltip:_mouse_leave(maybe_align, geo)
+function Popup:_mouse_leave(maybe_align, geo)
    -- When the event fires on the parent, we get an align as the first argument
    -- for some reason. When it fires on our wibox, we only get the geometry.
    geo = geo or maybe_align
@@ -179,12 +191,13 @@ function Widget:create()
    widget._status_widget = wibox.widget.textbox()
    widget._status_widget.font = beautiful.icon_font
    widget._textbox = wibox.widget.textbox()
+   -- TODO: Put this in a wibox.container.scroll.horizontal
    widget.widget = wibox.widget {
       widget._status_widget,
       widget._textbox,
       layout = wibox.layout.align.horizontal
    }
-   widget._tooltip = Tooltip:create(widget.widget)
+   widget._popup = Popup:create(widget.widget)
 
    widget._running = false
    widget._data = nil
@@ -298,7 +311,7 @@ function Widget:_update()
          common.notify.warn(self._status, 'Unknown playback status')
          return
       end
-      self._textbox.markup = ' <b>' .. self._data.artist .. '</b> \u{2014} ' .. self._data.title
+      self._textbox.markup = ' ' .. self._data.artist .. ' \u{2014} <b>' .. self._data.title .. '</b>'
    else
       self._status_widget.text = '\u{f316}'  -- icon-warning-sign
       self._textbox.markup = " <i>Spotify isn't running</i>"

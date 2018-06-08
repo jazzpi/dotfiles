@@ -15,11 +15,13 @@ theme.wallpaper = theme.dir .. "bird-on-branch.png"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "sans 8"
+theme.font      = "DejaVu Sans 9"
 theme.icon_font = "WebHostingHubGlyphs 10"
 theme.taglist_font = theme.icon_font
+theme.popup_font = "DejaVu Sans 10"
 
 -- {{{ Colors
+theme.fg_low     = "#e4e4e4"
 theme.fg_normal  = "#FFFFFF"
 theme.fg_focus   = "#FFFFFF"
 theme.fg_urgent  = "#FFFFFF"
