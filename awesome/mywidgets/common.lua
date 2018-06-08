@@ -1,8 +1,9 @@
 local naughty = require('naughty')
+local t = require('gears.table')
 
 local notify = {
    _presets = {
-      dbg = naughty.config.presets.low,
+      dbg = t.crush(naughty.config.presets.low, { timeout = 0 }),
       info = naughty.config.presets.normal,
       warn = { bg = "#ff9900", fg = "#ffffff", timeout = 20 },
       err = naughty.config.presets.critical,

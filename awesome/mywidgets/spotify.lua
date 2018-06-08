@@ -1,6 +1,7 @@
 local awful = require('awful')
 local wibox = require('wibox')
 local s = require('gears.string')
+local t = require('gears.table')
 local http = require('socket.http')
 local lgi = require('lgi')
 local GLib = lgi.GLib
@@ -210,6 +211,18 @@ function Popup:_mouse_leave(maybe_align, geo)
    geo = geo or maybe_align
    if geo.widget == self._parent.widget and mouse.current_wibox == self._wibox then
       return
+   elseif geo.widget == self._widget and mouse.current_wibox then
+      local coords = mouse.coords()
+      local wgeo = mouse.current_wibox:geometry()
+      local x = coords.x - wgeo.x
+      local y = coords.y - wgeo.y
+      local widgets = mouse.current_wibox:find_widgets(x, y)
+      local text = ''
+      for k, v in pairs(widgets) do
+         if v.widget == self._parent.widget then
+            return
+         end
+      end
    end
    self._wibox.visible = false
 end
