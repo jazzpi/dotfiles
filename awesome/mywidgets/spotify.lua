@@ -80,6 +80,19 @@ function Popup:create(parent, width, height)
    popup._album = wibox.widget.textbox('Album')
    popup._album.font = beautiful.popup_font
 
+   popup._play_pause = wibox.widget.textbox('\u{f565}')  -- icon-circlepauseempty
+   popup._play_pause.font = beautiful.large_icon_font
+   popup._play_pause:buttons(awful.button({}, 1, nil,
+                                function() popup._parent.play_pause() end))
+   popup._prev = wibox.widget.textbox('\u{f56a}')  -- icon-circlepreviousempty
+   popup._prev.font = beautiful.large_icon_font
+   popup._prev:buttons(awful.button({}, 1, nil,
+                          function() popup._parent.prev() end))
+   popup._next = wibox.widget.textbox('\u{f569}')  -- icon-circlenextempty
+   popup._next.font = beautiful.large_icon_font
+   popup._next:buttons(awful.button({}, 1, nil,
+                          function() popup._parent.next() end))
+
    popup._widget = wibox.widget {
       {
          {
@@ -96,6 +109,19 @@ function Popup:create(parent, width, height)
                   },
                   fg = beautiful.fg_low,
                   widget = wibox.container.background,
+               },
+               {
+                  {
+                     layout = wibox.layout.flex.horizontal,
+                     spacing = 10,
+                     popup._prev,
+                     popup._play_pause,
+                     popup._next,
+                  },
+                  valign = 'bottom',
+                  fill_vertical = true,
+                  fill_horizontal = true,
+                  widget = wibox.container.place,
                }
             }
          },
@@ -111,21 +137,27 @@ function Popup:create(parent, width, height)
    popup._wibox = nil
    popup._hidden = nil
 
-   popup._parent:connect_signal('music::update', function(...) popup:_music_update(...) end)
-   popup._parent:connect_signal('mouse::enter', function(...) popup:_mouse_enter(...) end)
-   popup._parent:connect_signal('mouse::leave', function(...) popup:_mouse_leave(...) end)
+   popup._parent.widget:connect_signal('music::update', function(...) popup:_music_update(...) end)
+   popup._parent.widget:connect_signal('mouse::enter', function(...) popup:_mouse_enter(...) end)
+   popup._parent.widget:connect_signal('mouse::leave', function(...) popup:_mouse_leave(...) end)
 end
 
 function Popup:_music_update(_, status, data)
-   if status == 'Playing' or status == 'Paused' then
-      if data.art ~= self._art_url then
-         self._art_url = data.art
-         Gio.Async.start(self._download_art)(self, data.art)
-      end
-      self._song.markup = '<big><b>' .. data.title .. '</b></big>'
-      self._artist.text = data.artist
-      self._album.text = data.album
+   if status == 'Playing' then
+      self._play_pause.markup = '\u{f565}'  -- icon-circlepauseemtpy
+   elseif status == 'Paused' then
+      self._play_pause.text = '\u{f563}'  -- icon-circleplayempty
+   else
+      return
    end
+
+   if data.art ~= self._art_url then
+      self._art_url = data.art
+      Gio.Async.start(self._download_art)(self, data.art)
+   end
+   self._song.markup = '<big><b>' .. data.title .. '</b></big>'
+   self._artist.text = data.artist
+   self._album.text = data.album
 end
 
 function Popup:_download_art(url)
@@ -176,7 +208,7 @@ function Popup:_mouse_leave(maybe_align, geo)
    -- When the event fires on the parent, we get an align as the first argument
    -- for some reason. When it fires on our wibox, we only get the geometry.
    geo = geo or maybe_align
-   if geo.widget == self._parent and mouse.current_wibox == self._wibox then
+   if geo.widget == self._parent.widget and mouse.current_wibox == self._wibox then
       return
    end
    self._wibox.visible = false
@@ -197,7 +229,7 @@ function Widget:create()
       widget._textbox,
       layout = wibox.layout.align.horizontal
    }
-   widget._popup = Popup:create(widget.widget)
+   widget._popup = Popup:create(widget)
 
    widget._running = false
    widget._data = nil
@@ -235,6 +267,48 @@ function Widget:create()
    )
 
    return widget
+end
+
+function Widget:play_pause()
+   local _, err = bus:call_sync(
+      SPOTIFY_NAME,
+      SPOTIFY_PATH,
+      PLAYER_NAME,
+      'PlayPause',
+      nil,
+      nil,
+      Gio.DBusConnectionFlags.NONE,
+      -1
+   )
+   check_err(err)
+end
+
+function Widget:prev()
+   local _, err = bus:call_sync(
+      SPOTIFY_NAME,
+      SPOTIFY_PATH,
+      PLAYER_NAME,
+      'Previous',
+      nil,
+      nil,
+      Gio.DBusConnectionFlags.NONE,
+      -1
+   )
+   check_err(err)
+end
+
+function Widget:next()
+   local _, err = bus:call_sync(
+      SPOTIFY_NAME,
+      SPOTIFY_PATH,
+      PLAYER_NAME,
+      'Next',
+      nil,
+      nil,
+      Gio.DBusConnectionFlags.NONE,
+      -1
+   )
+   check_err(err)
 end
 
 function Widget:_name_appeared()

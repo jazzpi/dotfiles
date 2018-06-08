@@ -17,6 +17,7 @@ theme.wallpaper = theme.dir .. "bird-on-branch.png"
 -- {{{ Styles
 theme.font      = "DejaVu Sans 9"
 theme.icon_font = "WebHostingHubGlyphs 10"
+theme.large_icon_font = "WebHostingHubGlyphs 18"
 theme.taglist_font = theme.icon_font
 theme.popup_font = "DejaVu Sans 10"
 
