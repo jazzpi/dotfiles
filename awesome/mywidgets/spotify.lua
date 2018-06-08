@@ -198,8 +198,8 @@ end
 function Popup:_mouse_enter(_, geo)
    self:_setup_boxes(geo)
    self._wibox:geometry({
-         x = geo.x,
-         y = geo.y + geo.height
+         x = geo.x + mouse.screen.geometry.x,
+         y = geo.y + geo.height + mouse.screen.geometry.y,
    })
    self._wibox.visible = true
 end
@@ -223,7 +223,8 @@ function Widget:create()
    widget._status_widget = wibox.widget.textbox()
    widget._status_widget.font = beautiful.icon_font
    widget._textbox = wibox.widget.textbox()
-   -- TODO: Put this in a wibox.container.scroll.horizontal
+   -- TODO: Scroll this on hover (wibox.container.scroll.horizontal continuously
+   -- scrolls)
    widget.widget = wibox.widget {
       widget._status_widget,
       widget._textbox,
