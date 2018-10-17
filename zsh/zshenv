@@ -1,7 +1,7 @@
 export PATH="$HOME/bin:$HOME/.linuxbrew/bin:$PATH:$HOME/.gem/ruby/2.5.0/bin:$HOME/.rvm/bin:$HOME/.cargo/bin:$HOME/.config/composer/vendor/bin"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-export PYTHONPATH="$PYTHONPATH:$HOME/ownCloud/RoboCup/hands_on_nao/pynaoqi/pynaoqi-python2.7-2.1.2.17-linux64"
+export PYTHONPATH="$PYTHONPATH:$HOME/dev/tensorflow-models/research:$HOME/dev/tensorflow-models/research/slim:$HOME/ownCloud/RoboCup/hands_on_nao/pynaoqi/pynaoqi-python2.7-2.1.2.17-linux64"
 export ALTERNATE_EDITOR=""
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
