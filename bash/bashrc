@@ -2,11 +2,19 @@
 ### jazzpi's bashrc
 ### ===============
 ### Separated into the following sections:
+### 0. UTIL                 (utilities for the bashrc itself)
 ### 1. PROMPT               (setup for prompts)
 ### 2. COLORIZE             (color setup for various programs like ls, grep and gcc)
 ### 3. HISTORY              (setup for histories)
 ### 4. COMPLETION/EXPANSION (setup for shell completion and pathname expansion)
-### 5. MISC                 (everything else)
+### 5. ENVIRONMENT/ALIASES  (environment variables and aliases)
+### 6. MISC                 (everything else)
+
+## UTIL
+
+function cmd_exists {
+    command -v "$1" &>/dev/null
+}
 
 ## PROMPT
 
@@ -35,7 +43,7 @@ PROMPT_COMMAND="PS1=\"╔═${_prompt_time} ${_prompt_user}\n╚═${_prompt_dir
 ## COLORIZE
 
 # ls and grep
-if command -v dircolors &>/dev/null ; then
+if cmd_exists dircolors ; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
 
@@ -76,4 +84,7 @@ fi
 # Update LINES and COLUMNS after each command
 shopt -s checkwinsize
 # Make less more friendly for e.g. archive files, see lesspipe(1)
-command -v lesspipe &>/dev/null && eval "$(SHELL=/bin/sh lesspipe)"
+cmd_exists lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Ensure that the last command in the bashrc was successful, so the prompt isn't red
+true
