@@ -11,6 +11,9 @@ install = \
         ln -s $(DOTFILES_DIR)/$(1) $(2); \
     fi
 
+$(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
+$(info )
+
 .PHONY: default
 default: tmux bash
 
