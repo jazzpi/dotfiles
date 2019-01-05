@@ -63,3 +63,4 @@ spacemacs:
 .PHONY: bash
 bash:
 	$(call install,bash/bashrc,~/.bashrc)
+	$(call install,bash/inputrc,~/.inputrc)
