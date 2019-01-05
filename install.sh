@@ -1,5 +1,12 @@
 #!/bin/bash
 
+>&2 echo "The install.sh script is deprecated, use make instead."
+read -n1 -p "Are you sure you want to continue? [yN] " yn
+case $yn in
+    [Yy]* ) echo -e "\nContinuing...";;
+    * ) echo -e "\nAborting"; exit;;
+esac
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_file {

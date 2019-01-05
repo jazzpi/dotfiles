@@ -1,0 +1,79 @@
+#!/bin/bash
+### jazzpi's bashrc
+### ===============
+### Separated into the following sections:
+### 1. PROMPT               (setup for prompts)
+### 2. COLORIZE             (color setup for various programs like ls, grep and gcc)
+### 3. HISTORY              (setup for histories)
+### 4. COMPLETION/EXPANSION (setup for shell completion and pathname expansion)
+### 5. MISC                 (everything else)
+
+## PROMPT
+
+# Yellow [HH:MM:SS]
+_prompt_time='[\[\033[1;33m\]\t\[\033[0m\]]'
+# Green user@host, red if last command failed
+_prompt_user='\`if [[ \$? = "0" ]]; then echo \"\\[\\033[1;32m\\]\"; else echo \"\\[\\033[1;31m\\]\"; fi\`\u@\h\[\033[0m\]'
+# Cyan cwd
+_prompt_dir='\[\033[36m\]\w\[\033[0m\]'
+# Git branch & status
+function _prompt_git_branch {
+    local branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3-)
+    if [[ "$branch" ]]; then
+        echo -n ":"
+        # Green if clean, yellow if dirty
+        if [[ -z $(git status -s) ]]; then
+            echo -n "\[\033[32m\]"
+        else
+            echo -n "\[\033[33m\]"
+        fi
+        echo -n "$branch\[\033[0m\]"
+    fi
+}
+PROMPT_COMMAND="PS1=\"╔═${_prompt_time} ${_prompt_user}\n╚═${_prompt_dir}\$(_prompt_git_branch)$ \""
+
+## COLORIZE
+
+# ls and grep
+if command -v dircolors &>/dev/null ; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+# GCC warnings/errors etc.
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+## HISTORY
+
+# Don't put duplicate or lines starting with space in the history
+HISTCONTROL=ignoreboth
+# Save more lines
+HISTSIZE=5000
+HISTFILESIZE=10000
+# Append to history file, so we can share history across sessions
+shopt -s histappend
+
+## COMPLETION/EXPANSION
+
+# "**" in a pathname expansion will match files in all levels of subdirectories
+shopt -s globstar
+# Include hidden files in pathname expansion
+shopt -s dotglob
+# Enable programmable completion features
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+## MISC
+
+# Update LINES and COLUMNS after each command
+shopt -s checkwinsize
+# Make less more friendly for e.g. archive files, see lesspipe(1)
+command -v lesspipe &>/dev/null && eval "$(SHELL=/bin/sh lesspipe)"
