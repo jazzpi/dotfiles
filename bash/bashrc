@@ -18,12 +18,12 @@ function cmd_exists {
 
 ## PROMPT
 
-# Yellow [HH:MM:SS]
-_prompt_time='[\[\033[1;33m\]\t\[\033[0m\]]'
 # Green user@host, red if last command failed
 _prompt_user='\`if [[ \$? = "0" ]]; then echo \"\\[\\033[1;32m\\]\"; else echo \"\\[\\033[1;31m\\]\"; fi\`\u@\h\[\033[0m\]'
 # Cyan cwd
 _prompt_dir='\[\033[36m\]\w\[\033[0m\]'
+# Yellow [HH:MM:SS]
+_prompt_time='\[\033[1;33m\]\t\[\033[0m\]'
 # Git branch & status
 function _prompt_git_branch {
     local branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3-)
@@ -38,7 +38,7 @@ function _prompt_git_branch {
         echo -n "$branch\[\033[0m\]"
     fi
 }
-PROMPT_COMMAND="PS1=\"╔═${_prompt_time} ${_prompt_user}\n╚═${_prompt_dir}\$(_prompt_git_branch)$ \""
+PROMPT_COMMAND="PS1=\"╔═${_prompt_user} [${_prompt_dir}\$(_prompt_git_branch)]\n╚═${_prompt_time} $ \""
 
 ## COLORIZE
 
