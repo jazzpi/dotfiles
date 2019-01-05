@@ -79,6 +79,23 @@ if ! shopt -oq posix; then
   fi
 fi
 
+## PATH/ALIASES
+
+export PATH="$HOME/bin:$PATH"
+export VISUAL="emacsclient -c"
+export EDITOR="emacsclient -t"
+if cmd_exists rustc; then
+    export RUST_BACKTRACE=1
+    export RUST_SRC_PATH="$(rustc --print sysroot)"/lib/rustlib/src/rust/src
+fi
+alias la="ls -lAh"
+alias ll="ls -lh"
+alias lsa="ls -lah"
+alias l="ls -A --group-directories-first"
+alias uds="udisksctl status"
+alias udm="udisksctl mount -b"
+alias udu="udisksctl unmount -b"
+
 ## MISC
 
 # Update LINES and COLUMNS after each command
