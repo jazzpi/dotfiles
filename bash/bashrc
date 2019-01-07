@@ -101,6 +101,18 @@ alias udu="udisksctl unmount -b"
 # Update LINES and COLUMNS after each command
 shopt -s checkwinsize
 # Make less more friendly for e.g. archive files, see lesspipe(1)
+if cmd_exists lesspipe; then
+    if lesspipe --version | grep -i gentoo &>/dev/null; then
+        # Not Gentoo, we should simply be able to run lesspipe to set it up
+        lesspipe >/dev/null
+    else
+        # Gentoo, we need to set up lesspipe manually
+        export LESSOPEN="|lesspipe %s"
+    fi
+elif cmd_exists lesspipe.sh; then
+    # Arch Linux, run to set up
+    lesspipe.sh >/dev/null
+fi
 cmd_exists lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Ensure that the last command in the bashrc was successful, so the prompt isn't red
