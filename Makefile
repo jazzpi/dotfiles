@@ -12,7 +12,6 @@ install = \
     fi
 
 $(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
-$(info )
 
 .PHONY: default
 default: tmux bash
@@ -22,6 +21,9 @@ extended: awesome tmux bash zsh
 
 .PHONY: all
 all: awesome nvim xresources tmux zsh spacemacs bash
+
+# Don't output commands unless run with `make VERBOSE=1`
+$(VERBOSE).SILENT:
 
 $(DIRS):
 	mkdir -p $@
