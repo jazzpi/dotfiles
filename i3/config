@@ -133,7 +133,17 @@ assign [class="^Emacs$"] number $ws2
 assign [class="^Eclipse$"] number $ws2
 assign [class="^jetbrains"] number $ws2
 assign [class="^Thunderbird$"] number $ws4
-for_window [class="^Spotify$"] move to workspace $ws5
+for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
+
+# Start some applications on startup
+exec thunderbird
+exec emacs --daemon
+# If we start spotify straightaway, it hangs (because DBus isn't started?)
+exec --no-startup-id bash -c 'sleep 1 && spotify > ~/.spot-log 2> ~/.spot-err'
+# `chromium` is called `chromium-browser` on Ubuntu
+exec bash -c 'chromium || chromium-browser'
+# Start a terminal on WS 3
+exec --no-startup-id i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
