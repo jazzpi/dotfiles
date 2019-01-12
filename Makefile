@@ -12,6 +12,9 @@ install = \
         ln -s $(DOTFILES_DIR)/$(1) $(2); \
     fi
 
+# Don't output commands unless run with `make VERBOSE=1`
+$(VERBOSE).SILENT:
+
 # Print help if no target is specified
 
 .PHONY: default
@@ -19,7 +22,7 @@ default: help
 
 help:
 	@echo "Choose a target to install from:"
-	@echo "    bash tmux awesome nvim xresources zsh spacemacs"
+	@echo "    bash emacs tmux awesome nvim xresources zsh spacemacs"
 
 # Print only if we aren't executing the help target
 ifneq ($(MAKECMDGOALS),help)
@@ -30,10 +33,16 @@ endif
 endif
 
 .PHONY: all
-all: awesome nvim xresources tmux zsh spacemacs bash
+all: bash emacs tmux awesome nvim xresources zsh spacemacs
 
-# Don't output commands unless run with `make VERBOSE=1`
-$(VERBOSE).SILENT:
+.PHONY: emacs
+emacs:
+	@echo "Downloading Emacs DOOM..."
+	git clone -b develop https://github.com/hlissner/doom-emacs ~/.emacs.d
+	@echo "Downloading DOOM config..."
+	git clone git@github.com:jazzpi/doom-d.git ~/.doom.d
+	@echo "Installing DOOM"
+	cd ~/.emacs.d && make install
 
 .PHONY: awesome
 awesome:
