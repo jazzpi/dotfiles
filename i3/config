@@ -193,6 +193,16 @@ mode "$mode_spotify" {
     bindsym $mode+Shift+s mode "default"
 }
 
+set $mode_display Display configuration: [s]ave, [r]estore
+bindsym $mod+Control+d mode "$mode_display"
+mode "$mode_display" {
+    bindsym s exec ~/.config/i3/scripts/randr-save.bash; mode "default"
+    bindsym r exec ~/.config/i3/scripts/randr-restore.bash; mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mode+Control+d mode "default"
+}
+
 bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
