@@ -6,18 +6,28 @@ NVIM_DIR = ~/.config/nvim
 DIRS = $(AWESOME_DIR) $(NVIM_DIR)
 
 install = \
+    echo "Installing $(1)"; \
     mkdir -p $$(dirname $(2)) && \
     if [ ! $$(readlink -f $(2)) -ef $(DOTFILES_DIR)/$(1) ]; then \
         ln -s $(DOTFILES_DIR)/$(1) $(2); \
     fi
 
-$(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
+# Print help if no target is specified
 
 .PHONY: default
-default: tmux bash
+default: help
 
-.PHONY: extended
-extended: awesome tmux bash zsh
+help:
+	@echo "Choose a target to install from:"
+	@echo "    bash tmux awesome nvim xresources zsh spacemacs"
+
+# Print only if we aren't executing the help target
+ifneq ($(MAKECMDGOALS),help)
+ifneq ($(MAKECMDGOALS),)
+$(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
+$(info )
+endif
+endif
 
 .PHONY: all
 all: awesome nvim xresources tmux zsh spacemacs bash
@@ -25,17 +35,14 @@ all: awesome nvim xresources tmux zsh spacemacs bash
 # Don't output commands unless run with `make VERBOSE=1`
 $(VERBOSE).SILENT:
 
-$(DIRS):
-	mkdir -p $@
-
 .PHONY: awesome
-awesome: $(AWESOME_DIR)
+awesome:
 	$(call install,awesome/rc.lua,$(AWESOME_DIR)/rc.lua)
 	$(call install,awesome/mywidgets,$(AWESOME_DIR)/mywidgets)
 	$(call install,awesome/themes/jazzpi,$(AWESOME_DIR)/themes/jazzpi)
 
 .PHONY: nvim
-nvim: $(NVIM_DIR)
+nvim:
 	$(call install,nvim/init.vim,$(NVIM_DIR)/init.vim)
 	$(call install,nvim/ftplugin/markdown.vim,$(NVIM_DIR)/ftplugin/markdown.vim)
 	$(call install,nvim/ftplugin/tex.vim,$(NVIM_DIR)/ftplugin/tex.vim)
