@@ -2,8 +2,7 @@ DOTFILES_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
-
-DIRS = $(AWESOME_DIR) $(NVIM_DIR)
+I3_DIR = ~/.config/i3
 
 install = \
     echo "Installing $(1)"; \
@@ -22,7 +21,7 @@ default: help
 
 help:
 	@echo "Choose a target to install from:"
-	@echo "    bash emacs tmux awesome nvim xresources zsh spacemacs"
+	@echo "    bash emacs tmux i3 awesome nvim xresources zsh spacemacs"
 
 # Print only if we aren't executing the help target
 ifneq ($(MAKECMDGOALS),help)
@@ -33,7 +32,11 @@ endif
 endif
 
 .PHONY: all
-all: bash emacs tmux awesome nvim xresources zsh spacemacs
+all: bash emacs tmux i3 awesome nvim xresources zsh spacemacs
+
+.PHONY: i3
+i3:
+	$(call install,i3/config,$(I3_DIR)/config)
 
 .PHONY: emacs
 emacs:
