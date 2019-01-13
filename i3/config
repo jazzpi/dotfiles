@@ -209,12 +209,14 @@ mode "$mode_display" {
     bindsym $mode+Control+d mode "default"
 }
 
-set $mode_system System: [s]hutdown, [r]estart, [e]xit
+set $mode_system System: [S]hutdown, [R]estart, [e]xit, [l]ock, [s]uspend
 bindsym $mod+x mode "$mode_system"
 mode "$mode_system" {
-    bindsym s exec poweroff
-    bindsym r exec reboot
+    bindsym Shift+s exec poweroff
+    bindsym Shift+r exec reboot
     bindsym e exit
+    bindsym l exec i3lock; mode "default"
+    bindsym s exec systemctl suspend; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+x mode "default"
