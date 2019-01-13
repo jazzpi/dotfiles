@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CFG_DIR="~/.config/i3/.local/randr_cfgs"
+CFG_DIR="$HOME/.config/i3/.local/randr_cfgs"
 
 function save_cfg {
     if [ -z "$1" ]; then
@@ -14,7 +14,7 @@ function save_cfg {
     sed_pattern+='\([[:digit:]]*\)/\([[:digit:]]*\)x'  # width (PIXELxMM)
     sed_pattern+='\([[:digit:]]*\)/\([[:digit:]]*\)+'  # height (PIXELxMM)
     sed_pattern+='\([[:digit:]]*\)+\([[:digit:]]*\).*' # offset (horiz+vert)
-    local sed_replacement='\1 --mode \2x\4 --fbmm \3x\5'
+    local sed_replacement='\1 --mode \2x\4 --fbmm \3x\5 --pos \6x\7'
     local sed_cmd="s=$sed_pattern=$sed_replacement="
 
     ## Explanation of the following command (line-by-line)
