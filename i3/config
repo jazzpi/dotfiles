@@ -206,6 +206,17 @@ mode "$mode_display" {
     bindsym $mode+Control+d mode "default"
 }
 
+set $mode_system System: [s]hutdown, [r]estart, [e]xit
+bindsym $mod+x mode "$mode_system"
+mode "$mode_system" {
+    bindsym s exec poweroff
+    bindsym r exec reboot
+    bindsym e exit
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+x mode "default"
+}
+
 bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
