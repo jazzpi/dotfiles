@@ -1,5 +1,8 @@
 # i3 config file (v4)
 
+# Restore default screen configuration before doing anything else
+exec ~/.config/i3/scripts/randr.bash restore default
+
 # Use super as modkey
 set $mod Mod4
 
