@@ -3,6 +3,7 @@ DOTFILES_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
 I3_DIR = ~/.config/i3
+I3STATUS_DIR = ~/.config/i3status
 
 install = \
     echo "Installing $(1)"; \
@@ -38,6 +39,7 @@ all: bash emacs tmux i3 awesome nvim xresources zsh spacemacs
 i3:
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
+	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
 
 .PHONY: emacs
 emacs:
