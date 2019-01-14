@@ -12,8 +12,20 @@
 
 ## UTIL
 
+# Get actual directory the bashrc is in
+# https://stackoverflow.com/a/246128
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 function cmd_exists {
     command -v "$1" &>/dev/null
+}
+function perr {
+    >&2 echo $@
 }
 
 ## PROMPT
@@ -88,13 +100,8 @@ if cmd_exists rustc; then
     export RUST_BACKTRACE=1
     export RUST_SRC_PATH="$(rustc --print sysroot)"/lib/rustlib/src/rust/src
 fi
-alias la="ls -lAh"
-alias ll="ls -lh"
-alias lsa="ls -lah"
-alias l="ls -A --group-directories-first"
-alias uds="udisksctl status"
-alias udm="udisksctl mount -b"
-alias udu="udisksctl unmount -b"
+. "$DIR/aliases.bash"
+. "$DIR/ros.bash"
 
 ## MISC
 
@@ -113,7 +120,12 @@ elif cmd_exists lesspipe.sh; then
     # Arch Linux, run to set up
     lesspipe.sh >/dev/null
 fi
-cmd_exists lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
+# Add an 'ag' function that behaves sort of like ag if it isn't installed
+if ! cmd_exists ag; then
+    function ag {
+        grep -rni --exclude-dir build --exclude-dir .git -- "$@"
+    }
+fi
 
 # Ensure that the last command in the bashrc was successful, so the prompt isn't red
 true

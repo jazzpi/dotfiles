@@ -2,38 +2,62 @@ DOTFILES_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
-
-DIRS = $(AWESOME_DIR) $(NVIM_DIR)
+I3_DIR = ~/.config/i3
+I3STATUS_DIR = ~/.config/i3status
 
 install = \
+    echo "Installing $(1)"; \
     mkdir -p $$(dirname $(2)) && \
     if [ ! $$(readlink -f $(2)) -ef $(DOTFILES_DIR)/$(1) ]; then \
         ln -s $(DOTFILES_DIR)/$(1) $(2); \
     fi
 
-$(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
-$(info )
+# Don't output commands unless run with `make VERBOSE=1`
+$(VERBOSE).SILENT:
+
+# Print help if no target is specified
 
 .PHONY: default
-default: tmux bash
+default: help
 
-.PHONY: extended
-extended: awesome tmux bash zsh
+help:
+	@echo "Choose a target to install from:"
+	@echo "    bash emacs tmux i3 awesome nvim xresources zsh spacemacs"
+
+# Print only if we aren't executing the help target
+ifneq ($(MAKECMDGOALS),help)
+ifneq ($(MAKECMDGOALS),)
+$(info If you get a "Failed to create symbolic link: File exists", please backup/remove the offending file and rerun.)
+$(info )
+endif
+endif
 
 .PHONY: all
-all: awesome nvim xresources tmux zsh spacemacs bash
+all: bash emacs tmux i3 awesome nvim xresources zsh spacemacs
 
-$(DIRS):
-	mkdir -p $@
+.PHONY: i3
+i3:
+	$(call install,i3/config,$(I3_DIR)/config)
+	$(call install,i3/scripts,$(I3_DIR)/scripts)
+	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
+
+.PHONY: emacs
+emacs:
+	@echo "Downloading Emacs DOOM..."
+	git clone -b develop https://github.com/hlissner/doom-emacs ~/.emacs.d
+	@echo "Downloading DOOM config..."
+	git clone git@github.com:jazzpi/doom-d.git ~/.doom.d
+	@echo "Installing DOOM"
+	cd ~/.emacs.d && make install
 
 .PHONY: awesome
-awesome: $(AWESOME_DIR)
+awesome:
 	$(call install,awesome/rc.lua,$(AWESOME_DIR)/rc.lua)
 	$(call install,awesome/mywidgets,$(AWESOME_DIR)/mywidgets)
 	$(call install,awesome/themes/jazzpi,$(AWESOME_DIR)/themes/jazzpi)
 
 .PHONY: nvim
-nvim: $(NVIM_DIR)
+nvim:
 	$(call install,nvim/init.vim,$(NVIM_DIR)/init.vim)
 	$(call install,nvim/ftplugin/markdown.vim,$(NVIM_DIR)/ftplugin/markdown.vim)
 	$(call install,nvim/ftplugin/tex.vim,$(NVIM_DIR)/ftplugin/tex.vim)
