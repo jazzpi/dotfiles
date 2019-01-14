@@ -120,6 +120,12 @@ elif cmd_exists lesspipe.sh; then
     # Arch Linux, run to set up
     lesspipe.sh >/dev/null
 fi
+# Add an 'ag' function that behaves sort of like ag if it isn't installed
+if ! cmd_exists ag; then
+    function ag {
+        grep -rni --exclude-dir build --exclude-dir .git -- "$@"
+    }
+fi
 
 # Ensure that the last command in the bashrc was successful, so the prompt isn't red
 true
