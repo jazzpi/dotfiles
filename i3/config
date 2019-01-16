@@ -231,13 +231,14 @@ bindsym $mod+r mode "resize"
 bar {
     status_command py3status
     position top
-    tray_output primary
     font pango:DejaVu Sans Mono, FontAwesome, github-octicons 8
 
     colors {
-        focused_background "#000000"
         background "#333333"
+        statusline "#aaaaaa"
+        focused_statusline "#ffffff"
 
-        active_workspace "#333333" "#444444" "#ffffff"
+        active_workspace "#333333" "#444444" "#aaaaaa"
+        inactive_workspace "#222222" "#222222" "#999999"
     }
 }
