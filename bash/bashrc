@@ -91,15 +91,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-## PATH/ALIASES
+## ENVIRONMENT/ALIASES
 
-export PATH="$HOME/bin:$PATH"
-export VISUAL="emacsclient -c"
-export EDITOR="emacsclient -t"
-if cmd_exists rustc; then
-    export RUST_BACKTRACE=1
-    export RUST_SRC_PATH="$(rustc --print sysroot)"/lib/rustlib/src/rust/src
-fi
 . "$DIR/aliases.bash"
 . "$DIR/ros.bash"
 

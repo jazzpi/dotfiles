@@ -22,7 +22,7 @@ default: help
 
 help:
 	@echo "Choose a target to install from:"
-	@echo "    bash emacs tmux i3 awesome nvim xresources zsh spacemacs"
+	@echo "    bash profile emacs tmux i3 awesome nvim xresources zsh spacemacs"
 
 # Print only if we aren't executing the help target
 ifneq ($(MAKECMDGOALS),help)
@@ -33,7 +33,11 @@ endif
 endif
 
 .PHONY: all
-all: bash emacs tmux i3 awesome nvim xresources zsh spacemacs
+all: bash profile emacs tmux i3 awesome nvim xresources zsh spacemacs
+
+.PHONY: profile
+profile:
+	$(call install,profile,~/.profile)
 
 .PHONY: i3
 i3:
@@ -85,6 +89,6 @@ spacemacs:
 	$(call install,spacemacs,~/.spacemacs)
 
 .PHONY: bash
-bash:
+bash: profile
 	$(call install,bash/bashrc,~/.bashrc)
 	$(call install,bash/inputrc,~/.inputrc)
