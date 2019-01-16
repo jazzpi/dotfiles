@@ -141,6 +141,8 @@ for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 # Start some applications on startup
 exec thunderbird
 exec emacs --daemon
+exec --no-startup-id nm-applet
+exec --no-startup-id ibus-daemon
 # If we start spotify straightaway, it hangs (because DBus isn't started?)
 exec --no-startup-id bash -c 'sleep 1 && spotify > ~/.spot-log 2> ~/.spot-err'
 # `chromium` is called `chromium-browser` on Ubuntu
