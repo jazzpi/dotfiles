@@ -14,3 +14,8 @@ fi
 . /opt/ros/$ROS_DISTRO/setup.bash
 # Import configuration for default workspace at ~/catkin_ws
 [ -f ~/catkin_ws/devel/setup.bash ] && source ~/catkin_ws/devel/setup.bash
+# Start roscore
+cmd_exists tmux &&
+    { ls ~/.ros/roscore-*.pid &>/dev/null &&
+          kill -0 $(cat ~/.ros/roscore-*.pid) &>/dev/null; } ||
+    { tmux new-session -d -s "roscore" roscore && echo "roscore started"; }
