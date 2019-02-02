@@ -230,7 +230,7 @@ mode "$mode_system" {
     bindsym Shift+s exec poweroff
     bindsym Shift+r exec reboot
     bindsym e exit
-    bindsym l exec i3lock; mode "default"
+    bindsym l exec ~/.config/i3/scripts/lock.bash; mode "default"
     bindsym s exec systemctl suspend; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
