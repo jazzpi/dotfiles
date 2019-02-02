@@ -43,6 +43,7 @@ profile:
 i3:
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
+	$(call install,i3/theme,$(I3_DIR)/theme)
 	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
 
 .PHONY: emacs

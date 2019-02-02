@@ -1,7 +1,10 @@
 # i3 config file (v4)
 
 # Restore default screen configuration before doing anything else
-exec ~/.config/i3/scripts/randr.bash restore default
+exec --no-startup-id ~/.config/i3/scripts/randr.bash restore default
+
+# Display the background
+exec --no-startup-id display -window root ~/.config/i3/theme/background.png
 
 # Use super as modkey
 set $mod Mod4
