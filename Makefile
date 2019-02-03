@@ -40,11 +40,13 @@ profile:
 	$(call install,profile,~/.profile)
 
 .PHONY: i3
-i3:
+i3: xresources
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
-	$(call install,i3/theme,$(I3_DIR)/theme)
+	$(call install,i3/themes,$(I3_DIR)/themes)
 	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
+# Install dark theme as default
+	i3/scripts/theme.bash install_only dark
 
 .PHONY: emacs
 emacs:

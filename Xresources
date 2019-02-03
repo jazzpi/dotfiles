@@ -41,3 +41,9 @@ URxvt.iso14755_52: false
 ! -----------------
 URxvt.inputMethod: ibus
 URxvt.preeditType: OverTheSpot
+
+! i3wm configuration
+! ==================
+! Since everything should be configurable in the theme, the entire configuration
+! is in the theme. So all we do here is include it.
+#include ".config/i3/.local/current-theme"
