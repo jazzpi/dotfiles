@@ -1,7 +1,22 @@
+! -*- mode: conf-xdefaults; eval: (rainbow-mode); eval: (hl-line-mode -1) -*-
+! Font
+! ----
 i3wm.font: pango:DejaVu Sans Mono, FontAwesome 9
+
+! Bar
+! ---
 i3wm.bar.background: "#333333"
 i3wm.bar.statusline: "#aaaaaa"
 i3wm.bar.focused_background: "#333333"
 i3wm.bar.focused_statusline: "#ffffff"
 i3wm.bar.active_workspace: "#333333" "#444444" "#aaaaaa"
 i3wm.bar.inactive_workspace: "#222222" "#222222" "#999999"
+
+! Window Decoration
+! -----------------
+i3wm.client.focused:          "#2E4E64" "#1A3E5A" "#ffffff" "#155D97" "#1A3E5A"
+i3wm.client.focused_inactive: "#575757" "#40464C" "#ffffff" "#707A7C" "#40464C"
+i3wm.client.unfocused:        "#333333" "#222222" "#888888" "#292d2e" "#222222"
+i3wm.client.urgent:           "#2f343a" "#900000" "#ffffff" "#900000" "#900000"
+i3wm.client.placeholder:      "#000000" "#0c0c0c" "#ffffff" "#000000" "#0c0c0c"
+i3wm.client.background:       "#ffffff"

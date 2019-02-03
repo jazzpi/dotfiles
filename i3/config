@@ -273,3 +273,18 @@ bar {
         binding_mode $barbm
     }
 }
+
+# Window decoration colors
+set_from_resource $clientfoc i3wm.client.focused          "#4c7899" "#285577" "#ffffff" "#2e9ef4" "#285577"
+set_from_resource $clientfin i3wm.client.focused_inactive "#333333" "#5f676a" "#ffffff" "#484e50" "#5f676a"
+set_from_resource $clientunf i3wm.client.unfocused        "#333333" "#222222" "#888888" "#292d2e" "#222222"
+set_from_resource $clienturg i3wm.client.urgent           "#2f343a" "#900000" "#ffffff" "#900000" "#900000"
+set_from_resource $clientplh i3wm.client.placeholder      "#000000" "#0c0c0c" "#ffffff" "#000000" "#0c0c0c"
+set_from_resource $clientbg i3wm.client.background       "#ffffff"
+client.focused          $clientfoc
+client.focused_inactive $clientfin
+client.unfocused        $clientunf
+client.urgent           $clienturg
+client.placeholder      $clientplh
+
+client.background       $clientbg
