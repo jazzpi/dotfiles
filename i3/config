@@ -22,8 +22,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# Like dmenu, but only display applications shipping a .desktop file
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id ~/.config/i3/scripts/launcher.bash
 
 # change focus
 # vim-like
@@ -140,6 +139,9 @@ assign [class="^Eclipse$"] number $ws2
 assign [class="^jetbrains"] number $ws2
 assign [class="^Thunderbird$"] number $ws4
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
+
+# The launcher script assigns a custom class to the fzf terminal
+for_window [class="^fzf$"] floating enable, border none, move position center
 
 # Start some applications on startup
 exec thunderbird
