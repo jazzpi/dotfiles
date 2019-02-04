@@ -9,7 +9,8 @@ i3wm.bar.background: "#333333"
 i3wm.bar.statusline: "#aaaaaa"
 i3wm.bar.focused_background: "#333333"
 i3wm.bar.focused_statusline: "#ffffff"
-i3wm.bar.active_workspace: "#333333" "#444444" "#aaaaaa"
+i3wm.bar.focused_workspace:  "#4c7899" "#285577" "#ffffff"
+i3wm.bar.active_workspace:   "#333333" "#444444" "#aaaaaa"
 i3wm.bar.inactive_workspace: "#222222" "#222222" "#999999"
 
 ! Window Decoration
