@@ -4,7 +4,7 @@ I3_THEME_DIR="$HOME/.config/i3/themes"
 I3_LOCAL_DIR="$HOME/.config/i3/.local"
 
 function usage {
-    >&2 echo "Usage: ${BASH_SOURCE[0]} (list|reload) | load [THEME] | install_only THEME"
+    >&2 echo "Usage: ${BASH_SOURCE[0]} (list|reload) | load [THEME] | install_only THEME | getres NAME DEFAULT"
     exit 1
 }
 
@@ -26,12 +26,21 @@ function install_theme {
 function reload_theme {
     xrdb -override "$I3_LOCAL_DIR/current-theme/resources"
     local img=$(sed -e '/i3wm\.background_image/s/[^:]*: //p' -n ~/.config/i3/.local/current-theme/resources)
-    &>/dev/null pgrep i3 && i3-msg reload
+    &>/dev/null pgrep i3 && i3-msg restart
     display -window root ${img/#\~/$HOME}
 }
 
 function list_themes {
     [ -d "$I3_THEME_DIR" ] && ls "$I3_THEME_DIR" | paste -sd " " -
+}
+
+function get_res {
+    local line=$(grep -F "$1" ~/.config/i3/.local/current-theme/resources)
+    if [ -n "$line" ]; then
+        echo ${line##[^:]* }
+    else
+        echo "$2"
+    fi
 }
 
 case "$1" in
@@ -65,6 +74,12 @@ case "$1" in
         usage
     fi
     list_themes
+    ;;
+"getres")
+    if [ "$#" -ne 3 ]; then
+        usage
+    fi
+    get_res "$2" "$3"
     ;;
 *)
     usage

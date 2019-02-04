@@ -14,6 +14,11 @@ i3wm.bar.focused_statusline: "#000000"
 i3wm.bar.focused_workspace:  "#1885DC" "#698EE1" "#ffffff"
 i3wm.bar.active_workspace:   "#949494" "#949494" "#222222"
 i3wm.bar.inactive_workspace: "#bbbbbb" "#bbbbbb" "#555555"
+i3wm.bar.color_good: "#009900"
+i3wm.bar.color_charging: "#838900"
+i3wm.bar.color_bad: "#FF0000"
+i3wm.bar.color_degraded: "#D68500"
+i3wm.bar.color_separator: "#333333"
 
 ! Window Decoration
 ! -----------------
