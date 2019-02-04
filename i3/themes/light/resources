@@ -1,7 +1,9 @@
 ! -*- mode: conf-xdefaults; eval: (rainbow-mode); eval: (hl-line-mode -1) -*-
-! Font
-! ----
+! General
+! -------
 i3wm.font: pango:DejaVu Sans Mono, FontAwesome 9
+i3wm.background_image: ~/.config/i3/themes/light/background.png
+i3wm.lockscreen_image: ~/.config/i3/themes/light/background-blur.png
 
 ! Bar
 ! ---
