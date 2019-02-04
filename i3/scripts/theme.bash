@@ -19,11 +19,11 @@ function install_theme {
     fi
 
     mkdir -p "$I3_LOCAL_DIR"
-    ln -s -f "$I3_THEME_DIR/$1/resources" "$I3_LOCAL_DIR/current-theme"
+    ln -s -f "$I3_THEME_DIR/$1" "$I3_LOCAL_DIR/current-theme"
 }
 
 function reload_theme {
-    xrdb -override "$I3_LOCAL_DIR/current-theme"
+    xrdb -override "$I3_LOCAL_DIR/current-theme/resources"
     &>/dev/null pgrep i3 && i3-msg reload
 }
 
