@@ -1,27 +1,21 @@
 #!/bin/bash
 
-# Gather data directories according to
-# https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
-IFS=: read -r -d '' -a data_dirs < <(printf '%s:\0' "$XDG_DATA_DIRS")
-if [ -z "$XDG_DATA_DIRS" ]; then
-    data_dirs=("/usr/local/share/" "/usr/share")
-fi
-if [ -n "$XDG_DATA_HOME" ]; then
-    data_dirs+=("$XDG_DATA_HOME")
+if [ $# -eq 0 ]; then
+    # Launch an XTerm running fzf. We need to capture its output as well, so we
+    # tee it to a FIFO.
+    inpipe=$(mktemp -u)
+    mkfifo -m 600 "$inpipe"
+    outpipe=$(mktemp -u)
+    mkfifo -m 600 "$outpipe"
+
+    xterm -fa "DejaVu Sans Mono" -fs 9 -bg black -fg white -class fzf -e "$HOME/.config/i3/scripts/fzf.bash '$inpipe' '$outpipe'" &
+    cat /dev/stdin >"$inpipe"
+    cat "$outpipe"
+
+    rm "$inpipe"
+    rm "$outpipe"
+elif [ $# -eq 2 ]; then
+    cat "$1" | fzf --reverse | tee "$2"
 else
-    data_dirs+=("$HOME/.local/share")
-fi
-
-# Gather .desktop files
-fzf_data=""
-for d in "${data_dirs[@]}"; do
-    if [ -d "$d/applications" ]; then
-        fzf_data+=$(grep -R "^Name" "$d/applications" | sort -u -t: -k1,1 | sed -e "s/Name.*=//")
-        fzf_data+=$'\n'
-    fi
-done
-
-selected=$(echo "$fzf_data" | fzf --delimiter=":" --with-nth=2.. --reverse | sed -e "s/:.*//")
-if [ -n "$selected" ]; then
-    gtk-launch "$(basename "$selected")"
+    >&2 echo "Usage: ${BASH_SOURCE[0]} [inpipe outpipe]"
 fi
