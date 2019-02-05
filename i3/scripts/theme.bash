@@ -27,7 +27,7 @@ function reload_theme {
     xrdb -override "$I3_LOCAL_DIR/current-theme/resources"
     local img=$(sed -e '/i3wm\.background_image/s/[^:]*: //p' -n ~/.config/i3/.local/current-theme/resources)
     &>/dev/null pgrep i3 && i3-msg restart
-    display -window root ${img/#\~/$HOME}
+    feh --bg-scale ${img/#\~/$HOME}
 }
 
 function list_themes {

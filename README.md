@@ -25,8 +25,10 @@ DOOM Emacs and my DOOM config are downloaded and installed by `make emacs`.
 My i3bar makes use of [py3status](https://py3status.readthedocs.io/en/latest/),
 which you will need to install.
 
+The background is displayed using `feh`.
+
 If [fzf](https://github.com/junegunn/fzf) is installed, it will be used instead
-of `i3-dmenu-desktop`.
+of `dmenu`.
 
 ## bash
 
