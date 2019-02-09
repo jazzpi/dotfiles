@@ -144,7 +144,7 @@ for_window [class="chromium-browser"] move --no-auto-back-and-forth to workspace
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 
 # The launcher script assigns a custom class to the fzf terminal
-for_window [class="^fzf$"] floating enable, border none, move position center
+for_window [class="^fzf$"] floating enable, border pixel, move position center
 
 # Start some applications on startup
 exec thunderbird
