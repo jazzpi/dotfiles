@@ -23,11 +23,51 @@ function install_theme {
     ln -s -f "$I3_THEME_DIR/$1" "$I3_LOCAL_DIR/current-theme"
 }
 
+function gnome_terminal_theme {
+    local i=0
+    local profile
+    for p in $(dconf list /org/gnome/terminal/legacy/profiles:/ | grep '/$'); do
+        local name=$(dconf read /org/gnome/terminal/legacy/profiles:/${p}visible-name | sed -e "s/^'//;s/'\$//")
+        if [ "$name" = "$1" ]; then
+            profile="$p"
+            break
+        fi
+        i=$(($i + 1))
+    done
+    local keystroke="Menu Up Up Up Right"
+    for j in $(seq 2 $i); do
+        keystroke="$keystroke Down"
+    done
+    xdotool search --class 'Gnome-terminal' | xargs -n1 -I{} sh -c "xwininfo -id {} | grep -q 'Map State: IsUnMapped' || (echo {}; xdotool windowactivate --sync {} key Menu $keystroke Return)"
+}
+
 function reload_theme {
-    xrdb -override "$I3_LOCAL_DIR/current-theme/resources"
-    local img=$(sed -e '/i3wm\.background_image/s/[^:]*: //p' -n ~/.config/i3/.local/current-theme/resources)
-    &>/dev/null pgrep i3 && i3-msg restart
-    feh --bg-scale ${img/#\~/$HOME}
+    (
+        echo "# Reloading resources..."
+        echo "0"
+        xrdb -override "$I3_LOCAL_DIR/current-theme/resources"
+        echo "# Restarting i3..."
+        echo "25"
+        if pgrep i3 &>/dev/null; then
+            # Wait for i3 to restart, otherwise Xorg gets very confused
+            i3-msg restart
+            until i3-msg -t get_version &>/dev/null; do
+                sleep 0.1
+            done
+            sleep 0.5
+        fi
+        echo "# Reloading Emacs theme..."
+        echo "50"
+        nohup emacsclient -e "(load-theme '$(get_res 'emacs.theme'))" &>/dev/null &
+        echo "# Reloading wallpaper..."
+        echo "75"
+        local img=$(get_res 'i3wm.background_image')
+        nohup feh --bg-scale ${img/#\~/$HOME} &>/dev/null &
+        # echo "# Reloading gnome-terminal theme..."
+        # echo "80"
+        # gnome_terminal_theme $(get_res 'gnome-terminal.theme')
+        echo "100"
+    ) | zenity --progress --title="Loading Theme..." --no-cancel --auto-close
 }
 
 function list_themes {

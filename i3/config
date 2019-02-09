@@ -232,8 +232,8 @@ mode "$mode_display" {
 set $mode_theme Thme: [l]oad, [r]eload
 bindsym $mod+Control+t mode "$mode_theme"
 mode "$mode_theme" {
-    bindsym l exec ~/.config/i3/scripts/theme.bash load; mode "default"
-    bindsym r exec ~/.config/i3/scripts/theme.bash reload; mode "default"
+    bindsym l exec sh -c 'nohup ~/.config/i3/scripts/theme.bash load &>/dev/null'; mode "default"
+    bindsym r exec sh -c 'nohup ~/.config/i3/scripts/theme.bash reload &>/dev/null'; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"
     bindsym $mod+Control+t mode "default"
