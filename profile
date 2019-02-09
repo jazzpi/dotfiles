@@ -11,3 +11,7 @@ if command -v rustc &>/dev/null; then
     export RUST_BACKTRACE=1
     export RUST_SRC_PATH="$(rustc --print sysroot)"/lib/rustlib/src/rust/src
 fi
+
+if [ -n "$BASH_VERSION" ]; then
+    . "$HOME/.bashrc"
+fi
