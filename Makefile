@@ -4,6 +4,11 @@ AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
 I3_DIR = ~/.config/i3
 I3STATUS_DIR = ~/.config/i3status
+MPDRIS2_DIR = ~/.config/mpDris2
+SYSTEMD_USER_DIR = ~/.config/systemd/user
+
+# Default value if $XDG_DATA_HOME is not set in the shell
+XDG_DATA_HOME ?= ~/.local/share
 
 install = \
     echo "Installing $(1)"; \
@@ -17,12 +22,14 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
+TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs
+
 .PHONY: default
 default: help
 
 help:
 	@echo "Choose a target to install from:"
-	@echo "    bash profile emacs tmux i3 awesome nvim xresources zsh spacemacs"
+	@echo "    $(TARGETS)"
 
 # Print only if we aren't executing the help target
 ifneq ($(MAKECMDGOALS),help)
@@ -32,8 +39,11 @@ $(info )
 endif
 endif
 
+$(SYSTEMD_USER_DIR):
+	mkdir -p $(SYSTEMD_USER_DIR)
+
 .PHONY: all
-all: bash profile emacs tmux i3 awesome nvim xresources zsh spacemacs
+all: $(TARGETS)
 
 .PHONY: profile
 profile:
@@ -48,6 +58,11 @@ i3: xresources
 # Install dark theme as default
 	i3/scripts/theme.bash install_only dark
 
+.PHONY: mpdris2
+mpdris2: $(SYSTEMD_USER_DIR)
+	$(call install,mpDris2/mpDris2.conf,$(MPDRIS2_DIR)/mpDris2.conf)
+	$(call install,mpDris2/mpDris2.service,$(SYSTEMD_USER_DIR)/mpDris2.service)
+
 .PHONY: emacs
 emacs:
 	@echo "Downloading Emacs DOOM..."
@@ -56,6 +71,10 @@ emacs:
 	git clone git@github.com:jazzpi/doom-d.git ~/.doom.d
 	@echo "Installing DOOM"
 	cd ~/.emacs.d && make install
+
+.PHONY: applications
+applications:
+	$(call install,applications,$(XDG_DATA_HOME)/applications/from_dotfiles)
 
 .PHONY: awesome
 awesome:
