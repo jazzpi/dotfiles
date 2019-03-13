@@ -27,6 +27,8 @@ which you will need to install.
 
 The background is displayed using `feh`.
 
+The `mpris` status depends on the pip package `pydbus`.
+
 If [fzf](https://github.com/junegunn/fzf) is installed, it will be used instead
 of `dmenu`.
 

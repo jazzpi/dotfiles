@@ -2,6 +2,7 @@ export PATH="$HOME/bin:$HOME/.pyenv/bin:$PATH"
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
 export TERMINAL="gnome-terminal"
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
 if command -v pyenv &>/dev/null; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
