@@ -22,7 +22,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs top
+TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs top gdb
 
 .PHONY: default
 default: help
@@ -118,3 +118,7 @@ spacemacs:
 bash: profile
 	$(call install,bash/bashrc,~/.bashrc)
 	$(call install,bash/inputrc,~/.inputrc)
+
+.PHONY: gdb
+gdb:
+	$(call install,gdbinit,~/.gdbinit)
