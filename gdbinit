@@ -49,3 +49,4 @@ set print vtbl on
 set pagination off
 
 source ~/.gdbinit.py
+source ~/.local/lib/python2.7/site-packages/voltron/entry.py

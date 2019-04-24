@@ -120,6 +120,9 @@ bash: profile
 	$(call install,bash/inputrc,~/.inputrc)
 
 .PHONY: gdb
-gdb:
+gdb: voltron
 	$(call install,gdbinit,~/.gdbinit)
 	$(call install,gdbinit.py,~/.gdbinit.py)
+
+voltron:
+	git submodule update --init voltron && cd voltron && sed -e "s/^GDB=.*/GDB=$(command -v arm-none-eabi-gdb)" -i install.sh && ./install.sh
