@@ -95,6 +95,7 @@ fi
 
 . "$DIR/aliases.bash"
 . "$DIR/ros.bash"
+. "$DIR/crossplatform.bash"
 
 ## MISC
 
