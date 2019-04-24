@@ -122,3 +122,4 @@ bash: profile
 .PHONY: gdb
 gdb:
 	$(call install,gdbinit,~/.gdbinit)
+	$(call install,gdbinit.py,~/.gdbinit.py)

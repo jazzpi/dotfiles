@@ -45,3 +45,7 @@ set print static-members on
 set print pascal_static-members on
 # Pretty-print vtables
 set print vtbl on
+# Don't ask me to continue
+set pagination off
+
+source ~/.gdbinit.py
