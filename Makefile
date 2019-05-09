@@ -22,7 +22,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs top gdb
+TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git
 
 .PHONY: default
 default: help
@@ -126,3 +126,8 @@ gdb: voltron
 
 voltron:
 	git submodule update --init voltron && cd voltron && sed -e "s/^GDB=.*/GDB=$(command -v arm-none-eabi-gdb)" -i install.sh && ./install.sh
+
+.PHONY: git
+git:
+	$(call install,gitignore_global,~/.gitignore_global)
+	git config --global core.excludesfile ~/.gitignore_global
