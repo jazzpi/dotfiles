@@ -48,5 +48,13 @@ set print vtbl on
 # Don't ask me to continue
 set pagination off
 
+## HISTORY SETTINGS
+set history save on
+set history size 10000
+# Remove the previous command if it is the same as the current
+set history remove-duplicates 1
+# Save in ~/.gdb_history by default
+set history filename ~/.gdb_history
+
 source ~/.gdbinit.py
 source ~/.local/lib/python2.7/site-packages/voltron/entry.py
