@@ -58,3 +58,12 @@ set history filename ~/.gdb_history
 
 source ~/.gdbinit.py
 source ~/.local/lib/python2.7/site-packages/voltron/entry.py
+
+## UTILITY FUNCTIONS
+define pstack
+    set $start = $sp + (($arg0 -1)*4)
+    while ($start >= $sp)
+        x/1wx $start
+        set $start = $start - 4
+    end
+end
