@@ -10,6 +10,21 @@ else
     return
 fi
 
+function cb {
+    # Subshell so we don't actually cd
+    (
+        cd -P ~/catkin_ws
+        catkin build "$@"
+        # Return the exit code of catkin build so we can do things like
+        # `cb && roslaunch ...`
+        local ret=$?
+        rm -f compile_commands.json
+        cat build/**/compile_commands.json > compile_commands.json && \
+            sed -i -e ':a;N;$!ba;s/\]\[/,/g' compile_commands.json
+        exit $ret
+    )
+}
+
 # Import ROS configuration
 . /opt/ros/$ROS_DISTRO/setup.bash
 # Import configuration for default workspace at ~/catkin_ws
