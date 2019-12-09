@@ -25,12 +25,23 @@ function cb {
     )
 }
 
-# Import ROS configuration
-. /opt/ros/$ROS_DISTRO/setup.bash
-# Import configuration for default workspace at ~/catkin_ws
-[ -f ~/catkin_ws/devel/setup.bash ] && source ~/catkin_ws/devel/setup.bash
-# Start roscore
-cmd_exists tmux &&
-    { ls ~/.ros/roscore-*.pid &>/dev/null &&
-          kill -0 $(cat ~/.ros/roscore-*.pid) &>/dev/null; } ||
-    { tmux new-session -d -s "roscore" roscore && echo "roscore started"; }
+function ros_setup {
+    # Import ROS configuration
+    . /opt/ros/$ROS_DISTRO/setup.bash
+    # Import configuration for default workspace at ~/catkin_ws
+    [ -f ~/catkin_ws/devel/setup.bash ] && source ~/catkin_ws/devel/setup.bash
+    # Start roscore
+    cmd_exists tmux &&
+        { ls ~/.ros/roscore-*.pid &>/dev/null &&
+            kill -0 $(cat ~/.ros/roscore-*.pid) &>/dev/null; } ||
+        { tmux new-session -d -s "roscore" roscore && echo "roscore started"; }
+
+    # Check how much space the logs are using up
+    MIN_LOG_SPACE_FOR_WARN=100M
+    log_space=$(rosclean check)
+    set -- $log_space
+    min_log_space=$(echo -e "$1\n$MIN_LOG_SPACE_FOR_WARN" | sort -h | head -1)
+    if [ "$min_log_space" = "$MIN_LOG_SPACE_FOR_WARN" ]; then
+        echo $'\e[1;33m'"$log_space"$'\nTo clean, run rosclean purge.\e[0m\n'
+    fi
+}
