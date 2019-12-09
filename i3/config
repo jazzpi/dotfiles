@@ -233,6 +233,8 @@ mode "$mode_display" {
     bindsym $mod+Control+d mode "default"
 }
 
+bindsym $mod+Control+l exec ~/.config/i3/scripts/layout_manager.sh
+
 set $mode_theme Thme: [l]oad, [r]eload
 bindsym $mod+Control+t mode "$mode_theme"
 mode "$mode_theme" {
