@@ -1,3 +1,10 @@
 # -*- mode: gitignore -*-
 
 .ccls-cache/
+.auctex-auto/
+compile_commands.json
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
