@@ -21,6 +21,7 @@ i3wm.bar.color_charging: "#838900"
 i3wm.bar.color_bad: "#FF0000"
 i3wm.bar.color_degraded: "#D68500"
 i3wm.bar.color_separator: "#333333"
+i3wm.bar.color_disabled: "#666666"
 
 ! Window Decoration
 ! -----------------
