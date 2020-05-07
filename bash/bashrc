@@ -90,8 +90,10 @@ HISTSIZE=5000
 HISTFILESIZE=10000
 # Append to history file, so we can share history across sessions
 shopt -s histappend
-# Save/reread history /after/ each command (TODO: once Bash 4.4 is on Ubuntu, use PS0 instead)
-PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+# Save history after reading, but before executing a command
+PS0="$PS0\$(history -a)"
+# Reread history before showing the prompt
+PROMPT_COMMAND="history -c; history -r; $PROMPT_COMMAND"
 
 ## COMPLETION/EXPANSION
 
