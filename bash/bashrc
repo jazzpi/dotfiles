@@ -27,6 +27,18 @@ function cmd_exists {
 function perr {
     >&2 echo $@
 }
+function vercmp() {
+  if [ "$1" = "$2" ]; then
+    echo "0"
+    return
+  fi
+  local lesser="$(echo -e "$1\n$2" | sort -V | head -n1)"
+  if [ "$1" = "$lesser" ]; then
+    echo "-1"
+  else
+    echo "1"
+  fi
+}
 
 ## PROMPT
 
@@ -90,10 +102,15 @@ HISTSIZE=5000
 HISTFILESIZE=10000
 # Append to history file, so we can share history across sessions
 shopt -s histappend
-# Save history after reading, but before executing a command
-PS0="$PS0\$(history -a)"
-# Reread history before showing the prompt
-PROMPT_COMMAND="history -c; history -r; $PROMPT_COMMAND"
+if [ "$(vercmp "$BASH_VERSION" 4.4)" != "-1" ]; then
+  # Save history after reading, but before executing a command
+  PS0="$PS0\$(history -a)"
+  # Reread history before showing the prompt
+  PROMPT_COMMAND="history -c; history -r; $PROMPT_COMMAND"
+else
+  # Save/reread history /after/ each command
+  PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+fi
 
 ## COMPLETION/EXPANSION
 
