@@ -4,6 +4,7 @@ AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
 I3_DIR = ~/.config/i3
 I3STATUS_DIR = ~/.config/i3status
+DUNST_DIR = ~/.config/dunst
 MPDRIS2_DIR = ~/.config/mpDris2
 SYSTEMD_USER_DIR = ~/.config/systemd/user
 
@@ -22,7 +23,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux i3 mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git
+TARGETS = bash profile emacs tmux i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git
 
 .PHONY: default
 default: help
@@ -61,6 +62,10 @@ i3: xresources
 	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
 # Install dark theme as default
 	i3/scripts/theme.bash install_only dark
+
+.PHONY: dunst
+dunst:
+	$(call install,dunst/dunstrc,$(DUNST_DIR)/dunstrc)
 
 .PHONY: mpdris2
 mpdris2: $(SYSTEMD_USER_DIR)
