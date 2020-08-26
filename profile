@@ -1,6 +1,6 @@
 # -*- mode: shell-script -*-
 
-export PATH="$HOME/bin:$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:/usr/local-cuda-11.0/bin:$PATH"
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
 export TERMINAL="gnome-terminal"
