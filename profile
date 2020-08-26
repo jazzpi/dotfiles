@@ -1,3 +1,5 @@
+# -*- mode: shell-script -*-
+
 export PATH="$HOME/bin:$HOME/.pyenv/bin:$PATH"
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
