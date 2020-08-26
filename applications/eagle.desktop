@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=EAGLE
+GenericName=PCB Layouter
+MimeType=application/x-eagle-schematic;application/x-eagle-board;application/x-eagle-project;
+Exec=/opt/eagle-latest/eagle %F
+Icon=/opt/eagle-latest/bin/eagle-logo.png
+Type=Application
+Terminal=false
+Categories=Engineering;Electronics;
+Keywords=eagle;pcb;schematic;
