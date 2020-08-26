@@ -164,8 +164,7 @@ exec thunderbird
 exec emacs --daemon
 exec --no-startup-id nm-applet
 exec --no-startup-id ibus-daemon
-# If we start spotify straightaway, it hangs (because DBus isn't started?)
-exec --no-startup-id bash -c 'sleep 1 && spotify > ~/.spot-log 2> ~/.spot-err'
+exec --no-startup-id bash -c "~/.config/i3/scripts/spotify.bash"
 exec firefox
 # Start a terminal on WS 3
 exec --no-startup-id i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1"
