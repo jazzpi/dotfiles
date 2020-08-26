@@ -263,8 +263,8 @@ mode "$mode_theme" {
 set $mode_system System: [S]hutdown, [R]estart, [e]xit, [l]ock, [s]uspend
 bindsym $mod+x mode "$mode_system"
 mode "$mode_system" {
-    bindsym Shift+s exec poweroff
-    bindsym Shift+r exec reboot
+    bindsym Shift+s exec systemctl poweroff
+    bindsym Shift+r exec systemctl reboot
     bindsym e exit
     bindsym l exec ~/.config/i3/scripts/lock.bash; mode "default"
     bindsym s exec systemctl suspend; mode "default"
