@@ -1,10 +1,13 @@
 # -*- mode: gitignore -*-
 
+.mypy_cache/
 .ccls-cache/
 .auctex-auto/
+__pycache__/
 compile_commands.json
 *.aux
 *.fdb_latexmk
 *.fls
 *.out
 *.synctex.gz
+.python-version
