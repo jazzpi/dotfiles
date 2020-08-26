@@ -23,7 +23,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git
+TARGETS = bash profile emacs tmux i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git systemd
 
 .PHONY: default
 default: help
@@ -136,3 +136,7 @@ voltron:
 git:
 	$(call install,gitignore_global,~/.gitignore_global)
 	git config --global core.excludesfile ~/.gitignore_global
+
+.PHONY: systemd
+systemd:
+	$(call install,systemd/user,~/.config/systemd/user)
