@@ -1,6 +1,9 @@
 # -*- mode: shell-script -*-
 
 export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$HOME/perl5/bin:/usr/local-cuda-11.0/bin:/usr/local/llvm-10/bin:$PATH"
+if [ -d /mnt/c/WINDOWS ]; then
+   export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32:$PATH"
+fi
 export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
 export PERL_LOCAL_LIB_ROOT="$HOME/perl5:$PERL_LOCAL_LIB_ROOT"
 export PERL_MB_OPT="--install_base \"$HOME/perl5\""
