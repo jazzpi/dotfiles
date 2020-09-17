@@ -77,7 +77,8 @@ emacs:
 	@echo "Downloading Emacs DOOM..."
 	git clone -b develop https://github.com/hlissner/doom-emacs ~/.emacs.d
 	@echo "Downloading DOOM config..."
-	git clone git@github.com:jazzpi/doom-d.git ~/.doom.d
+	git clone https://github.com/jazzpi/doom-d.git ~/.doom.d
+	git -C ~/.emacs.d checkout $$(cat ~/.doom.d/.doom-version)
 	@echo "Installing DOOM"
 	cd ~/.emacs.d && bin/doom install
 
