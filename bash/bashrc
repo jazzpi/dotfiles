@@ -65,6 +65,11 @@ function _prompt_git_branch {
 PROMPT_COMMAND="PS1=\"╔═${_prompt_user} [${_prompt_dir}\$(_prompt_git_branch)]\n╚═${_prompt_time} $ \""
 if [ "${VTE_VERSION:-0}" -ge 3405 ]; then
     # Set terminal title & PWD in xterm (and gnome-terminal)
+    if [ -f /usr/lib/vte-urlencode-cwd ]; then
+        _VTE_URLENCODE_CWD=/usr/lib/vte-urlencode-cwd
+    elif [ -f /usr/libexec/vte-urlencode-cwd ]; then
+        _VTE_URLENCODE_CWD=/usr/libexec/vte-urlencode-cwd
+    fi
     function _prompt_vte {
         [ "${VTE_VERSION:-0}" -ge 3405 ] || return
         # Replace $HOME with ~
@@ -74,7 +79,7 @@ if [ "${VTE_VERSION:-0}" -ge 3405 ]; then
         # Title
         echo -ne "\033]0;$USER@$HOSTNAME:$pwd\033\\"
         # PWD
-        echo -ne "\033]7;file://$HOSTNAME$(/usr/lib/vte-urlencode-cwd)\033\\"
+        echo -ne "\033]7;file://$HOSTNAME$("$_VTE_URLENCODE_CWD")\033\\"
     }
     PROMPT_COMMAND="_prompt_vte;$PROMPT_COMMAND"
 fi
