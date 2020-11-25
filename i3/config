@@ -77,6 +77,9 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
+# toggle sticky mode
+bindsym $mod+p sticky toggle
+
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
@@ -159,6 +162,8 @@ for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 
 # The launcher script assigns a custom class to the fzf terminal
 for_window [class="^fzf$"] floating enable, border pixel, move position center
+
+for_window [title="Picture-in-Picture"] sticky enable
 
 # Start some applications on startup
 exec thunderbird
