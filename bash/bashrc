@@ -69,6 +69,8 @@ if [ "${VTE_VERSION:-0}" -ge 3405 ]; then
         _VTE_URLENCODE_CWD=/usr/lib/vte-urlencode-cwd
     elif [ -f /usr/libexec/vte-urlencode-cwd ]; then
         _VTE_URLENCODE_CWD=/usr/libexec/vte-urlencode-cwd
+    else
+        _VTE_URLENCODE_CWD=:
     fi
     function _prompt_vte {
         [ "${VTE_VERSION:-0}" -ge 3405 ] || return
