@@ -159,6 +159,7 @@ assign [class="^rviz$"] number $ws6
 for_window [class="^chromium-browser$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Firefox$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
+for_window [title="^Picture-in-Picture$"] border pixel 1
 
 # The launcher script assigns a custom class to the fzf terminal
 for_window [class="^fzf$"] floating enable, border pixel, move position center
