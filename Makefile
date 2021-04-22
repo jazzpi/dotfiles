@@ -79,7 +79,7 @@ emacs:
 	@echo "Downloading DOOM config..."
 	git clone git@github.com:jazzpi/doom-d.git ~/.doom.d
 	@echo "Installing DOOM"
-	cd ~/.emacs.d && make install
+	cd ~/.emacs.d && bin/doom install
 
 .PHONY: applications
 applications:
