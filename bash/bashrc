@@ -48,21 +48,26 @@ _prompt_user='\`if [[ \$? = "0" ]]; then echo \"\\[\\033[1;32m\\]\"; else echo \
 _prompt_dir='\[\033[36m\]\w\[\033[0m\]'
 # Yellow [HH:MM:SS]
 _prompt_time='\[\033[1;33m\]\t\[\033[0m\]'
-# Git branch & status
-function _prompt_git_branch {
+# Git branch & status xor sshfs mountpoint
+function _prompt_git_or_sshfs {
+  local fs=($(df --output=fstype,source . | tail -n +2)) 
+  if [ "${fs[0]}" = "fuse.sshfs" ]; then
+    echo -n " at \[\033[33m\]${fs[1]}\[\033[0m\]"
+  else
     local branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3-)
     if [[ "$branch" ]]; then
-        echo -n ":"
-        # Green if clean, yellow if dirty
-        if [[ -z $(git status -s) ]]; then
-            echo -n "\[\033[32m\]"
-        else
-            echo -n "\[\033[33m\]"
-        fi
-        echo -n "$branch\[\033[0m\]"
+      echo -n ":"
+      # Green if clean, yellow if dirty
+      if [[ -z $(git status -s) ]]; then
+        echo -n "\[\033[32m\]"
+      else
+        echo -n "\[\033[33m\]"
+      fi
+      echo -n "$branch\[\033[0m\]"
     fi
+  fi
 }
-PROMPT_COMMAND="PS1=\"╔═${_prompt_user} [${_prompt_dir}\$(_prompt_git_branch)]\n╚═${_prompt_time} $ \""
+PROMPT_COMMAND="PS1=\"╔═${_prompt_user} [${_prompt_dir}\$(_prompt_git_or_sshfs)]\n╚═${_prompt_time} $ \""
 if [ "${VTE_VERSION:-0}" -ge 3405 ]; then
     # Set terminal title & PWD in xterm (and gnome-terminal)
     if [ -f /usr/lib/vte-urlencode-cwd ]; then
