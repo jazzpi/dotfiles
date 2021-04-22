@@ -5,6 +5,8 @@ fi
 
 if [ -d /opt/ros/kinetic ]; then
     ROS_DISTRO=kinetic
+elif [ -d /opt/ros/noetic ]; then
+    ROS_DISTRO=noetic
 else
     perr "No known ROS config installed ($(ls /opt/ros))"
     return
