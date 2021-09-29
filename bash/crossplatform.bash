@@ -1,6 +1,9 @@
 # Check for cross-compilation tools
-if ! [ -d /usr/arm-linux-gnueabihf ]; then
-    return
+if [ -d /usr/arm-linux-gnueabihf ]; then
+    export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
 fi
 
-export QEMU_LD_PREFIX=/usr/arm-linux-gnueabihf
+if [ -d /mnt/c/WINDOWS ]; then
+    export DISPLAY=host.docker.internal:0.0
+    export LIBGL_ALWAYS_INDIRECT=1
+fi
