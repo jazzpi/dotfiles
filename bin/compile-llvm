@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    >&2 echo "Usage: compile_llvm SOURCE-FILE"
+    exit 64
+fi
+
+OPT_PASSES=(
+    --mem2reg
+    --instcombine
+)
+
+if [[ "$1" == *.cpp ]]; then
+    compiler=clang++
+else
+    compiler=clang
+fi
+llvm_bin=$(dirname $(readlink -f $(which "$compiler")))
+opt="$llvm_bin/opt"
+
+tmpir=$(mktemp)
+finalir="${1%.*}.ll"
+
+"$compiler" -O0 -gline-tables-only -S -emit-llvm -Xclang -disable-lifetime-markers -Xclang -disable-O0-optnone "$1" -o "$tmpir"
+"$opt" -S "${OPT_PASSES[@]}" "$tmpir" -o "$finalir"
+rm "$tmpir"
+"$compiler" "$finalir" -o "${1%.*}" -fsanitize=address -g

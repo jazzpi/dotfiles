@@ -23,7 +23,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git systemd
+TARGETS = bash profile emacs tmux i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git systemd bin
 
 .PHONY: default
 default: help
@@ -141,3 +141,7 @@ git:
 .PHONY: systemd
 systemd:
 	$(call install,systemd/user,~/.config/systemd/user)
+
+.PHONY: bin
+bin:
+	$(call install,bin/compile-llvm,~/.local/bin/compile-llvm)
