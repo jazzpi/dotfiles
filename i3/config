@@ -192,8 +192,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl -- set-source-mute @DEFAULT_SOURCE@ toggle && killall -s USR1 py3status
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 && killall -s USR1 py3status
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 && killall -s USR1 py3status
+bindsym XF86MonBrightnessUp exec brightnessctl s +10% && killall -s USR1 py3status
+bindsym XF86MonBrightnessDown exec brightnessctl s 10%- && killall -s USR1 py3status
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
