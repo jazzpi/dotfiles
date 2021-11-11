@@ -169,7 +169,7 @@ for_window [title="Picture-in-Picture"] sticky enable
 # Start some applications on startup
 exec thunderbird
 exec --no-startup-id nm-applet
-exec --no-startup-id ibus-daemon
+exec --no-startup-id ibus-daemon -r
 exec --no-startup-id bash -c "~/.config/i3/scripts/spotify.bash"
 exec firefox
 # Start a terminal on WS 3
