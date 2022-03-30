@@ -1,0 +1,4 @@
+[core]
+	excludesfile = /home/jasper/.gitignore_global
+[user]
+	useconfigonly = true

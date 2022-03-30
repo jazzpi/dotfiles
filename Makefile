@@ -8,6 +8,7 @@ I3STATUS_DIR = ~/.config/i3status
 DUNST_DIR = ~/.config/dunst
 MPDRIS2_DIR = ~/.config/mpDris2
 SYSTEMD_USER_DIR = ~/.config/systemd/user
+GIT_DIR = $(XDG_CONFIG_HOME)/git
 
 install = \
     echo "Installing $(1)"; \
@@ -133,8 +134,8 @@ voltron:
 
 .PHONY: git
 git:
-	$(call install,gitignore_global,~/.gitignore_global)
-	git config --global core.excludesfile ~/.gitignore_global
+	$(call install,git/ignore,$(XDG_CONFIG_HOME)/git/ignore)
+	$(call install,git/config,$(XDG_CONFIG_HOME)/git/config)
 
 .PHONY: systemd
 systemd:
