@@ -13,7 +13,7 @@ install = \
     echo "Installing $(1)"; \
     mkdir -p $$(dirname $(2)) && \
     if [ ! $$(readlink -f $(2)) -ef $(DOTFILES_DIR)/$(1) ]; then \
-        ln -s $(DOTFILES_DIR)/$(1) $(2); \
+        ln --backup -s $(DOTFILES_DIR)/$(1) $(2); \
     fi
 
 # Don't output commands unless run with `make VERBOSE=1`
