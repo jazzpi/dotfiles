@@ -1,0 +1,33 @@
+! -*- mode: conf-xdefaults; eval: (rainbow-mode); eval: (hl-line-mode -1) -*-
+! General
+! -------
+emacs.theme: doom-one-light
+! gnome-terminal.theme: Light
+i3wm.font: pango:DejaVu Sans Mono, FontAwesome 9
+i3wm.background_image: ~/.config/i3/themes/light/background.png
+i3wm.lockscreen_image: ~/.config/i3/themes/light/background-blur.png
+
+! Bar
+! ---
+i3wm.bar.background: "#dddddd"
+i3wm.bar.statusline: "#555555"
+i3wm.bar.focused_background: "#dddddd"
+i3wm.bar.focused_statusline: "#000000"
+i3wm.bar.focused_workspace:  "#1885DC" "#698EE1" "#ffffff"
+i3wm.bar.active_workspace:   "#949494" "#949494" "#222222"
+i3wm.bar.inactive_workspace: "#bbbbbb" "#bbbbbb" "#555555"
+i3wm.bar.color_good: "#009900"
+i3wm.bar.color_charging: "#838900"
+i3wm.bar.color_bad: "#FF0000"
+i3wm.bar.color_degraded: "#D68500"
+i3wm.bar.color_separator: "#333333"
+i3wm.bar.color_disabled: "#666666"
+
+! Window Decoration
+! -----------------
+i3wm.client.focused:          "#A59EFD" "#9790FF" "#ffffff" "#434079" "#9790FF"
+i3wm.client.focused_inactive: "#B8B3FF" "#99BFFB" "#F0F7FF" "#655F97" "#ADA7FF"
+i3wm.client.unfocused:        "#B8B3FF" "#A9CAE5" "#D8EAFF" "#655F97" "#ADA7FF"
+i3wm.client.urgent:           "#2f343a" "#900000" "#ffffff" "#900000" "#900000"
+i3wm.client.placeholder:      "#000000" "#ffffff" "#0c0c0c" "#000000" "#0c0c0c"
+i3wm.client.background:       "#ffffff"
