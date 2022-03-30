@@ -11,6 +11,9 @@ export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
 export TERMINAL="gnome-terminal"
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
 export NVM_DIR="$HOME/.nvm"
 
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
