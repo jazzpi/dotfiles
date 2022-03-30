@@ -1,14 +1,14 @@
 DOTFILES_DIR = $(patsubst %/,%,$(dir $(realpath $(firstword $(MAKEFILE_LIST)))))
 $(info Dotfles installed at $(DOTFILES_DIR))
 
-AWESOME_DIR = ~/.config/awesome
-NVIM_DIR = ~/.config/nvim
-I3_DIR = ~/.config/i3
-I3STATUS_DIR = ~/.config/i3status
+AWESOME_DIR = $(XDG_CONFIG_HOME)/awesome
+NVIM_DIR = $(XDG_CONFIG_HOME)/nvim
+I3_DIR = $(XDG_CONFIG_HOME)/i3
+I3STATUS_DIR = $(XDG_CONFIG_HOME)/i3status
 SWAY_DIR = $(XDG_CONFIG_HOME)/sway
-DUNST_DIR = ~/.config/dunst
-MPDRIS2_DIR = ~/.config/mpDris2
-SYSTEMD_USER_DIR = ~/.config/systemd/user
+DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
+MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
+SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
 GIT_DIR = $(XDG_CONFIG_HOME)/git
 
 install = \
@@ -48,11 +48,11 @@ all: $(TARGETS)
 
 .PHONY: profile
 profile:
-	$(call install,profile,~/.profile)
+	$(call install,profile,$(HOME)/.profile)
 
 .PHONY: top
 top:
-	$(call install,toprc,~/.toprc)
+	$(call install,toprc,$(HOME)/.toprc)
 
 .PHONY: i3
 i3: xresources
@@ -79,12 +79,12 @@ mpdris2: $(SYSTEMD_USER_DIR)
 .PHONY: emacs
 emacs:
 	@echo "Downloading Emacs DOOM..."
-	git clone -b develop https://github.com/hlissner/doom-emacs ~/.emacs.d
+	git clone -b develop https://github.com/hlissner/doom-emacs $(HOME)/.emacs.d
 	@echo "Downloading DOOM config..."
-	git clone https://github.com/jazzpi/doom-d.git ~/.doom.d
-	git -C ~/.emacs.d checkout $$(cat ~/.doom.d/.doom-version)
+	git clone https://github.com/jazzpi/doom-d.git $(HOME)/.doom.d
+	git -C $(HOME)/.emacs.d checkout $$(cat $(HOME)/.doom.d/.doom-version)
 	@echo "Installing DOOM"
-	cd ~/.emacs.d && bin/doom install
+	cd $(HOME)/.emacs.d && bin/doom install
 
 .PHONY: applications
 applications:
@@ -109,30 +109,30 @@ nvim:
 
 .PHONY: xresources
 xresources:
-	$(call install,Xresources,~/.Xresources)
+	$(call install,Xresources,$(HOME)/.Xresources)
 
 .PHONY: tmux
 tmux:
-	$(call install,tmux.conf,~/.tmux.conf)
+	$(call install,tmux.conf,$(HOME)/.tmux.conf)
 
 .PHONY: zsh
 zsh:
-	$(call install,zsh/zshrc,~/.zshrc)
-	$(call install,zsh/zshenv,~/.zshenv)
+	$(call install,zsh/zshrc,$(HOME)/.zshrc)
+	$(call install,zsh/zshenv,$(HOME)/.zshenv)
 
 .PHONY: spacemacs
 spacemacs:
-	$(call install,spacemacs,~/.spacemacs)
+	$(call install,spacemacs,$(HOME)/.spacemacs)
 
 .PHONY: bash
 bash: profile
-	$(call install,bash/bashrc,~/.bashrc)
-	$(call install,bash/inputrc,~/.inputrc)
+	$(call install,bash/bashrc,$(HOME)/.bashrc)
+	$(call install,bash/inputrc,$(HOME)/.inputrc)
 
 .PHONY: gdb
 gdb: voltron
-	$(call install,gdbinit,~/.gdbinit)
-	$(call install,gdbinit.py,~/.gdbinit.py)
+	$(call install,gdbinit,$(HOME)/.gdbinit)
+	$(call install,gdbinit.py,$(HOME)/.gdbinit.py)
 
 voltron:
 	git submodule update --init voltron && cd voltron && sed -e "s/^GDB=.*/GDB=$(command -v arm-none-eabi-gdb)" -i install.sh && ./install.sh
@@ -144,7 +144,7 @@ git:
 
 .PHONY: systemd
 systemd:
-	$(call install,systemd/user,~/.config/systemd/user)
+	$(call install,systemd/user,$(XDG_CONFIG_HOME)/systemd/user)
 
 .PHONY: bin
 bin:
