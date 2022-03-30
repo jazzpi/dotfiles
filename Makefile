@@ -143,4 +143,6 @@ systemd:
 
 .PHONY: bin
 bin:
-	$(call install,bin/compile-llvm,~/.local/bin/compile-llvm)
+	$(call install,bin/compile-llvm,$(HOME)/.local/bin/compile-llvm)
+	$(call install,bin/git-use-id,$(HOME)/.local/bin/git-use-id)
+	$(call install,bin/git-add-id,$(HOME)/.local/bin/git-add-id)
