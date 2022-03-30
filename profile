@@ -11,8 +11,16 @@ export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export VISUAL="emacsclient -c"
 export EDITOR="emacsclient -t"
 export TERMINAL="gnome-terminal"
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
 export NVM_DIR="$HOME/.nvm"
+
+export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="$HOME/.config"}
+export XDG_STATE_HOME=${XDG_STATE_HOME:="$HOME/.local/state"}
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:="/usr/local/share:/usr/share"}
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:="/etc/xdg"}
+export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/run/user/$(id -u)"}
+
 if command -v pyenv &>/dev/null; then
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"

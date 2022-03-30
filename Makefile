@@ -8,9 +8,6 @@ DUNST_DIR = ~/.config/dunst
 MPDRIS2_DIR = ~/.config/mpDris2
 SYSTEMD_USER_DIR = ~/.config/systemd/user
 
-# Default value if $XDG_DATA_HOME is not set in the shell
-XDG_DATA_HOME ?= ~/.local/share
-
 install = \
     echo "Installing $(1)"; \
     mkdir -p $$(dirname $(2)) && \
