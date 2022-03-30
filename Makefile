@@ -1,4 +1,5 @@
-DOTFILES_DIR = $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+DOTFILES_DIR = $(patsubst %/,%,$(dir $(realpath $(firstword $(MAKEFILE_LIST)))))
+$(info Dotfles installed at $(DOTFILES_DIR))
 
 AWESOME_DIR = ~/.config/awesome
 NVIM_DIR = ~/.config/nvim
