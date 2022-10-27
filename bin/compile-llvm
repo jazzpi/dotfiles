@@ -8,6 +8,7 @@ fi
 OPT_PASSES=(
     --mem2reg
     --instcombine
+    --instnamer
 )
 
 if [[ "$1" == *.cpp ]]; then
@@ -16,6 +17,10 @@ else
     compiler=clang
 fi
 llvm_bin=$(dirname $(readlink -f $(which "$compiler")))
+if [ $? -ne 0 ]; then
+    >&2 echo "Couldn't find compiler: $compiler"
+    exit 1
+fi
 opt="$llvm_bin/opt"
 
 tmpir=$(mktemp)
@@ -24,4 +29,4 @@ finalir="${1%.*}.ll"
 "$compiler" -O0 -gline-tables-only -S -emit-llvm -Xclang -disable-lifetime-markers -Xclang -disable-O0-optnone "$1" -o "$tmpir"
 "$opt" -S "${OPT_PASSES[@]}" "$tmpir" -o "$finalir"
 rm "$tmpir"
-"$compiler" "$finalir" -o "${1%.*}" -fsanitize=address -g
+"$compiler" "$finalir" -o "${1%.*}" -g
