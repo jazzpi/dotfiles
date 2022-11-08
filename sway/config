@@ -360,3 +360,5 @@ input type:touchpad {
     natural_scroll enabled
     dwt enabled # disable while typing
 }
+
+include ~/.config/sway/.local/config
