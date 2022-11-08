@@ -1,18 +1,9 @@
 # sway config file
 
-# Background image
-#set_from_resource $bg i3wm.background_image /dev/null
-#exec_always --no-startup-id feh --bg-scale $bg
-
 exec ibus-daemon -drxR
 
 # Use super as modkey
 set $mod Mod4
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-# set_from_resource $font i3wm.font "pango:monospace 8"
-font $font
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -23,7 +14,6 @@ bindsym $mod+Return exec gnome-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Mod1+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec albert toggle
 
@@ -141,9 +131,6 @@ bindsym $mod+Control+n scratchpad show
 # restore first scratchpad window
 bindsym $mod+Shift+n scratchpad show; floating toggle
 
-# Rename current workspace
-bindsym $mod+Control+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
-
 # go back to previous workspace by switching to current workspace again
 workspace_auto_back_and_forth no
 
@@ -173,17 +160,15 @@ exec --no-startup-id /usr/libexec/gnome-terminal-server
 exec thunderbird
 exec --no-startup-id nm-applet
 exec --no-startup-id ibus-daemon -r
-exec --no-startup-id bash -c "~/.config/i3/scripts/spotify.bash"
+exec --no-startup-id bash -c "~/.config/sway/scripts/spotify.bash"
 exec firefox
 # Start a terminal on WS 3
-exec --no-startup-id i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1"
+exec --no-startup-id sway-msg "workspace $ws3; exec gnome-terminal; workspace $ws1"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# exit sway (logs you out)
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway?' -B 'Yes, exit sway' 'sway-msg exit'"
 
 bindsym $mod+m exec i3-input -F 'mark "%s"' -P 'Mark as: ' -l1
 bindsym $mod+grave exec ~/.config/i3/scripts/mark-goto.bash
@@ -247,27 +232,27 @@ mode "$mode_spotify" {
     bindsym $mod+Shift+s mode "default"
 }
 
-set $mode_display Display configuration: [s]ave, [r]estore
-bindsym $mod+Control+d mode "$mode_display"
-mode "$mode_display" {
-    bindsym s exec ~/.config/i3/scripts/randr-save.bash; mode "default"
-    bindsym r exec ~/.config/i3/scripts/randr-restore.bash; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+Control+d mode "default"
-}
-
-bindsym $mod+Control+l exec ~/.config/i3/scripts/layout_manager.sh
-
-set $mode_theme Thme: [l]oad, [r]eload
-bindsym $mod+Control+t mode "$mode_theme"
-mode "$mode_theme" {
-    bindsym l exec sh -c 'nohup ~/.config/i3/scripts/theme.bash load &>/dev/null'; mode "default"
-    bindsym r exec sh -c 'nohup ~/.config/i3/scripts/theme.bash reload &>/dev/null'; mode "default"
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+Control+t mode "default"
-}
+#set $mode_display Display configuration: [s]ave, [r]estore
+#bindsym $mod+Control+d mode "$mode_display"
+#mode "$mode_display" {
+#    bindsym s exec ~/.config/i3/scripts/randr-save.bash; mode "default"
+#    bindsym r exec ~/.config/i3/scripts/randr-restore.bash; mode "default"
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#    bindsym $mod+Control+d mode "default"
+#}
+#
+#bindsym $mod+Control+l exec ~/.config/i3/scripts/layout_manager.sh
+#
+#set $mode_theme Thme: [l]oad, [r]eload
+#bindsym $mod+Control+t mode "$mode_theme"
+#mode "$mode_theme" {
+#    bindsym l exec sh -c 'nohup ~/.config/i3/scripts/theme.bash load &>/dev/null'; mode "default"
+#    bindsym r exec sh -c 'nohup ~/.config/i3/scripts/theme.bash reload &>/dev/null'; mode "default"
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#    bindsym $mod+Control+t mode "default"
+#}
 
 set $mode_system System: [S]hutdown, [R]estart, [e]xit, [l]ock, [s]uspend
 bindsym $mod+x mode "$mode_system"
