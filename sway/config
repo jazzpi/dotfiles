@@ -166,8 +166,9 @@ for_window [class="^fzf$"] floating enable, border pixel, move position center
 
 for_window [title="Picture-in-Picture"] sticky enable
 
-# Start PolKit authentication agent
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# Start GNOME stuff
+exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
+exec --no-startup-id /usr/libexec/gnome-terminal-server
 # Start some applications on startup
 exec thunderbird
 exec --no-startup-id nm-applet
