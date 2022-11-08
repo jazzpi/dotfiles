@@ -1,5 +1,8 @@
 # sway config file
 
+# include system-wide config files
+include /etc/sway/config.d/*
+
 exec ibus-daemon -drxR
 
 # Use super as modkey
