@@ -1,0 +1,6 @@
+color=222222
+image=~/.config/sway/.local/wallpaper.jpeg
+show-failed-attempts
+show-keyboard-layout
+scaling=fill
+indicator-radius=100

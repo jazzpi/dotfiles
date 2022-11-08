@@ -275,7 +275,7 @@ mode "$mode_system" {
     bindsym Shift+s exec systemctl poweroff
     bindsym Shift+r exec systemctl reboot
     bindsym e exit
-    bindsym l exec ~/.config/i3/scripts/lock.bash; mode "default"
+    bindsym l exec swaylock; mode "default"
     bindsym s exec systemctl suspend; mode "default"
     bindsym Return mode "default"
     bindsym Escape mode "default"

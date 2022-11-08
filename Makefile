@@ -6,6 +6,7 @@ NVIM_DIR = $(XDG_CONFIG_HOME)/nvim
 I3_DIR = $(XDG_CONFIG_HOME)/i3
 I3STATUS_DIR = $(XDG_CONFIG_HOME)/i3status
 SWAY_DIR = $(XDG_CONFIG_HOME)/sway
+SWAYLOCK_DIR = $(XDG_CONFIG_HOME)/swaylock
 DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
 MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
 SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
@@ -66,6 +67,7 @@ i3: xresources
 .PHONY: sway
 sway:
 	$(call install,sway,$(SWAY_DIR))
+	$(call install,swaylock,$(SWAYLOCK_DIR))
 
 .PHONY: dunst
 dunst:
