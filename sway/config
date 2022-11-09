@@ -241,52 +241,9 @@ mode "$mode_system" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#set_from_resource $barbg i3wm.bar.background "#000000"
-#set_from_resource $barsl i3wm.bar.statusline "#ffffff"
-#set_from_resource $barsep i3wm.bar.separator "#666666"
-#set_from_resource $barfbg i3wm.bar.focused_background "#000000"
-#set_from_resource $barfsl i3wm.bar.focused_statusline "#ffffff"
-#set_from_resource $barfsep i3wm.bar.focused_separator "#666666"
-#set_from_resource $barfws i3wm.bar.focused_workspace "#4c7899" "#285577" "#ffffff"
-#set_from_resource $baraws i3wm.bar.active_workspace "#333333" "#5f676a" "#ffffff"
-#set_from_resource $bariws i3wm.bar.inactive_workspace "#333333" "#222222" "#888888"
-#set_from_resource $baruws i3wm.bar.urgent_workspace "#2f343a" "#900000" "#ffffff"
-#set_from_resource $barbm i3wm.bar.binding_mode "#2f343a" "#900000" "#ffffff"
 bar {
     swaybar_command waybar
     position top
-#    font pango:DejaVu Sans Mono, FontAwesome, github-octicons 8
-#    tray_output primary
-#
-#    colors {
-#        background #333333
-#        statusline #aaaaaa
-#        separator #666666
-#        focused_background #333333
-#        focused_statusline #ffffff
-#        focused_separator #666666
-#
-#        focused_workspace #4c7899 #285577 #ffffff
-#        active_workspace #333333 #444444 #aaaaaa
-#        inactive_workspace #222222 #222222 #999999
-#        urgent_workspace #2f343a #900000 #ffffff
-#        binding_mode #2f343a #900000 #ffffff
-
-#        background $barbg
-#        statusline $barsl
-#        separator $barsep
-#        focused_background $barfbg
-#        focused_statusline $barfsl
-#        focused_separator $barfsep
-#
-#        focused_workspace $barfws
-#        active_workspace $baraws
-#        inactive_workspace $bariws
-#        urgent_workspace $baruws
-#        binding_mode $barbm
-    }
 }
 
 # Window decoration colors

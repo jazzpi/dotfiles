@@ -7,6 +7,7 @@ I3_DIR = $(XDG_CONFIG_HOME)/i3
 I3STATUS_DIR = $(XDG_CONFIG_HOME)/i3status
 SWAY_DIR = $(XDG_CONFIG_HOME)/sway
 SWAYLOCK_DIR = $(XDG_CONFIG_HOME)/swaylock
+WAYBAR_DIR = $(XDG_CONFIG_HOME)/waybar
 DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
 MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
 SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
@@ -70,6 +71,7 @@ i3: xresources
 sway:
 	$(call install,sway,$(SWAY_DIR))
 	$(call install,swaylock,$(SWAYLOCK_DIR))
+	$(call install,waybar,$(WAYBAR_DIR))
 	@echo "Installing Wayland session config for Sway. You might get a sudo prompt."
 	sudo $(INSTALL_CMD) -m0644 -D sway/sway-in-a-shell.desktop $(WAYLAND_SESSIONS_DIR)
 	sudo $(INSTALL_CMD) -m0755 -D sway/scripts/sway-in-a-shell /usr/local/bin
