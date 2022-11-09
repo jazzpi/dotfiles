@@ -128,6 +128,7 @@ spacemacs:
 
 .PHONY: bash
 bash: profile
+	$(call install,bash/bash_profile,$(HOME)/.bash_profile)
 	$(call install,bash/bashrc,$(HOME)/.bashrc)
 	$(call install,bash/inputrc,$(HOME)/.inputrc)
 
