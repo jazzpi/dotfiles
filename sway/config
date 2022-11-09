@@ -3,8 +3,6 @@
 # include system-wide config files
 include /etc/sway/config.d/*
 
-exec ibus-daemon -drxR
-
 # Use super as modkey
 set $mod Mod4
 
@@ -347,6 +345,12 @@ input type:touchpad {
     tap enabled
     natural_scroll enabled
     dwt enabled # disable while typing
+}
+
+input type:keyboard {
+    xkb_layout "us,de"
+    xkb_variant "altgr-intl,"
+    xkb_options "grp:ctrls_toggle"
 }
 
 include ~/.config/sway/.local/config
