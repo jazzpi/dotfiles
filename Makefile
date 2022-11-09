@@ -11,7 +11,9 @@ DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
 MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
 SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
 GIT_DIR = $(XDG_CONFIG_HOME)/git
+WAYLAND_SESSIONS_DIR = /usr/share/wayland-sessions
 
+INSTALL_CMD = install
 install = \
     echo "Installing $(1)"; \
     mkdir -p $$(dirname $(2)) && \
@@ -68,6 +70,9 @@ i3: xresources
 sway:
 	$(call install,sway,$(SWAY_DIR))
 	$(call install,swaylock,$(SWAYLOCK_DIR))
+	@echo "Installing Wayland session config for Sway. You might get a sudo prompt."
+	sudo $(INSTALL_CMD) -m0644 -D sway/sway-in-a-shell.desktop $(WAYLAND_SESSIONS_DIR)
+	sudo $(INSTALL_CMD) -m0755 -D sway/scripts/sway-in-a-shell /usr/local/bin
 
 .PHONY: dunst
 dunst:
