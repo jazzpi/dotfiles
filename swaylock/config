@@ -1,7 +1,8 @@
 color=222222
 image=~/.config/sway/.local/wallpaper.jpeg
 show-failed-attempts
-show-keyboard-layout
+font=Overpass ExtraLight
+text-color=eeeeee
 scaling=fill
 indicator
 indicator-radius=100
