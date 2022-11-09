@@ -23,6 +23,8 @@ bindsym $mod+d exec albert toggle
 
 # Albert Launcher
 exec albert
+# Lock screen when idle
+exec ~/.config/sway/scripts/idle.sh
 
 # Screenshots
 bindsym Print exec gnome-screenshot
