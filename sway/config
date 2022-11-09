@@ -141,16 +141,16 @@ bindsym $mod+Shift+n scratchpad show; floating toggle
 workspace_auto_back_and_forth no
 
 # Default workspaces for applications
-assign [class="^Emacs$"] number $ws2
-assign [class="^Code$"] number $ws2
+assign [app_id="^firefox$"] number $ws1
+assign [app_id="^emacs$"] number $ws2
+assign [app_id="^code-url-handler$"] number $ws2
 assign [class="^Eclipse$"] number $ws2
 assign [class="^jetbrains"] number $ws2
-assign [class="^Thunderbird$"] number $ws4
+assign [app_id="^thunderbird$"] number $ws4
 assign [class="^Blender$"] number $ws6
 assign [class="^rviz$"] number $ws6
 # Some applications only set the class later, these don't work with `assign`
 for_window [class="^chromium-browser$"] move --no-auto-back-and-forth to workspace $ws1
-for_window [class="^Firefox$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 for_window [title="^Picture-in-Picture$"] border pixel 1
 
