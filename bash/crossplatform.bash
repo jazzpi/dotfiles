@@ -7,3 +7,7 @@ if [ -d /mnt/c/WINDOWS ]; then
     export DISPLAY=host.docker.internal:0.0
     export LIBGL_ALWAYS_INDIRECT=1
 fi
+
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    export MOZ_ENABLE_WAYLAND=1
+fi
