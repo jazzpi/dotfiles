@@ -3,6 +3,9 @@
 # include system-wide config files
 include /etc/sway/config.d/*
 
+# Import environment into systemd user session
+exec sh -c 'systemctl --user import-environment; systemctl --user start sway-session.target'
+
 # Use super as modkey
 set $mod Mod4
 
