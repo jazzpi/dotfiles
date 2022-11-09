@@ -179,14 +179,19 @@ bindsym $mod+m exec echo "" | dmenu -p "Mark as: " | xargs -r swaymsg mark
 bindsym $mod+grave exec ~/.config/sway/scripts/mark-goto.bash
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5% && killall -s USR1 py3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ -5% && killall -s USR1 py3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && killall -s USR1 py3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl -- set-source-mute @DEFAULT_SOURCE@ toggle && killall -s USR1 py3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl -- set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Media player controls
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec brightnessctl s +10% && killall -s USR1 py3status
-bindsym XF86MonBrightnessDown exec brightnessctl s 10%- && killall -s USR1 py3status
+bindsym XF86MonBrightnessUp exec brightnessctl s +10%
+bindsym XF86MonBrightnessDown exec brightnessctl -n1 s 10%-
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -220,44 +225,6 @@ mode "resize" {
     bindsym Escape mode "default"
     bindsym $mod+r mode "default"
 }
-
-set $mode_spotify Spotify: [ ]Play/Pause, [hj]Previous, [kl]Next
-set $spotify_send dbus-send --print-reply \
-    --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
-    org.mpris.MediaPlayer2.Player
-bindsym $mod+Shift+s mode "$mode_spotify"
-mode "$mode_spotify" {
-    bindsym space exec $spotify_send.PlayPause
-    bindsym h exec $spotify_send.Previous
-    bindsym j exec $spotify_send.Previous
-    bindsym k exec $spotify_send.Next
-    bindsym l exec $spotify_send.Next
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-    bindsym $mod+Shift+s mode "default"
-}
-
-#set $mode_display Display configuration: [s]ave, [r]estore
-#bindsym $mod+Control+d mode "$mode_display"
-#mode "$mode_display" {
-#    bindsym s exec ~/.config/i3/scripts/randr-save.bash; mode "default"
-#    bindsym r exec ~/.config/i3/scripts/randr-restore.bash; mode "default"
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#    bindsym $mod+Control+d mode "default"
-#}
-#
-#bindsym $mod+Control+l exec ~/.config/i3/scripts/layout_manager.sh
-#
-#set $mode_theme Thme: [l]oad, [r]eload
-#bindsym $mod+Control+t mode "$mode_theme"
-#mode "$mode_theme" {
-#    bindsym l exec sh -c 'nohup ~/.config/i3/scripts/theme.bash load &>/dev/null'; mode "default"
-#    bindsym r exec sh -c 'nohup ~/.config/i3/scripts/theme.bash reload &>/dev/null'; mode "default"
-#    bindsym Return mode "default"
-#    bindsym Escape mode "default"
-#    bindsym $mod+Control+t mode "default"
-#}
 
 set $mode_system System: [S]hutdown, [R]estart, [e]xit, [l]ock, [s]uspend
 bindsym $mod+x mode "$mode_system"
