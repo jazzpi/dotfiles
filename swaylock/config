@@ -3,4 +3,9 @@ image=~/.config/sway/.local/wallpaper.jpeg
 show-failed-attempts
 show-keyboard-layout
 scaling=fill
+indicator
 indicator-radius=100
+indicator-y-position=200
+clock
+timestr=%H:%M
+datestr=%Y-%m-%d
