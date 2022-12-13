@@ -88,9 +88,9 @@ mpdris2: $(SYSTEMD_USER_DIR)
 .PHONY: emacs
 emacs:
 	@echo "Downloading Emacs DOOM..."
-	git clone -b develop https://github.com/hlissner/doom-emacs $(HOME)/.emacs.d
+	git clone https://github.com/hlissner/doom-emacs $(HOME)/.emacs.d
 	@echo "Downloading DOOM config..."
-	git clone https://github.com/jazzpi/doom-d.git $(HOME)/.doom.d
+	git clone -b writing https://github.com/jazzpi/doom-d.git $(HOME)/.doom.d
 	git -C $(HOME)/.emacs.d checkout $$(cat $(HOME)/.doom.d/.doom-version)
 	@echo "Installing DOOM"
 	cd $(HOME)/.emacs.d && bin/doom install
