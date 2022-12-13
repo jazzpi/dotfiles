@@ -54,15 +54,16 @@ function _prompt_git_or_sshfs {
   if [ "${fs[0]}" = "fuse.sshfs" ]; then
     echo -n " at \[\033[33m\]${fs[1]}\[\033[0m\]"
   else
-    local branch=$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3-)
-    if [[ "$branch" ]]; then
+    local status=$(git status -sb 2>/dev/null)
+    if [[ -n "$status" ]]; then
       echo -n ":"
       # Green if clean, yellow if dirty
-      if [[ -z $(git status -s) ]]; then
+      if [[ $(echo "$status" | wc -l) == 1 ]]; then
         echo -n "\[\033[32m\]"
       else
         echo -n "\[\033[33m\]"
       fi
+      local branch=$(echo "$status" | sed -Ene '1{/no branch/!ba;s/.*/DETACHED/p;be;:a;1s/^## ([^.]*)(\.\.\..*)?/\1/p;:e}')
       echo -n "$branch\[\033[0m\]"
     fi
   fi
