@@ -153,6 +153,9 @@ for_window [class="^chromium-browser$"] move --no-auto-back-and-forth to workspa
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 for_window [title="^Picture-in-Picture$"] border pixel 1
 
+# Chromium inhibits sway shortcuts for PWAs by default
+for_window [app_id="^chrome-.*-.*$"] shortcuts_inhibitor disable
+
 # The launcher script assigns a custom class to the fzf terminal
 for_window [class="^fzf$"] floating enable, border pixel, move position center
 
