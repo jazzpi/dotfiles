@@ -27,9 +27,8 @@ exec albert
 exec ~/.config/sway/scripts/idle.sh
 
 # Screenshots
-bindsym Print exec gnome-screenshot
-bindsym Control+Print exec gnome-screenshot -a
-bindsym Shift+Print exec gnome-screenshot -i
+bindsym Print exec grim -g "$(slurp)" - | swappy -f -
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
 
 # change focus
 # vim-like
