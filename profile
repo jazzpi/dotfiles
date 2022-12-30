@@ -36,6 +36,9 @@ fi
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
 fi
+if [ "$DESKTOP_SESSION" = "sway" ]; then
+    export _JAVA_AWT_WM_NONREPARENTING=1
+fi
 
 if [ -n "$BASH_VERSION" ]; then
     . "$HOME/.bashrc"
