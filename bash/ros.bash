@@ -12,10 +12,22 @@ else
     return
 fi
 
+if [ -z "$CATKIN_WORKSPACE" ]; then
+    if [ -d ~/catkin_ws ]; then
+        CATKIN_WORKSPACE=~/catkin_ws
+    elif [ -d /catkin_ws ]; then
+        CATKIN_WORKSPACE=/catkin_ws
+    fi
+fi
+
 function cb {
+    if [ -z "$CATKIN_WORKSPACE" ]; then
+        perr "Couldn't find catkin workspace, please set \$CATKIN_WORKSPACE"
+        return
+    fi
     # Subshell so we don't actually cd
     (
-        cd -P ~/catkin_ws
+        cd -P "$CATKIN_WORKSPACE"
         catkin build "$@"
         # Return the exit code of catkin build so we can do things like
         # `cb && roslaunch ...`
@@ -31,7 +43,7 @@ function ros_setup {
     # Import ROS configuration
     . /opt/ros/$ROS_DISTRO/setup.bash
     # Import configuration for default workspace at ~/catkin_ws
-    [ -f ~/catkin_ws/devel/setup.bash ] && source ~/catkin_ws/devel/setup.bash
+    [ -f "$CATKIN_WORKSPACE/devel/setup.bash" ] && source "$CATKIN_WORKSPACE/devel/setup.bash"
     # Start roscore
     cmd_exists tmux &&
         { ls ~/.ros/roscore-*.pid &>/dev/null &&
