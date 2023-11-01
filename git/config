@@ -2,3 +2,5 @@
 	excludesfile = /home/jasper/.gitignore_global
 [user]
 	useconfigonly = true
+[init]
+	defaultBranch = main
