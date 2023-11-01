@@ -47,3 +47,7 @@ function ros_setup {
         echo $'\e[1;33m'"$log_space"$'\nTo clean, run rosclean purge.\e[0m\n'
     fi
 }
+
+if [ -f ~/.auto_ros ]; then
+    ros_setup
+fi
