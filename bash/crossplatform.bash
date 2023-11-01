@@ -11,3 +11,8 @@ fi
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
     export MOZ_ENABLE_WAYLAND=1
 fi
+
+# On Ubuntu, fd is called fdfind
+if cmd_exists fdfind && ! cmd_exists fd; then
+    alias fd=fdfind
+fi
