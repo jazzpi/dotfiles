@@ -21,3 +21,7 @@ alias gp="git push"
 alias gf="git fetch"
 alias gl="git pull"
 alias glg="git log"
+
+function dockattach {
+    docker start $@ && docker attach $@
+}
