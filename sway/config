@@ -29,6 +29,7 @@ exec ~/.config/sway/scripts/idle.sh
 # Screenshots
 bindsym Print exec grim -g "$(slurp)" - | swappy -f -
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f -
+bindsym $mod+Control+s exec grim -g "$(~/.config/sway/scripts/pick-window.sh)" - | swappy -f -
 
 # change focus
 # vim-like
