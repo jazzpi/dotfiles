@@ -178,7 +178,7 @@ bindsym $mod+Shift+c reload
 # exit sway (logs you out)
 bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway?' -B 'Yes, exit sway' 'sway-msg exit'"
 
-bindsym $mod+m exec echo "" | dmenu -p "Mark as: " | xargs -r swaymsg mark
+bindsym $mod+m exec echo "" | rofi -dmenu -p "Mark as: " | xargs -r swaymsg mark
 bindsym $mod+grave exec ~/.config/sway/scripts/mark-goto.bash
 
 # Pulse Audio controls
