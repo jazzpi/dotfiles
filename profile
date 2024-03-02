@@ -45,6 +45,9 @@ if [ "$XDG_SESSION_DESKTOP" = "sway" ]; then
         export XWAYLAND_NO_GLAMOR=1
     fi
 fi
+# Fix session bus on Arch when logging in with ly
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" -a -S /run/user/$UID/bus ]; then
+    export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
 fi
 
 if [ -n "$BASH_VERSION" ]; then
