@@ -36,8 +36,15 @@ fi
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
 fi
-if [ "$DESKTOP_SESSION" = "sway" ]; then
+if [ "$XDG_SESSION_DESKTOP" = "sway" ]; then
     export _JAVA_AWT_WM_NONREPARENTING=1
+    # Make sway suck less on proprietary nvidia drivers
+    if lsmod | grep -q nvidia; then
+        export WLR_RENDERER=vulkan
+        export WLR_NO_HARDWARE_CURSORS=1
+        export XWAYLAND_NO_GLAMOR=1
+    fi
+fi
 fi
 
 if [ -n "$BASH_VERSION" ]; then
