@@ -79,6 +79,7 @@ sway:
 	$(call install,waybar,$(WAYBAR_DIR))
 	@echo "Installing Wayland session config for Sway. You might get a sudo prompt."
 	sudo $(INSTALL_CMD) -m0644 -D sway/sway-in-a-shell.desktop $(WAYLAND_SESSIONS_DIR)
+	sudo $(INSTALL_CMD) -m0644 -D sway/sway-unsupported-gpu.desktop $(WAYLAND_SESSIONS_DIR)
 	sudo $(INSTALL_CMD) -m0755 -D sway/scripts/sway-in-a-shell /usr/local/bin
 
 .PHONY: dunst

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Sway (unsupported GPU)
+Comment=SirCmpwn's Wayland window manager
+Exec=/usr/bin/sway --unsupported-gpu
+Type=Application
