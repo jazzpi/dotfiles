@@ -9,6 +9,7 @@ SWAY_DIR = $(XDG_CONFIG_HOME)/sway
 SWAYLOCK_DIR = $(XDG_CONFIG_HOME)/swaylock
 WAYBAR_DIR = $(XDG_CONFIG_HOME)/waybar
 DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
+MAKO_DIR = $(XDG_CONFIG_HOME)/mako
 MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
 SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
 GIT_DIR = $(XDG_CONFIG_HOME)/git
@@ -79,6 +80,10 @@ sway:
 .PHONY: dunst
 dunst:
 	$(call install,dunst/dunstrc,$(DUNST_DIR)/dunstrc)
+
+.PHONY: mako
+mako:
+	$(call install,mako/config,$(MAKO_DIR)/config)
 
 .PHONY: mpdris2
 mpdris2: $(SYSTEMD_USER_DIR)
