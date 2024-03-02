@@ -1,6 +1,10 @@
 DOTFILES_DIR = $(patsubst %/,%,$(dir $(realpath $(firstword $(MAKEFILE_LIST)))))
 $(info Dotfles installed at $(DOTFILES_DIR))
 
+# Set defaults for XDG directories so we don't accidentally write to /sway
+XDG_CONFIG_HOME ?= $(HOME)/.config
+XDG_DATA_HOME ?= $(HOME)/.local/share
+
 AWESOME_DIR = $(XDG_CONFIG_HOME)/awesome
 NVIM_DIR = $(XDG_CONFIG_HOME)/nvim
 I3_DIR = $(XDG_CONFIG_HOME)/i3
