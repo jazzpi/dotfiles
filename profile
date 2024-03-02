@@ -36,7 +36,7 @@ fi
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
 fi
-if [ "$XDG_SESSION_DESKTOP" = "sway" ]; then
+if [ "$XDG_SESSION_DESKTOP" = "sway" -o "$XDG_SESSION_DESKTOP" = "hyprland" ]; then
     export _JAVA_AWT_WM_NONREPARENTING=1
     # Make sway suck less on proprietary nvidia drivers
     if lsmod | grep -q nvidia; then

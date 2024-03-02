@@ -12,11 +12,13 @@ I3STATUS_DIR = $(XDG_CONFIG_HOME)/i3status
 SWAY_DIR = $(XDG_CONFIG_HOME)/sway
 SWAYLOCK_DIR = $(XDG_CONFIG_HOME)/swaylock
 WAYBAR_DIR = $(XDG_CONFIG_HOME)/waybar
+HYPRLAND_DIR = $(XDG_CONFIG_HOME)/hypr
 DUNST_DIR = $(XDG_CONFIG_HOME)/dunst
 MAKO_DIR = $(XDG_CONFIG_HOME)/mako
 MPDRIS2_DIR = $(XDG_CONFIG_HOME)/mpDris2
 SYSTEMD_USER_DIR = $(XDG_CONFIG_HOME)/systemd/user
 GIT_DIR = $(XDG_CONFIG_HOME)/git
+RESOURCES_DIR = $(XDG_DATA_HOME)/dotfiles_resources
 WAYLAND_SESSIONS_DIR = /usr/share/wayland-sessions
 
 INSTALL_CMD = install
@@ -72,15 +74,29 @@ i3: xresources
 # Install dark theme as default
 	i3/scripts/theme.bash install_only dark
 
-.PHONY: sway
-sway:
-	$(call install,sway,$(SWAY_DIR))
-	$(call install,swaylock,$(SWAYLOCK_DIR))
+.PHONY: resources
+resources:
+	$(call install,resources,$(RESOURCES_DIR))
+
+.PHONY: waybar
+waybar:
 	$(call install,waybar,$(WAYBAR_DIR))
+
+.PHONY: swaylock
+swaylock:
+	$(call install,swaylock,$(SWAYLOCK_DIR))
+
+.PHONY: sway
+sway: waybar swaylock resources
+	$(call install,sway,$(SWAY_DIR))
 	@echo "Installing Wayland session config for Sway. You might get a sudo prompt."
 	sudo $(INSTALL_CMD) -m0644 -D sway/sway-in-a-shell.desktop $(WAYLAND_SESSIONS_DIR)
 	sudo $(INSTALL_CMD) -m0644 -D sway/sway-unsupported-gpu.desktop $(WAYLAND_SESSIONS_DIR)
 	sudo $(INSTALL_CMD) -m0755 -D sway/scripts/sway-in-a-shell /usr/local/bin
+
+.PHONY: hyprland
+hyprland: waybar swaylock resources
+	$(call install,hyprland,$(HYPRLAND_DIR))
 
 .PHONY: dunst
 dunst:

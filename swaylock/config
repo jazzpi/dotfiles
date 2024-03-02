@@ -1,5 +1,5 @@
 color=222222
-image=~/.config/sway/.local/lockscreen.jpeg
+image=~/.local/share/dotfiles_resources/lockscreen.jpg
 show-failed-attempts
 font=Overpass ExtraLight
 text-color=eeeeee
