@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CONFIG_FILES="$HOME/.config/waybar/config $HOME/.config/waybar/style.css"
+
+trap "killall waybar" EXIT
+
+LOG_FILE=$(mktemp --tmpdir waybar.XXX.log)
+echo "Waybar log file: $LOG_FILE"
+
+while true; do
+    echo "Starting waybar in the background..."
+    waybar 2>&1 >> $LOG_FILE &
+    PID=$!
+    inotifywait -e modify ${CONFIG_FILES}
+    echo "Killing waybar (pid $PID)..."
+    kill $PID
+    sleep 1
+    if ps -p $PID > /dev/null; then
+        echo "Waybar (pid $PID) is still running, killing it with -9..."
+        kill -9 $PID
+        sleep 1
+    fi
+done

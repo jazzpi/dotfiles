@@ -21,6 +21,8 @@ GIT_DIR = $(XDG_CONFIG_HOME)/git
 RESOURCES_DIR = $(XDG_DATA_HOME)/dotfiles_resources
 WAYLAND_SESSIONS_DIR = /usr/share/wayland-sessions
 
+BINARY_DIR = $(HOME)/.local/bin
+
 INSTALL_CMD = install
 install = \
     echo "Installing $(1)"; \
@@ -184,6 +186,7 @@ systemd:
 
 .PHONY: bin
 bin:
-	$(call install,bin/compile-llvm,$(HOME)/.local/bin/compile-llvm)
-	$(call install,bin/git-use-id,$(HOME)/.local/bin/git-use-id)
-	$(call install,bin/git-add-id,$(HOME)/.local/bin/git-add-id)
+	$(call install,bin/compile-llvm,$(BINARY_DIR)/compile-llvm)
+	$(call install,bin/git-use-id,$(BINARY_DIR)/git-use-id)
+	$(call install,bin/git-add-id,$(BINARY_DIR)/git-add-id)
+	$(call install,bin/monitor-waybar,$(BINARY_DIR)/monitor-waybar)
