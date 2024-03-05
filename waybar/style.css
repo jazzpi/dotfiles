@@ -62,12 +62,12 @@ button:hover {
     background-color: #7678ed;
 }
 
-#workspaces button:first-child.focused, #workspaces button:first-child.active {
+#workspaces button:first-child.focused, #workspaces button:first-child.active, #workspaces button:first-child.urgent {
     border-top-left-radius: 100px;
     border-bottom-left-radius: 100px;
 }
 
-#workspaces button:last-child.focused, #workspaces button:last-child.active {
+#workspaces button:last-child.focused, #workspaces button:last-child.active, #workspaces button:last-child.urgent {
     border-top-right-radius: 100px;
     border-bottom-right-radius: 100px;
 }
