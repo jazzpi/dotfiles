@@ -186,6 +186,7 @@ trough {
 highlight {
     min-width: 3px;
     background-color: #ffffff;
+    border: none;
 }
 
 #temperature.critical {
