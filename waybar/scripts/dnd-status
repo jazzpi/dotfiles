@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DND_MODE=do-not-disturb
+
+# Sleep for a bit to give mako time to update its mode when toggling
+sleep 0.2
+if makoctl mode | grep -q "$DND_MODE"; then
+    TEXT=""
+    TOOLTIP="Do Not Disturb enabled"
+    CLASS="enabled"
+else
+    TEXT=""
+    TOOLTIP="Do Not Disturb disabled"
+    CLASS="disabled"
+fi
+
+echo "{\"text\": \"$TEXT\", \"alt\": \"\", \"tooltip\": \"$TOOLTIP\", \"class\": \"$CLASS\", \"percentage\": 0}"

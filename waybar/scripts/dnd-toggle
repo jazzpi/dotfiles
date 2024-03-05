@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DND_MODE=do-not-disturb
+
+if makoctl mode | grep -q "$DND_MODE"; then
+    makoctl mode -r "$DND_MODE"
+else
+    makoctl mode -a "$DND_MODE"
+fi
