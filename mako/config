@@ -7,5 +7,8 @@ default-timeout=30000
 [urgency=high]
 default-timeout=0
 
+[desktop-entry=com.spotify.Client]
+invisible=1
+
 [mode=do-not-disturb]
 invisible=1
