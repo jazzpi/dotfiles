@@ -4,7 +4,7 @@ show-failed-attempts
 font=Overpass ExtraLight
 text-color=eeeeee
 scaling=fill
-indicator
+indicator-idle-visible
 indicator-radius=100
 indicator-y-position=200
 clock
