@@ -118,6 +118,10 @@ button:hover {
     padding: 0 10px;
 }
 
+.modules-right > * > *:not(#backlightgroup), #backlight-slider {
+    border-right: 2px solid #aaaaaa;
+}
+
 #window,
 #workspaces {
     margin: 0 4px;
@@ -157,16 +161,13 @@ label:focus {
     background-color: #f53c3c;
 }
 
-#backlightgroup, #audio {
-    padding: 0 5px;
-}
-
 #backlight, #pulseaudio {
+    padding-left: 10px;
     padding-right: 5px;
 }
 
 #backlight-slider, #pulseaudio-slider {
-    padding: 3px 0;
+    padding: 3px 5px 3px 0;
 }
 
 slider {

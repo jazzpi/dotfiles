@@ -40,31 +40,18 @@
   "group/right-modules": {
     "modules": [
       "custom/dnd",
-      "custom/separator",
       "idle_inhibitor",
-      "custom/separator",
       "group/audio",
-      "custom/separator",
       "group/backlightgroup",
-      "custom/separator",
       "group/networkgroup",
-      "custom/separator",
       "cpu",
-      "custom/separator",
       "memory",
-      "custom/separator",
       "temperature",
-      "custom/separator",
       "battery",
-      "custom/separator",
       "clock",
-      "custom/separator",
       "tray"
     ],
     "orientation": "inherit"
-  },
-  "custom/separator": {
-    "format": " "
   },
   "custom/dnd": {
     "exec": "$XDG_CONFIG_HOME/waybar/scripts/dnd-status",
