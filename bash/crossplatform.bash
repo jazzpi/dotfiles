@@ -16,3 +16,8 @@ fi
 if cmd_exists fdfind && ! cmd_exists fd; then
     alias fd=fdfind
 fi
+
+# If xterm-kitty isn't supported, say we're xterm-color instead
+if [ "$TERM" = "xterm-kitty" ] && ! infocmp &>/dev/null; then
+    export TERM=xterm-color
+fi
