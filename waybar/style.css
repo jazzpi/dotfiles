@@ -118,7 +118,7 @@ button:hover {
     padding: 0 10px;
 }
 
-.modules-right > * > *:not(#backlightgroup), #backlight-slider {
+.modules-right > * > *:not(#backlightgroup):not(:last-child), #backlight-slider {
     border-right: 2px solid #aaaaaa;
 }
 
