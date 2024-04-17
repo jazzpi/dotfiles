@@ -43,7 +43,12 @@ function vercmp() {
 ## PROMPT
 
 # Green user@host, red if last command failed
-_prompt_user='\`if [[ \$? = "0" ]]; then echo \"\\[\\033[1;32m\\]\"; else echo \"\\[\\033[1;31m\\]\"; fi\`\u@\h\[\033[0m\]'
+_prompt_user='\`if [[ \$? = "0" ]]; then echo \"\\[\\033[1;32m\\]\"; else echo \"\\[\\033[1;31m\\]\"; fi\`'
+if [ -n "$SSH_CLIENT" -o -n "$SSH_TTY" ]; then
+  # Invert colors if we're in an SSH session
+  _prompt_user+='\[\033[7m\]'
+fi
+_prompt_user+='\u@\h\[\033[0m\]'
 # Cyan cwd
 _prompt_dir='\[\033[36m\]\w\[\033[0m\]'
 # Yellow [HH:MM:SS]
@@ -68,7 +73,7 @@ function _prompt_git_or_sshfs {
     fi
   fi
 }
-PROMPT_COMMAND="PS1=\"╔═${_prompt_user} [${_prompt_dir}\$(_prompt_git_or_sshfs)]\n╚═${_prompt_time} $ \""
+PROMPT_COMMAND="PS1=\"╔═${_prompt_user}${_prompt_remote} [${_prompt_dir}\$(_prompt_git_or_sshfs)]\n╚═${_prompt_time} $ \""
 if [ "${VTE_VERSION:-0}" -ge 3405 ]; then
     # Set terminal title & PWD in xterm (and gnome-terminal)
     if [ -f /usr/lib/vte-urlencode-cwd ]; then
