@@ -8,8 +8,7 @@ declare -a possible_paths=(
 
 for path in "${possible_paths[@]}"; do
     if [ -x "$path" ]; then
-        exec "$path" &
-        break
+        exec "$path"
     fi
 done
 
