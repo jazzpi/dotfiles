@@ -127,7 +127,7 @@
   },
   "clock": {
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "format": "{:<small>%Y-%m-%d</small> %H:%M}",
+    "format": "<small>{:%Y-%m-%d</small> %H:%M}",
     "format-alt": "{:%H:%M}",
     "calendar": {
       "mode-mon-col": 3,
