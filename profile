@@ -1,7 +1,7 @@
 # -*- mode: shell-script -*-
 
 PATH_PRE="$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin"
-PATH_POST="$HOME/.platformio/penv/bin"
+PATH_POST="$HOME/.platformio/penv/bin:$HOME/.rvm/bin"
 export PATH="$PATH_PRE:$PATH:$PATH_POST"
 if [ -d /mnt/c/WINDOWS ]; then
    export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32:$PATH"

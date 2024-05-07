@@ -151,6 +151,7 @@ fi
 . "$DIR/ros.bash"
 . "$DIR/crossplatform.bash"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+[ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
 
 ## MISC
 
