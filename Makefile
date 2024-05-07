@@ -190,3 +190,7 @@ bin:
 	$(call install,bin/git-use-id,$(BINARY_DIR)/git-use-id)
 	$(call install,bin/git-add-id,$(BINARY_DIR)/git-add-id)
 	$(call install,bin/monitor-waybar,$(BINARY_DIR)/monitor-waybar)
+
+.PHONY: kitty
+kitty:
+	$(call install,kitty,$(XDG_CONFIG_HOME)/kitty)
