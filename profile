@@ -10,8 +10,8 @@ export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
 export PERL_LOCAL_LIB_ROOT="$HOME/perl5:$PERL_LOCAL_LIB_ROOT"
 export PERL_MB_OPT="--install_base \"$HOME/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-export VISUAL="emacsclient -c"
-export EDITOR="emacsclient -t"
+export VISUAL="code"
+export EDITOR="code"
 export TERMINAL="gnome-terminal"
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
