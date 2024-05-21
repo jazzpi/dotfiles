@@ -23,9 +23,7 @@ bindsym $mod+Shift+q kill
 
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Mod1+d exec --no-startup-id dmenu_run
-
-# Albert Launcher
-exec albert
+bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
 
 # Screenshots
 bindsym Print exec gnome-screenshot
