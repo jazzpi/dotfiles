@@ -12,7 +12,7 @@ export PERL_MB_OPT="--install_base \"$HOME/perl5\""
 export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
 export VISUAL="code"
 export EDITOR="code"
-export TERMINAL="gnome-terminal"
+export TERMINAL="kitty"
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
