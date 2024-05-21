@@ -1,8 +1,5 @@
 # i3 config file (v4)
 
-# Restore default screen configuration before doing anything else
-exec --no-startup-id ~/.config/i3/scripts/randr.bash restore default
-
 # Background image
 set_from_resource $bg i3wm.background_image /dev/null
 exec_always --no-startup-id feh --bg-scale $bg

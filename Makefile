@@ -36,7 +36,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xresources zsh spacemacs top gdb git systemd bin
+TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xstuff zsh spacemacs top gdb git systemd bin
 
 .PHONY: default
 default: help
@@ -68,7 +68,7 @@ top:
 	$(call install,toprc,$(HOME)/.toprc)
 
 .PHONY: i3
-i3: xresources
+i3: xstuff
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
 	$(call install,i3/themes,$(I3_DIR)/themes)
@@ -144,9 +144,10 @@ nvim:
 # Install plugins
 	nvim -c "PlugInstall | qa"
 
-.PHONY: xresources
-xresources:
+.PHONY: xstuff
+xstuff:
 	$(call install,Xresources,$(HOME)/.Xresources)
+	$(call install,xinitrc,$(HOME)/.xinitrc)
 
 .PHONY: tmux
 tmux:
