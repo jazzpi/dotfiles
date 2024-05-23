@@ -100,6 +100,7 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+set $wsIM "i"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -112,6 +113,7 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
+bindsym $mod+i workspace $wsIM
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -124,6 +126,7 @@ bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+i move container to workspace number $wsIM
 
 # move focused workspace to screen
 bindsym $mod+Control+Left move workspace to output left
@@ -155,11 +158,14 @@ assign [class="^jetbrains"] number $ws2
 assign [class="^Thunderbird$"] number $ws4
 assign [class="^Blender$"] number $ws6
 assign [class="^rviz$"] number $ws6
+assign [class="^TelegramDesktop$"] workspace $wsIM
+assign [class="^Signal$"] workspace $wsIM
 # Some applications only set the class later, these don't work with `assign`
 for_window [class="^chromium-browser$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Firefox$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 for_window [title="^Picture-in-Picture$"] border pixel 1
+for_window [window_type="notification"] floating enable
 
 # The launcher script assigns a custom class to the fzf terminal
 for_window [class="^fzf$"] floating enable, border pixel, move position center
@@ -171,6 +177,8 @@ exec thunderbird
 exec --no-startup-id nm-applet
 exec --no-startup-id ibus-daemon -r
 exec --no-startup-id bash -c "~/.config/i3/scripts/spotify.bash"
+exec signal-desktop
+exec telegram-desktop
 exec firefox
 # Start a terminal on WS 3
 exec --no-startup-id i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1"
