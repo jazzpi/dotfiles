@@ -36,7 +36,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xstuff zsh spacemacs top gdb git systemd bin
+TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xstuff zsh spacemacs top gdb git systemd bin eww picom
 
 .PHONY: default
 default: help
@@ -68,7 +68,7 @@ top:
 	$(call install,toprc,$(HOME)/.toprc)
 
 .PHONY: i3
-i3: xstuff
+i3: xstuff eww
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
 	$(call install,i3/themes,$(I3_DIR)/themes)
@@ -83,6 +83,10 @@ resources:
 .PHONY: waybar
 waybar:
 	$(call install,waybar,$(WAYBAR_DIR))
+
+.PHONY: eww
+eww: picom
+	$(call install,eww,$(XDG_CONFIG_HOME)/eww)
 
 .PHONY: swaylock
 swaylock:
@@ -195,3 +199,7 @@ bin:
 .PHONY: kitty
 kitty:
 	$(call install,kitty,$(XDG_CONFIG_HOME)/kitty)
+
+.PHONY: picom
+picom:
+	$(call install,picom.conf,$(XDG_CONFIG_HOME)/picom.conf)

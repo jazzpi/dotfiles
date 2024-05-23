@@ -1,0 +1,67 @@
+$background: #444444;
+$foreground: #ffffff;
+$background_active: #cccccc;
+$foreground_active: #222222;
+
+* {
+  all: unset; // Remove all styles
+}
+
+.bar {
+  background: transparent;
+  background-image: linear-gradient(
+    180deg,
+    rgba(50, 50, 50, 0.5) 0%,
+    rgba(50, 50, 50, 0)
+  );
+  font-family: FontAwesome, Meslo LG S DZ, monospace;
+  font-size: 10pt;
+  color: $foreground;
+  padding: 2px;
+}
+
+.workspaces {
+  background-color: $background;
+  border-radius: 100px;
+  button {
+    padding: 0 5px;
+
+    &:first-child {
+      padding-left: 10px;
+
+      &.focused,
+      &.urgent {
+        border-top-left-radius: 100px;
+        border-bottom-left-radius: 100px;
+      }
+    }
+    &:last-child {
+      padding-right: 10px;
+
+      &.focused,
+      &.urgent {
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 100px;
+      }
+    }
+
+    &.urgent {
+      background-color: #eb4d4b;
+    }
+    &.focused {
+      background-color: #7678ed;
+    }
+  }
+}
+
+.right-info {
+  background-color: $background;
+  border-radius: 100px;
+
+  & > * {
+    padding: 0 10px;
+    &:not(:last-child) {
+      border-right: 2px solid #aaaaaa;
+    }
+  }
+}

@@ -4,6 +4,11 @@
 set_from_resource $bg i3wm.background_image /dev/null
 exec_always --no-startup-id feh --bg-scale $bg
 
+# EWW bar
+exec --no-startup-id "~/.config/eww/scripts/launch.sh"
+# Compositor
+exec --no-startup-id picom
+
 # Use super as modkey
 set $mod Mod4
 
@@ -85,12 +90,12 @@ bindsym $mod+c focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:"
-set $ws2 "2:"
-set $ws3 "3:"
-set $ws4 "4:"
-set $ws5 "5:"
-set $ws6 "6:"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
@@ -275,41 +280,6 @@ mode "$mode_system" {
 }
 
 bindsym $mod+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-set_from_resource $barbg i3wm.bar.background "#000000"
-set_from_resource $barsl i3wm.bar.statusline "#ffffff"
-set_from_resource $barsep i3wm.bar.separator "#666666"
-set_from_resource $barfbg i3wm.bar.focused_background "#000000"
-set_from_resource $barfsl i3wm.bar.focused_statusline "#ffffff"
-set_from_resource $barfsep i3wm.bar.focused_separator "#666666"
-set_from_resource $barfws i3wm.bar.focused_workspace "#4c7899" "#285577" "#ffffff"
-set_from_resource $baraws i3wm.bar.active_workspace "#333333" "#5f676a" "#ffffff"
-set_from_resource $bariws i3wm.bar.inactive_workspace "#333333" "#222222" "#888888"
-set_from_resource $baruws i3wm.bar.urgent_workspace "#2f343a" "#900000" "#ffffff"
-set_from_resource $barbm i3wm.bar.binding_mode "#2f343a" "#900000" "#ffffff"
-bar {
-    status_command py3status
-    position top
-    font pango:DejaVu Sans Mono, FontAwesome, github-octicons 8
-    tray_output primary
-
-    colors {
-        background $barbg
-        statusline $barsl
-        separator $barsep
-        focused_background $barfbg
-        focused_statusline $barfsl
-        focused_separator $barfsep
-
-        focused_workspace $barfws
-        active_workspace $baraws
-        inactive_workspace $bariws
-        urgent_workspace $baruws
-        binding_mode $barbm
-    }
-}
 
 # Window decoration colors
 set_from_resource $clientfoc i3wm.client.focused          "#4c7899" "#285577" "#ffffff" "#2e9ef4" "#285577"

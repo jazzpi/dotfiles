@@ -1,0 +1,59 @@
+(defwindow bar [monitor]
+  :monitor monitor
+  :geometry (geometry :x "0%"
+    :y "0%"
+    :width "100%"
+    :height "20px"
+  :anchor "top center")
+  
+  :stacking "fg"
+  ; X11
+  :reserve (struts :distance "0px" :side "top")
+  :windowtype "dock"
+  :wm-ignore false
+  ; Wayland
+  :exclusive true
+  
+  (centerbox :orientation "horizontal"
+    (workspaces :monitor monitor)
+    monitor
+    (info :monitor monitor)))
+
+; ## LEFT: Workspaces ##
+(deflisten workspace_list `scripts/workspace_list.sh`)
+(deflisten monitors `scripts/monitors.sh`)
+(defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
+
+(defwidget workspaces [monitor]
+  (box :orientation "horizontal" :halign "start" :class "workspaces"
+    (for ws in {workspace_list[monitor]}
+      (ws-button :ws ws))))
+(defwidget ws-button [ws]
+  (button
+    :onclick "i3-msg -t command 'workspace ${ws.name}'"
+    :class "${ws.focused ? 'focused' : ''} ${ws.urgent ? 'urgent' : ''}"
+  "${ws.name}${workspace_names[ws.name] == 'null' ? '' : ':'}${workspace_names[ws.name] ?: ''}"))
+
+; ## RIGHT: System info ##
+(defwidget info [monitor]
+  (box
+    :class "right-info"
+    :orientation "horizontal"
+    :halign "end"
+    :space-evenly false
+    (cpu)
+    (memory)
+    (temperature)
+    (datetime)
+    (tray :visible {monitors[monitor].primary})))
+(defwidget tray [visible]
+  (box :visible {visible} ; Setting :visible on systray seems to not work
+    (systray :orientation "horizontal")))
+(defwidget datetime []
+  (label :class "datetime" :text {formattime(EWW_TIME, "%Y-%m-%d %H:%M:%S")}))
+(defwidget temperature []
+  (label :class "temperature" :text "${round(EWW_TEMPS.K10TEMP_TCTL, 0)}°C "))
+(defwidget memory []
+  (label :class "memory" :text "${round(EWW_RAM.used_mem_perc, 0)}% "))
+(defwidget cpu []
+  (label :class "cpu" :text "${round(EWW_CPU.avg, 0)}% "))
