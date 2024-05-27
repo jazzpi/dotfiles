@@ -68,7 +68,7 @@ top:
 	$(call install,toprc,$(HOME)/.toprc)
 
 .PHONY: i3
-i3: xstuff eww
+i3: xstuff eww dunst
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
 	$(call install,i3/themes,$(I3_DIR)/themes)

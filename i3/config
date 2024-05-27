@@ -8,6 +8,8 @@ exec_always --no-startup-id feh --bg-scale $bg
 exec --no-startup-id "~/.config/eww/scripts/launch.sh"
 # Compositor
 exec --no-startup-id picom
+# Notification daemon
+exec --no-startup-id dunst
 
 # Use super as modkey
 set $mod Mod4
