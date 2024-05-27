@@ -20,8 +20,8 @@
     (info :monitor monitor)))
 
 ; ## LEFT: Workspaces ##
-(deflisten workspace_list `scripts/workspace_list.sh`)
-(deflisten monitors `scripts/monitors.sh`)
+(deflisten workspace_list `scripts/run.sh workspace_list`)
+(deflisten monitors `scripts/run.sh monitors`)
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 
 (defwidget workspaces [monitor]
