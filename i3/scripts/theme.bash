@@ -4,7 +4,7 @@ I3_THEME_DIR="$HOME/.config/i3/themes"
 I3_LOCAL_DIR="$HOME/.config/i3/.local"
 
 function usage {
-    >&2 echo "Usage: ${BASH_SOURCE[0]} (list|reload) | load [THEME] | install_only THEME | getres NAME DEFAULT"
+    echo >&2 "Usage: ${BASH_SOURCE[0]} (list|reload) | load [THEME] | install_only THEME | getres NAME DEFAULT"
     exit 1
 }
 
@@ -14,7 +14,7 @@ fi
 
 function install_theme {
     if [ ! -f "$I3_THEME_DIR/$1/resources" ]; then
-        echo "Theme `$1` does not exist!"
+        echo "Theme '$1' does not exist!"
         exit 1
     fi
 
@@ -62,7 +62,7 @@ function reload_theme {
         echo "# Reloading wallpaper..."
         echo "75"
         local img=$(get_res 'i3wm.background_image')
-        nohup feh --bg-scale ${img/#\~/$HOME} &>/dev/null &
+        nohup ~/.config/i3/scripts/background.sh ${img/#\~/$HOME} &>/dev/null &
         # echo "# Reloading gnome-terminal theme..."
         # echo "80"
         # gnome_terminal_theme $(get_res 'gnome-terminal.theme')
