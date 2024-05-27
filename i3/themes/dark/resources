@@ -4,8 +4,6 @@
 emacs.theme: doom-one
 ! gnome-terminal.theme: Dark
 i3wm.font: pango:DejaVu Sans Mono, FontAwesome 9
-i3wm.background_image: ~/.config/i3/themes/dark/background.png
-i3wm.lockscreen_image: ~/.config/i3/themes/dark/background-blur.png
 
 ! Bar
 ! ---
