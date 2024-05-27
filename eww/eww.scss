@@ -54,6 +54,14 @@ $foreground_active: #222222;
   }
 }
 
+.mode {
+  background-color: #cc7178;
+  color: #111111;
+  margin-left: 10px;
+  padding: 0 10px;
+  border-radius: 100px;
+}
+
 .right-info {
   background-color: $background;
   border-radius: 100px;
