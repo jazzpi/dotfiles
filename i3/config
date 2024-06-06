@@ -135,6 +135,10 @@ bindsym $mod+Control+Left move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
 bindsym $mod+Control+Down move workspace to output down
 bindsym $mod+Control+Up move workspace to output up
+bindsym $mod+Control+h move workspace to output left
+bindsym $mod+Control+l move workspace to output right
+bindsym $mod+Control+j move workspace to output down
+bindsym $mod+Control+k move workspace to output up
 
 # move focused container to other screen
 bindsym $mod+o move container to output right
@@ -264,7 +268,7 @@ mode "$mode_display" {
     bindsym $mod+Control+d mode "default"
 }
 
-bindsym $mod+Control+l exec ~/.config/i3/scripts/layout_manager.sh
+bindsym $mod+Control+p exec ~/.config/i3/scripts/layout_manager.sh
 
 set $mode_theme Thme: [l]oad, [r]eload
 bindsym $mod+Control+t mode "$mode_theme"
