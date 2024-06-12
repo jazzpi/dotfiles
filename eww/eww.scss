@@ -23,9 +23,14 @@ $focused: #7678ed;
   padding: 2px;
 }
 
-.workspaces {
+.left-info,
+.media,
+.right-info {
   background-color: $background;
   border-radius: 100px;
+}
+
+.workspaces {
   button {
     padding: 0 5px;
 
@@ -65,10 +70,11 @@ $focused: #7678ed;
   border-radius: 100px;
 }
 
-.right-info {
-  background-color: $background;
-  border-radius: 100px;
+.media {
+  padding: 0 10px;
+}
 
+.right-info {
   & > * {
     padding: 0 10px;
     &:not(:last-child) {
