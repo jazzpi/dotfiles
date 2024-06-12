@@ -76,7 +76,7 @@
     (tray :visible {monitors[monitor].primary})))
 (defwidget tray [visible]
   (box :visible {visible} ; Setting :visible on systray seems to not work
-    (systray :orientation "horizontal")))
+    (systray :orientation "horizontal" :icon-size 20)))
 (defwidget datetime []
   (label :class "datetime" :text {formattime(EWW_TIME, "%Y-%m-%d %H:%M:%S")}))
 (defwidget temperature []
