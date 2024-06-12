@@ -5,7 +5,7 @@ set_from_resource $bg i3wm.background_image /dev/null
 exec_always --no-startup-id "~/.config/i3/scripts/background.sh $bg"
 
 # EWW bar
-exec --no-startup-id "~/.config/eww/scripts/run.sh launch"
+exec --no-startup-id "~/.config/eww/scripts/wm.sh launch"
 # Compositor
 exec --no-startup-id picom
 # Notification daemon
