@@ -2,6 +2,9 @@ $background: #444444;
 $foreground: #ffffff;
 $background_active: #cccccc;
 $foreground_active: #222222;
+$background_highlight: #222222;
+$urgent: #eb4d4b;
+$focused: #7678ed;
 
 * {
   all: unset; // Remove all styles
@@ -46,16 +49,16 @@ $foreground_active: #222222;
     }
 
     &.urgent {
-      background-color: #eb4d4b;
+      background-color: $urgent;
     }
     &.focused {
-      background-color: #7678ed;
+      background-color: $focused;
     }
   }
 }
 
 .mode {
-  background-color: #cc7178;
+  background-color: $urgent;
   color: #111111;
   margin-left: 10px;
   padding: 0 10px;
@@ -70,6 +73,31 @@ $foreground_active: #222222;
     padding: 0 10px;
     &:not(:last-child) {
       border-right: 2px solid #aaaaaa;
+    }
+  }
+
+  progressbar.vertical {
+    min-height: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-width: 0px;
+    & > trough {
+      min-height: 10px;
+      min-width: 3px;
+      background-color: $background_highlight;
+      & > progress {
+        min-width: 3px;
+        background-color: $foreground;
+      }
+    }
+  }
+
+  .audio {
+    progressbar {
+      margin-left: 5px;
+    }
+    &.over progress {
+      background-color: $urgent;
     }
   }
 }
