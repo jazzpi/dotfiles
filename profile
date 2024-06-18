@@ -51,6 +51,12 @@ fi
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" -a -S /run/user/$UID/bus ]; then
     export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus
 fi
+# Enable hardware decoding via VA-API on nvidia
+if lsmod | grep -q nvidia; then
+    export LIBVA_DRIVER_NAME=nvidia
+    export NVD_BACKEND=direct
+    export MOZ_DISABLE_RDD_SANDBOX=1
+fi
 
 if [ -n "$BASH_VERSION" ]; then
     . "$HOME/.bashrc"
