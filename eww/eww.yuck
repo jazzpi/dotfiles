@@ -19,13 +19,11 @@
     (media)
     (right-info :monitor monitor)))
 
-(defvar MEDIA_PLAYERS "spotify")
-
 (deflisten workspace_list `scripts/wm.sh workspace_list`)
 (deflisten monitors `scripts/wm.sh monitors`)
 (deflisten mode `scripts/wm.sh mode`)
 (deflisten padata `scripts/pulse.sh monitor`)
-(deflisten playerdata `scripts/player.sh {MEDIA_PLAYERS}`)
+(deflisten playerdata `scripts/player.sh monitor`)
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 (defvar player_status_icons '{ "Playing": "\\uf04b", "Paused": "\\uf04c", "Stopped": "\\uf04d" }')
 
@@ -52,13 +50,15 @@
 
 ; ## CENTER: Media player ##
 (defwidget media []
-  (button
-    :class "media"
-    :visible {playerdata.status != "Stopped"}
-    :onclick "playerctl -p ${MEDIA_PLAYERS} play-pause"
-    (label
-      :text "${player_status_icons[playerdata.status]} ${playerdata.title} - ${playerdata.artist}"
-    ))
+  (eventbox
+    :onclick "~/.config/eww/scripts/player.sh play-pause"
+    :onscroll "~/.config/eww/scripts/player.sh {}"
+    (box
+      :class "media"
+      :visible {playerdata.status != "Stopped"}
+      (label
+        :text "${player_status_icons[playerdata.status]} ${playerdata.title} - ${playerdata.artist}"
+      )))
 )
 
 ; ## RIGHT: System info ##
