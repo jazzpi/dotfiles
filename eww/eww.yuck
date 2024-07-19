@@ -55,8 +55,7 @@
     :onclick "~/.config/eww/scripts/player.sh play-pause"
     :onscroll "~/.config/eww/scripts/player.sh {}"
     (box
-      :class "media"
-      :visible {playerdata.status != "Stopped"}
+      :class "media ${(playerdata ?: {}).status == 'null' || playerdata.status == '' || playerdata.status == 'Stopped' ? 'hidden' : ''}"
       (label
         :text "${player_status_icons[playerdata.status]} ${playerdata.title} - ${playerdata.artist}"
       )))

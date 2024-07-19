@@ -10,6 +10,10 @@ $focused: #7678ed;
   all: unset; // Remove all styles
 }
 
+.hidden {
+  opacity: 0;
+}
+
 .bar {
   background: transparent;
   background-image: linear-gradient(
