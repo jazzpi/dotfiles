@@ -80,7 +80,9 @@
 (defwidget datetime []
   (label :class "datetime" :text {formattime(EWW_TIME, "%Y-%m-%d %H:%M:%S")}))
 (defwidget temperature []
-  (label :class "temperature" :text "${round(EWW_TEMPS.K10TEMP_TCTL, 0)}°C "))
+  (label
+    :class "temperature"
+    :text "${round(EWW_TEMPS.K10TEMP_TCTL ?: EWW_TEMPS.CORETEMP_PACKAGE_ID_0, 0)}°C "))
 (defwidget memory []
   (label :class "memory" :text "${round(EWW_RAM.used_mem_perc, 0)}% "))
 (defwidget cpu []
