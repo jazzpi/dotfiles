@@ -36,7 +36,7 @@ $(VERBOSE).SILENT:
 
 # Print help if no target is specified
 
-TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xstuff zsh spacemacs top gdb git systemd bin eww picom
+TARGETS = bash profile emacs tmux sway i3 dunst mpdris2 applications awesome nvim xstuff zsh spacemacs top gdb git systemd bin eww picom sioyek
 
 .PHONY: default
 default: help
@@ -203,3 +203,7 @@ kitty:
 .PHONY: picom
 picom:
 	$(call install,picom.conf,$(XDG_CONFIG_HOME)/picom.conf)
+
+.PHONY: sioyek
+sioyek:
+	$(call install,sioyek,$(XDG_CONFIG_HOME)/sioyek)
