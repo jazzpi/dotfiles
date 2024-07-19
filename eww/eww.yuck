@@ -26,6 +26,7 @@
 (deflisten playerdata `scripts/player.sh monitor`)
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 (defvar player_status_icons '{ "Playing": "\\uf04b", "Paused": "\\uf04c", "Stopped": "\\uf04d" }')
+(defvar battery_icons '{ "Discharging": "\\uf241", "Charging": "\\uf0e7", "Not charging": "\\uf240" }')
 
 ; ## LEFT: Workspaces, mode ##
 (defwidget left-info [monitor]
@@ -68,10 +69,11 @@
     :orientation "horizontal"
     :halign "end"
     :space-evenly false
-    (cpu)
     (audio)
-    (memory)
     (temperature)
+    (cpu)
+    (memory)
+    (battery)
     (datetime)
     (tray :visible {monitors[monitor].primary})))
 (defwidget tray [visible]
@@ -79,6 +81,11 @@
     (systray :orientation "horizontal" :icon-size 20)))
 (defwidget datetime []
   (label :class "datetime" :text {formattime(EWW_TIME, "%Y-%m-%d %H:%M:%S")}))
+(defwidget battery []
+  (label
+    :visible {EWW_BATTERY != {}}
+    :class "battery"
+  :text "${EWW_BATTERY.BAT1.capacity}% ${battery_icons[EWW_BATTERY.BAT1.status]}"))
 (defwidget temperature []
   (label
     :class "temperature"
