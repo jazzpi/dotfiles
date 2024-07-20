@@ -10,6 +10,7 @@ exec --no-startup-id "~/.config/eww/scripts/wm.sh launch"
 exec --no-startup-id picom
 # Notification daemon
 exec --no-startup-id dunst
+exec --no-startup-id "~/.config/i3/scripts/startup.sh"
 
 # Use super as modkey
 set $mod Mod4
@@ -177,17 +178,6 @@ for_window [window_type="notification"] floating enable
 for_window [class="^fzf$"] floating enable, border pixel, move position center
 
 for_window [title="Picture-in-Picture"] sticky enable
-
-# Start some applications on startup
-exec thunderbird
-exec --no-startup-id nm-applet
-exec --no-startup-id ibus-daemon -r
-exec --no-startup-id bash -c "~/.config/i3/scripts/spotify.bash"
-exec signal-desktop
-exec telegram-desktop
-exec firefox
-# Start a terminal on WS 3
-exec --no-startup-id i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
