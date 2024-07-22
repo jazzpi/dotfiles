@@ -34,9 +34,9 @@ bindsym $mod+Mod1+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
 
 # Screenshots
-bindsym Print exec gnome-screenshot
+bindsym Print exec gnome-screenshot -i
 bindsym Control+Print exec gnome-screenshot -a
-bindsym Shift+Print exec gnome-screenshot -i
+bindsym Shift+Print exec gnome-screenshot -ac
 
 # change focus
 # vim-like
