@@ -173,6 +173,8 @@ for_window [class="^Firefox$"] move --no-auto-back-and-forth to workspace $ws1
 for_window [class="^Spotify$"] move --no-auto-back-and-forth to workspace $ws5
 for_window [title="^Picture-in-Picture$"] border pixel 1
 for_window [window_type="notification"] floating enable
+for_window [class="^[Gg]nome-screenshot$"] floating enable
+for_window [title="- Wine desktop$"] floating enable
 
 # The launcher script assigns a custom class to the fzf terminal
 for_window [class="^fzf$"] floating enable, border pixel, move position center
