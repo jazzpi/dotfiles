@@ -93,7 +93,7 @@ swaylock:
 	$(call install,swaylock,$(SWAYLOCK_DIR))
 
 .PHONY: sway
-sway: waybar swaylock resources
+sway: waybar swaylock resources mako
 	$(call install,sway,$(SWAY_DIR))
 	@echo "Installing Wayland session config for Sway. You might get a sudo prompt."
 	sudo $(INSTALL_CMD) -m0644 -D sway/sway-in-a-shell.desktop $(WAYLAND_SESSIONS_DIR)
@@ -101,7 +101,7 @@ sway: waybar swaylock resources
 	sudo $(INSTALL_CMD) -m0755 -D sway/scripts/sway-in-a-shell /usr/local/bin
 
 .PHONY: hyprland
-hyprland: waybar swaylock resources
+hyprland: waybar swaylock resources mako
 	$(call install,hyprland,$(HYPRLAND_DIR))
 
 .PHONY: dunst
