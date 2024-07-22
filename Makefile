@@ -72,6 +72,7 @@ i3: xstuff eww dunst resources
 	$(call install,i3/config,$(I3_DIR)/config)
 	$(call install,i3/scripts,$(I3_DIR)/scripts)
 	$(call install,i3/themes,$(I3_DIR)/themes)
+	$(call install,i3/workspace-im.json,$(I3_DIR)/workspace-im.json)
 	$(call install,i3/i3status.conf,$(I3STATUS_DIR)/config)
 # Install light theme as default
 	i3/scripts/theme.bash install_only light

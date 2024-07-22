@@ -1,0 +1,49 @@
+// vim:ts=4:sw=4:et
+{
+    "percent": 0.5,
+    "swallows": [
+       {
+       "class": "^firefox$",
+       // "instance": "^Navigator$",
+       // "machine": "^jasper\\-desk\\-arch$",
+       "title": "Microsoft Teams|WhatsApp"
+       // "window_role": "^browser$"
+       }
+    ],
+    "type": "con"
+}
+
+{
+    // tabbed split container with 2 children
+    "layout": "tabbed",
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^[Ss]ignal$"
+               // "instance": "^signal$",
+               // "machine": "^jasper\\-desk\\-arch$",
+               // "title": "^Signal$",
+               // "window_role": "^browser\\-window$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^TelegramDesktop$"
+               // "instance": "^telegram\\-desktop$",
+               // "machine": "^jasper\\-desk\\-arch$",
+               // "title": "^Telegram\\ \\(1\\)$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
