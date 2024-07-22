@@ -1,10 +1,10 @@
 # -*- mode: shell-script -*-
 
-PATH_PRE="$HOME/bin:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin"
+PATH_PRE="$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin"
 PATH_POST="$HOME/.platformio/penv/bin:$HOME/.rvm/bin"
 export PATH="$PATH_PRE:$PATH:$PATH_POST"
 if [ -d /mnt/c/WINDOWS ]; then
-   export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32:$PATH"
+    export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:/mnt/c/WINDOWS/System32:$PATH"
 fi
 export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
 export PERL_LOCAL_LIB_ROOT="$HOME/perl5:$PERL_LOCAL_LIB_ROOT"
@@ -26,10 +26,6 @@ export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:="/etc/xdg"}
 export XDG_CACHE_HOME=${XDG_CACHE_HOME:="$HOME/.cache"}
 export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:="/run/user/$(id -u)"}
 
-if command -v pyenv &>/dev/null; then
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 if command -v rustc &>/dev/null; then
     export RUST_BACKTRACE=1
