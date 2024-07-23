@@ -201,8 +201,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl -- set-source-mute @DEFAULT_SOURCE@ toggle && killall -s USR1 py3status
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec brightnessctl s +10% && killall -s USR1 py3status
-bindsym XF86MonBrightnessDown exec brightnessctl s 10%- && killall -s USR1 py3status
+bindsym XF86MonBrightnessUp exec ~/.config/eww/scripts/backlight.sh change up
+bindsym XF86MonBrightnessDown exec ~/.config/eww/scripts/backlight.sh change down
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

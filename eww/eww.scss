@@ -102,12 +102,13 @@ $focused: #7678ed;
     }
   }
 
-  .audio {
+  .audio,
+  .backlight {
     progressbar {
       margin-left: 5px;
     }
-    &.over progress {
-      background-color: $urgent;
-    }
+  }
+  .audio.over progress {
+    background-color: $urgent;
   }
 }

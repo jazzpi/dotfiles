@@ -23,6 +23,10 @@
 (deflisten monitors `scripts/wm.sh monitors`)
 (deflisten mode `scripts/wm.sh mode`)
 (deflisten padata `scripts/pulse.sh monitor`)
+(defpoll backlightlevel
+  :interval "10s"
+  :initial ""
+`scripts/backlight.sh get`)
 (deflisten playerdata `scripts/player.sh monitor`)
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 (defvar player_status_icons '{ "Playing": "\\uf04b", "Paused": "\\uf04c", "Stopped": "\\uf04d" }')
@@ -69,6 +73,7 @@
     :halign "end"
     :space-evenly false
     (audio)
+    (backlight)
     (temperature)
     (cpu)
     (memory)
@@ -93,6 +98,23 @@
   (label :class "memory" :text "${round(EWW_RAM.used_mem_perc, 0)}% "))
 (defwidget cpu []
   (label :class "cpu" :text "${round(EWW_CPU.avg, 0)}% "))
+(defwidget backlight []
+  (box
+    :visible {backlightlevel != ""}
+    (eventbox
+      :onscroll "scripts/backlight.sh change {}"
+      (box
+        :orientation "horizontal"
+        :space-evenly false
+        :class "backlight"
+        (label :text "\\uf185")
+        (progress
+          :orientation "v"
+          :flipped true
+          :height 10
+          :width 3
+          :value {backlightlevel}
+        )))))
 (defwidget audio []
   (box
     (eventbox
