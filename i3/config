@@ -34,9 +34,9 @@ bindsym $mod+Mod1+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
 
 # Screenshots
-bindsym Print exec gnome-screenshot -i
-bindsym Control+Print exec gnome-screenshot -a
-bindsym Shift+Print exec gnome-screenshot -ac
+bindsym --release Print exec --no-startup-id bash -c "~/.config/i3/scripts/screenshot.sh >> /tmp/screenshot.log 2>&1"
+bindsym --release Control+Print exec gnome-screenshot -ac
+bindsym --release Shift+Print exec gnome-screenshot -i
 
 # change focus
 # vim-like
