@@ -81,7 +81,9 @@
     (datetime)
     (tray :visible {monitors[monitor].primary})))
 (defwidget tray [visible]
-  (box :visible {visible} ; Setting :visible on systray seems to not work
+  (box
+    :visible {visible} ; Setting :visible on systray seems to not work
+    :class "tray"
     (systray :orientation "horizontal" :icon-size 20)))
 (defwidget datetime []
   (label :class "datetime" :text {formattime(EWW_TIME, "%Y-%m-%d %H:%M:%S")}))
