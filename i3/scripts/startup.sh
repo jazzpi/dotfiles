@@ -16,5 +16,6 @@ ibus-daemon -r &
 signal-desktop &
 telegram-desktop &
 firefox &
+nextcloud &
 # Start a terminal on WS 3
 i3-msg "workspace $ws3; exec i3-sensible-terminal; workspace $ws1" &
