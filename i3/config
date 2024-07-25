@@ -29,9 +29,14 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# Launcher
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+Mod1+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
+# Notifications
+bindsym $mod+period exec --no-startup-id dunstctl close
+bindsym $mod+Shift+period exec --no-startup-id dunstctl close-all
+bindsym $mod+comma exec --no-startup-id dunstctl history-pop
 
 # Screenshots
 bindsym --release Print exec --no-startup-id bash -c "~/.config/i3/scripts/screenshot.sh >> /tmp/screenshot.log 2>&1"
