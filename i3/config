@@ -198,6 +198,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 bindsym $mod+m exec i3-input -F 'mark "%s"' -P 'Mark as: ' -l1
 bindsym $mod+grave exec ~/.config/i3/scripts/mark-goto.bash
+bindsym $mod+Tab exec rofi -show window -show-icons
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume @DEFAULT_SINK@ +5% && killall -s USR1 py3status
