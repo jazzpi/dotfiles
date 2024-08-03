@@ -3,6 +3,7 @@ $foreground: #ffffff;
 $background_active: #cccccc;
 $foreground_active: #222222;
 $background_highlight: #222222;
+$background_lighten: #606060;
 $urgent: #eb4d4b;
 $focused: #7678ed;
 $border: #aaaaaa;
@@ -43,7 +44,8 @@ $border: #aaaaaa;
       padding-left: 10px;
 
       &.focused,
-      &.urgent {
+      &.urgent,
+      &.visible {
         border-top-left-radius: 100px;
         border-bottom-left-radius: 100px;
       }
@@ -52,7 +54,8 @@ $border: #aaaaaa;
       padding-right: 10px;
 
       &.focused,
-      &.urgent {
+      &.urgent,
+      &.visible {
         border-top-right-radius: 100px;
         border-bottom-right-radius: 100px;
       }
@@ -63,6 +66,9 @@ $border: #aaaaaa;
     }
     &.focused {
       background-color: $focused;
+    }
+    &.visible:not(.focused) {
+      background-color: $background_lighten;
     }
   }
 }
