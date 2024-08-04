@@ -121,7 +121,8 @@
   (box
     (eventbox
       :onclick "scripts/pulse.sh toggle"
-      :onrightclick "pavucontrol &"
+      :onrightclick "scripts/pulse.sh select-sink &"
+      :onmiddleclick "pavucontrol &"
       :onscroll "scripts/pulse.sh change {}"
       (box
         :orientation "horizontal"

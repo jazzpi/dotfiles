@@ -51,6 +51,16 @@ change_usage() {
     exit 1
 }
 
+select_sink() {
+    sinks=$(pactl -f json list sinks | jq 'map({name, desc: .properties["device.description"]})')
+    active=$(echo "$sinks" | jq "map(.name) | index(\"$(pactl get-default-sink)\")")
+    selected=$(echo "$sinks" | jq -r '.[] | .desc' | rofi -dmenu -p "Select output" -i -a $active -format i)
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
+    pactl set-default-sink $(echo "$sinks" | jq -r ".[$selected] | .name")
+}
+
 if [ $# -eq 0 ]; then
     usage
 fi
@@ -67,6 +77,9 @@ change)
         change_usage
     fi
     change $2
+    ;;
+select-sink)
+    select_sink
     ;;
 *)
     usage
