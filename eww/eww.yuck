@@ -31,6 +31,8 @@
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 (defvar player_status_icons '{ "Playing": "\\uf04b", "Paused": "\\uf04c", "Stopped": "\\uf04d" }')
 (defvar battery_icons '{ "Discharging": "\\uf241", "Charging": "\\uf0e7", "Not charging": "\\uf240" }')
+(defvar inhibit_idle 'false')
+(defvar dnd 'false')
 
 ; ## LEFT: Workspaces, mode ##
 (defwidget left-info [monitor]
@@ -72,6 +74,8 @@
     :orientation "horizontal"
     :halign "end"
     :space-evenly false
+    (inhibit_idle)
+    (dnd)
     (audio)
     (backlight)
     (temperature)
@@ -136,3 +140,13 @@
           :width 3
           :value {padata.volume}
         )))))
+(defwidget dnd []
+  (button
+    :class "dnd ${dnd ? 'active' : ''}"
+    :onclick "scripts/wm.sh dnd set ${!dnd}"
+    (label :text "${dnd ? '' : ''}")))
+(defwidget inhibit_idle []
+  (button
+    :class "inhibit_idle ${inhibit_idle ? 'active' : ''}"
+    :onclick "scripts/wm.sh inhibit_idle set ${!inhibit_idle}"
+    (label :text "")))
