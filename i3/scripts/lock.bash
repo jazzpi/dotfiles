@@ -18,13 +18,19 @@ if [ ! -e "$path" ]; then
 fi
 
 i3lock_args=(
-    -f          # Show failed attempts
-    -k          # Show clock
-    --indicator # Always show indicator
-    --{time,date,layout,verif,wrong,greeter}-font="Overpass ExtraLight"
-    --{time,date,layout,verif,wrong,greeter}-color=eeeeeeff
+    -f         # Show failed attempts
+    -k         # Show clock
     -i "$path" # Image
-    -F         # Zoom image to screen size (without stretching)
 )
+
+ver="$(i3lock --version 2>&1)"
+if [[ $ver =~ 'i3lock-color' ]]; then
+    i3lock_args+=(
+        --indicator # Always show indicator
+        --{time,date,layout,verif,wrong,greeter}-font="Overpass ExtraLight"
+        --{time,date,layout,verif,wrong,greeter}-color=eeeeeeff
+        -F # Zoom image to screen size (without stretching)
+    )
+fi
 
 i3lock "${i3lock_args[@]}"
