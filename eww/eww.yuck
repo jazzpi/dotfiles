@@ -94,7 +94,7 @@
 (defwidget battery []
   (label
     :visible {EWW_BATTERY != ""}
-    :class "battery"
+    :class "battery ${EWW_BATTERY.BAT1.capacity < 15 ? 'urgent' : ''}"
   :text "${EWW_BATTERY.BAT1.capacity}% ${battery_icons[EWW_BATTERY.BAT1.status]}"))
 (defwidget temperature []
   (label
