@@ -10,7 +10,7 @@ done
 
 # Start some applications on startup
 thunderbird &
-nm-applet &
+nm-applet --indicator &
 ibus-daemon -r &
 ~/.config/i3/scripts/spotify.bash &
 signal-desktop &
