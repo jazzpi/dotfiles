@@ -8,6 +8,9 @@ while [[ (-z "$(eww active-windows)" || -z "$(pgrep dunst)") && $i -lt 10 ]]; do
     let i++
 done
 
+# Restore default monitor layout
+~/.config/i3/scripts/randr.bash restore default
+
 # Start some applications on startup
 thunderbird &
 nm-applet --indicator &
