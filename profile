@@ -54,6 +54,6 @@ if lsmod | grep -q nvidia; then
     export MOZ_DISABLE_RDD_SANDBOX=1
 fi
 
-if [ -n "$BASH_VERSION" ]; then
+if [ -n "$BASH_VERSION" -a -z "$BASHRC_SOURCED" ]; then
     . "$HOME/.bashrc"
 fi

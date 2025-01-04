@@ -176,5 +176,7 @@ if ! cmd_exists ag; then
     }
 fi
 
+export BASHRC_SOURCED=true
+
 # Ensure that the last command in the bashrc was successful, so the prompt isn't red
 true
