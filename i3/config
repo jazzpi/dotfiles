@@ -40,6 +40,7 @@ bindsym $mod+comma exec --no-startup-id dunstctl history-pop
 
 # Screenshots
 bindsym --release Print exec --no-startup-id bash -c "~/.config/i3/scripts/screenshot.sh >> /tmp/screenshot.log 2>&1"
+bindsym --release $mod+Shift+s exec --no-startup-id bash -c "~/.config/i3/scripts/screenshot.sh >> /tmp/screenshot.log 2>&1"
 bindsym --release Control+Print exec gnome-screenshot -ac
 bindsym --release Shift+Print exec gnome-screenshot -i
 
@@ -248,7 +249,7 @@ set $mode_spotify Spotify: [ ]Play/Pause, [hj]Previous, [kl]Next
 set $spotify_send dbus-send --print-reply \
     --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
     org.mpris.MediaPlayer2.Player
-bindsym $mod+Shift+s mode "$mode_spotify"
+bindsym $mod+Mod1+s mode "$mode_spotify"
 mode "$mode_spotify" {
     bindsym space exec $spotify_send.PlayPause
     bindsym h exec $spotify_send.Previous
