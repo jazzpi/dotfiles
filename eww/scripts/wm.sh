@@ -11,7 +11,7 @@ if [ -z "$xdg_desktop" ]; then
 fi
 
 case "$xdg_desktop" in
-i3)
+*i3)
     desktop=i3
     ;;
 *)
