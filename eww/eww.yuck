@@ -94,8 +94,8 @@
 (defwidget battery []
   (label
     :visible {EWW_BATTERY != ""}
-    :class "battery ${EWW_BATTERY.BAT1.capacity < 15 ? 'urgent' : ''}"
-  :text "${EWW_BATTERY.BAT1.capacity}% ${battery_icons[EWW_BATTERY.BAT1.status]}"))
+    :class "battery ${EWW_BATTERY != '' && EWW_BATTERY.BAT1.capacity < 15 ? 'urgent' : ''}"
+  :text "${EWW_BATTERY != '' && EWW_BATTERY.BAT1.capacity}% ${EWW_BATTERY != '' && battery_icons[EWW_BATTERY.BAT1.status]}"))
 (defwidget temperature []
   (label
     :class "temperature"
@@ -119,7 +119,7 @@
           :flipped true
           :height 10
           :width 3
-          :value {backlightlevel}
+          :value (literal :content "backlightlevel ? backlightlevel : 0")
         )))))
 (defwidget audio []
   (box

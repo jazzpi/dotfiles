@@ -2,7 +2,7 @@
 
 if ! brightnessctl -l -c backlight &>/dev/null; then
     echo "No backlight device found" >&2
-    exit 1
+    exit 0
 fi
 
 case "$1" in
