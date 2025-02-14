@@ -30,7 +30,7 @@
 (deflisten playerdata `scripts/player.sh monitor`)
 (defvar workspace_names '{ "1": "", "2": "", "3": "", "4":"", "5":"", "6":"", "i":"" }')
 (defvar player_status_icons '{ "Playing": "\\uf04b", "Paused": "\\uf04c", "Stopped": "\\uf04d" }')
-(defvar battery_icons '{ "Discharging": "\\uf241", "Charging": "\\uf0e7", "Not charging": "\\uf240" }')
+(defvar battery_icons '{ "Discharging": "\\uf241", "Charging": "\\uf0e7", "Not charging": "\\uf240", "Full": "\\uf240" }')
 (defvar inhibit_idle 'false')
 (defvar dnd 'false')
 
