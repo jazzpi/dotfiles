@@ -21,6 +21,7 @@ i3lock_args=(
     -f         # Show failed attempts
     -k         # Show clock
     -i "$path" # Image
+    -t         # Tiling image
 )
 
 ver="$(i3lock --version 2>&1)"
