@@ -98,8 +98,9 @@
   :text "${EWW_BATTERY != '' && EWW_BATTERY.BAT1.capacity}% ${EWW_BATTERY != '' && battery_icons[EWW_BATTERY.BAT1.status]}"))
 (defwidget temperature []
   (label
+    :visible {EWW_TEMPS != {}}
     :class "temperature"
-    :text "${round(EWW_TEMPS.K10TEMP_TCTL ?: EWW_TEMPS.CORETEMP_PACKAGE_ID_0, 0)}°C "))
+    :text "${round(EWW_TEMPS.K10TEMP_TCTL ?: EWW_TEMPS.CORETEMP_PACKAGE_ID_0 ?: 0, 0)}°C "))
 (defwidget memory []
   (label :class "memory" :text "${round(EWW_RAM.used_mem_perc, 0)}% "))
 (defwidget cpu []
