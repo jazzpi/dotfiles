@@ -94,8 +94,8 @@
 (defwidget battery []
   (label
     :visible {EWW_BATTERY != ""}
-    :class "battery ${EWW_BATTERY != '' && EWW_BATTERY.BAT1.capacity < 15 ? 'urgent' : ''}"
-  :text "${EWW_BATTERY != '' && EWW_BATTERY.BAT1.capacity}% ${EWW_BATTERY != '' && battery_icons[EWW_BATTERY.BAT1.status]}"))
+    :class "battery ${(EWW_BATTERY?.BAT1 ?: EWW_BATTERY?.BAT0)?.capacity < 15 ? 'urgent' : ''}"
+    :text "${(EWW_BATTERY?.BAT1 ?: EWW_BATTERY?.BAT0)?.capacity}% ${EWW_BATTERY != '' ? battery_icons[(EWW_BATTERY?.BAT1 ?: EWW_BATTERY?.BAT0).status] : ''}"))
 (defwidget temperature []
   (label
     :visible {EWW_TEMPS != {}}
