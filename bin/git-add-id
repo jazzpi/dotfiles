@@ -4,7 +4,7 @@ if ! ( [ -d .git ] || git rev-parse --git-dir >/dev/null ); then
     exit 128
 fi
 
-CONFIG_DIR="$XDG_STATE_HOME/git"
+CONFIG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/git"
 mkdir -p "$CONFIG_DIR"
 
 if [ $# -ne 3 ]; then
@@ -12,7 +12,7 @@ if [ $# -ne 3 ]; then
     exit 64
 fi
 
-output_path="$XDG_STATE_HOME/git/$1"
+output_path="$CONFIG_DIR/$1"
 
 cat <<EOF > "$output_path"
 #!/bin/bash

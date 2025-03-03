@@ -4,15 +4,15 @@ if ! ( [ -d .git ] || git rev-parse --git-dir >/dev/null ); then
     exit 128
 fi
 
-CONFIG_DIR="$XDG_STATE_HOME/git"
+CONFIG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/git"
 mkdir -p "$CONFIG_DIR"
 
 if [ $# -ne 1 ]; then
-    >&2 echo "Usage: $(basename $0) CONFIG-NAME EMAIL USERNAME"
+    >&2 echo "Usage: $(basename $0) CONFIG-NAME"
     >&2 echo
     >&2 echo "Available configs:"
-    >&2 ls "$XDG_STATE_HOME/git"
+    >&2 ls "$CONFIG_DIR"
     exit 64
 fi
 
-"$XDG_STATE_HOME/git/$1"
+"$CONFIG_DIR/$1"
