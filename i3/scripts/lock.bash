@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CACHE_DIR="$HOME/.config/i3/.local/lock-cache"
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/lock-cache"
 
 # Extract the primary monitor resolution from xrandr
 # TODO: What if there is no primary monitor?
