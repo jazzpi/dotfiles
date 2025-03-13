@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# Wait for EWW and Dunst to be running so that a tray & notification daemon is
-# available
-let i=0
-while [[ (-z "$(eww active-windows)" || -z "$(pgrep dunst)") && $i -lt 10 ]]; do
-    sleep 1
-    let i++
-done
+poll() {
+    timeout=$1
+    shift
+    while ! eval "$@" && ((timeout-- > 0)); do
+        sleep 1
+    done
+    ((!timeout))
+}
 
-# Restore default monitor layout
-~/.config/i3/scripts/randr.bash restore default
+set -x
 
-# Start some applications on startup
+# First, picom needs to run so other apps can use transparency
+poll 10 "pgrep -f picom" || true
+# Then, EWW and Dunst need to run so that the tray and notifications are available
+~/.config/eww/scripts/wm.sh launch &
+poll 10 '[ -z "$(eww active-windows)" -o -z "$(pgrep dunst)" ]' || true
+
+# Then, we can start the rest of the applications
 thunderbird &
 nm-applet --indicator &
 ibus-daemon -r &
